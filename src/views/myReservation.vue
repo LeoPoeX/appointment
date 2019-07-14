@@ -436,7 +436,7 @@ export default {
 
     p {
       margin: 0;
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       display: inline-block;
       line-height: 3.6rem;
     }
@@ -458,7 +458,7 @@ export default {
     .card-header {
       height: 4.5rem;
       width: 100%;
-      background: #232323;
+      background: #fa7f0c;
       border-top-left-radius: 0.5rem;
       border-top-right-radius: 0.5rem;
       color: #FFFFFF;
