@@ -17,5 +17,10 @@ export default new Router({
       name: "appointment",
       component: () => import("./views/appointment.vue")
     },
+    {
+      path: "/pass",
+      name: "pass",
+      component: () => import("./components/Pass.vue")
+    },
   ]
 });

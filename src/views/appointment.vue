@@ -2,13 +2,13 @@
   <div class="index-box">
 
     <!-- 头部 -->
-    <mt-header title="预 约" style="background-image: linear-gradient(-180deg, #FFFFFF 0%, #FFFDF8 100%);
-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.12); color: #333333; font-size: 1.7rem;">
+    <mt-header title="预 约" class="header">
       <router-link to="/" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
 
+    <!-- 预约详情 -->
     <div class="details">
       <div class="yuyueTitle">预约详情</div>
       <div class="visitor">
@@ -24,8 +24,8 @@ box-shadow: 0 1px 1px 0 rgba(0,0,0,0.12); color: #333333; font-size: 1.7rem;">
         </div>
 
         <div class="GoTime">
-          <input type="text" placeholder="到达（必填）" />
-          <input type="text" placeholder="离开（必填）" />
+          <DatePicker class="time" type="datetime" placeholder="到达（必填）"></DatePicker>
+          <input class="time" type="text" placeholder="离开（必填）" />
         </div>
 
         <div class="receiver">
@@ -72,19 +72,73 @@ box-shadow: 0 1px 1px 0 rgba(0,0,0,0.12); color: #333333; font-size: 1.7rem;">
       </div>
     </div>
 
+    <!-- 随行人员信息 -->
+    <div class="details">
+      <div class="yuyueTitle">填写随员信息</div>
+
+      <div class="visitor">
+
+        <div class="content">
+          <div class="img-backgro"><img /></div>
+          <input type="text" placeholder="姓名（必填）" />
+        </div>
+
+        <div class="content">
+          <div class="img-backgro"><img /></div>
+          <input type="text" placeholder="电话（必填）" />
+        </div>
+
+        <div class="content">
+          <div class="img-backgro"><img /></div>
+          <input type="text" placeholder="职位（必填）" />
+        </div>
+
+        <div class="content">
+          <div class="img-backgro"><img /></div>
+          <input type="text" placeholder="公司（必填）" />
+        </div>
+
+        <div class="content">
+          <div class="img-backgro"><img /></div>
+          <input type="text" placeholder="车牌（选填）" />
+        </div>
+
+      </div>
+
+      <div class="PeopleInfo">
+        <p>添加随员信息</p>
+      </div>
+      
+    </div>
+
+    <div class="submit">
+      <button>立即提交</button>
+    </div>
+
   </div>
 </template>
 
 
 <script>
 export default {
-  
+  name: 'Appointment'
 }
 </script>
 
 
 <style lang="less">
 .index-box {
+  padding-top: 40px;
+
+  .header {
+    background-image: linear-gradient(-180deg, #FFFFFF 0%, #FFFDF8 100%);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.12); 
+    color: #333333; 
+    font-size: 1.7rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
 
   .details {
     margin: 2rem 1.3rem 1.3rem 1.3rem;
@@ -125,7 +179,7 @@ export default {
       .GoTime {
         display: flex;
 
-        input {
+        .time {
           width: 49%;
           line-height: 3rem;
           border: 0;
@@ -192,11 +246,36 @@ export default {
         select {
           border: none;
           outline: none;
-          width: 8.2rem;
+          width: 9rem;
           border-bottom: 0.5px solid #DEDEDE;
         }
       }
     
+    }
+
+    .PeopleInfo {
+      line-height: 3rem;
+      text-align: center;
+      background: #FFFAF5;
+
+      p {
+        margin: 0;
+        color: #999999;
+      }
+    }
+
+  }
+
+  .submit {
+    text-align: center;
+    margin: 1.5rem 0;
+
+    button {
+      width: 25rem;
+      height: 3rem;
+      border: 0;
+      border-radius: 3rem;
+      background-image: linear-gradient(1deg, #FACE83 0%, #F6AE3A 100%);
     }
   }
 
