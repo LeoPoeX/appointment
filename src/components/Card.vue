@@ -1,42 +1,33 @@
 <template>
   <div>
-    <div class="audit" v-for="(item, i) in waitAuditList" :key="i">
+    <div class="card-box" v-for="(item, i) in list" :key="i">
       <div class="card-header">
-        <p>待审核</p>
-        <router-link tag="a" to="/pass">查看通行证</router-link>
+        <span :class="`tag ${status}-tag`">{{ item.state }}</span>
+        <router-link tag="a" to="/pass" :class="status">查看通行证</router-link>
       </div>
       
-      <div class="content-box">
-        <div class="content">
-          <div class="mess">
-            <div class="img-backgro"><img /></div>
-            <p>姓名：</p>
-          </div>
-          <p class="text name">{{ item.name }}</p>
+      <div :class="`card-content ${status==='over' ? 'over-box' : ''}`">
+        <div class="appoint-info">
+          <span class="appoint-icon"><img /></span>
+          <span class="appoint-name">姓名：</span>
+          <p class="appoint-desc user">{{ item.name }}</p>
         </div>
-        <div class="content">
-          <div class="mess">
-            <div class="img-backgro"><img /></div>
-            <p>单位：</p>
-          </div>
-          <p class="text">{{ item.company }}</p>
+        <div class="appoint-info">
+          <span class="appoint-icon"><img /></span>
+          <span class="appoint-name">单位：</span>
+          <p class="appoint-desc">{{ item.company }}</p>
         </div>
-        <div class="content">
-          <div class="mess">
-            <div class="img-backgro"><img /></div>
-            <p>随行：</p>
-          </div>
-          <p class="text">{{ item.others[0] }} / {{ item.others[1] }} / {{ item.others[2] }} </p>
+        <div class="appoint-info">
+          <span class="appoint-icon"><img /></span>
+          <span class="appoint-name">随行：</span>
+          <p class="appoint-desc">{{ item.others[0] }} / {{ item.others[1] }} / {{ item.others[2] }} </p>
         </div>
-        <div class="content">
-          <div class="mess">
-            <div class="img-backgro"><img /></div>
-            <p>来访日期：</p>
-          </div>
-          <p class="text time">{{ item.visitStartTime }}～{{ item.visitEndTime }}</p>
+        <div class="appoint-info">
+          <span class="appoint-icon"><img /></span>
+          <span class="appoint-name">来访日期：</span>
+          <p class="appoint-desc time">{{ item.visitStartTime }}～{{ item.visitEndTime }}</p>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -45,32 +36,16 @@
 import utils from '../utils';
 export default {
   name: 'Card',
+  props: {
+    list: Array,
+    status: { // 'audit', 'pass', 'over'
+      type: String,
+      default: 'audit'
+    }
+  },
   data() {
     return {
-      waitAuditList: [{ // 待审核列表
-        id: 1,
-        name: '王长阳1',
-        company: '昆山XXXXX精密仪器股份有限公司',
-        others: ['码云', '马化腾', '李彦宏'],
-        visitStartTime: this.getTime(1563098400000),
-        visitEndTime: this.getTime(1563105600000)
-      }, {
-        id: 2,
-        name: '王长阳2',
-        company: '昆山XXXXX精密仪器股份有限公司',
-        others: ['码云', '马化腾', '李彦宏'],
-        visitStartTime: this.getTime(1563098400000),
-        visitEndTime: this.getTime(1563105600000)
-      }, {
-        id: 3,
-        name: '王长阳3',
-        company: '昆山XXXXX精密仪器股份有限公司',
-        others: ['码云', '马化腾', '李彦宏'],
-        visitStartTime: this.getTime(1563098400000),
-        visitEndTime: this.getTime(1563105600000)
-      }]
     }
-    
   },
   methods: {
     getTime (e) {
@@ -82,8 +57,9 @@ export default {
 </script>
 
 <style lang="less">
-.audit {
+.card-box {
   margin: 1.3rem;
+  background: #FFFFFF;
 
   .card-header {
     height: 4.5rem;
@@ -93,34 +69,28 @@ export default {
     border-top-right-radius: 0.5rem;
     color: #FFFFFF;
 
-    // 待放行标签
-    .daifangxing {
-      background: #00A83B;
-    }
-
-    // 已放行标签
-    .yifangxing {
-      background: #ACACAC;
-      box-shadow: 0 0.1rem 0.2rem 0 rgba(112, 112, 112, 0.315);
-    }
-    // 已放行
-    .yiwancheng {
-      text-decoration: line-through;
-      color: #C2C2C2;
-    }
-
-
-    p {
+    .tag {
       display: inline-block;
-      margin: 0;
       width: 5rem;
-      height: 2rem;
-      background: #FF0000;
-      box-shadow: 0 0.1rem 0.2rem 0 rgba(204,151,31,0.75);
-      border-radius: 0 0 0.5rem 0.5rem;
+      line-height: 2rem;
+      border-radius: 0 0 8px 8px;
       text-align: center;
-      margin-left: 2rem;
-      font-size: 1.3rem;
+      margin-left: 20px;
+      font-size: 12px;
+      // 待审核标签
+      &.audit-tag {
+        background: #FF0000;
+        box-shadow: 0 1px 2px 0 rgba(204,151,31,0.75);
+      }
+      // 待放行标签
+      &.pass-tag {
+        background: #00A83B;
+        box-shadow: 0 1px 2px 0 rgba(204,151,31,0.75);
+      }
+      // 已放行标签
+      &.over-tag {
+        background: #989898;
+      }
     }
 
     a {
@@ -135,69 +105,68 @@ export default {
       text-decoration: none;
       color: #FF4F00;
       margin: 1.3rem 1.5rem 0 0;
+      &.over {
+        text-decoration: line-through;
+        color: #C2C2C2;
+      }
     }
   }
 
-  .content-box {
+  .card-content {
     border: 1px solid #DDDDDD;
     padding: 1rem;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
 
-    .content {
+    // 已放行
+    &.over-box {
+      color: #c2c2c2;
+      .appoint-info {
+        .appoint-icon {
+          background-color: #dfdfdf;
+        }
+        .appoint-name {
+          color: #c2c2c2;
+        }
+        .appoint-desc {
+          color: #c2c2c2;
+          &.time {
+            color: #c2c2c2;
+          }
+        }
+      }
+    }
+    .appoint-info {
       margin-top: 0.5rem;
       display: flex;
       border-bottom: 1px solid #DDDDDD;
-      justify-content: space-between;
-
-      // 已放行
-      .fulfill-box {
-        color: #c2c2c2;
-
+      .appoint-icon {
+        flex-shrink: 0;
+        width: 1.7rem;
+        height: 1.7rem;
+        background: #F6CD80;
+        border-radius: 50%;
+        margin-bottom: 2px;
       }
-
-      .mess {
-        display: flex;
-        
-        .img-backgro {
-          width: 1.7rem;
-          height: 1.7rem;
-          background: #F6CD80;
-          border-radius: 50%;
-          margin-bottom: 2px;
+      .appoint-name {
+        flex-shrink: 0;
+        margin-left: 5px;
+        color: #C6AA67;
+      }
+      .appoint-desc {
+        flex-grow: 1;
+        text-align: right;
+        color: #333333;
+        &.user {
+          font-weight: bold;
+          font-size: 1.5rem;
         }
-
-        .fulfill-img {
-          background: #C2C2C2;
+        &.time {
+          color: #FF0000;
         }
-
-        p {
-          margin-left: 5px; 
-        }
-      
-      }
-
-      
-
-      .fulfill-text {
-        color: #C2C2C2;
-      }
-
-      p {
-        margin: 0;
-      }
-
-      .name {
-        font-weight: bold;
-        font-size: 1.5rem;
-      }
-
-      .time {
-        color: #FF0000;
       }
     }
   }
-
 }
 </style>
 

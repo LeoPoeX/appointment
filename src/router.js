@@ -22,5 +22,25 @@ export default new Router({
       name: "pass",
       component: () => import("./components/Pass.vue")
     },
+    {
+      path: "/appoinsuccess",
+      name: "appoinsuccess",
+      component: () => import("./components/appoinSuccess.vue")
+    },
+    {
+      path: "/auditdetails",
+      name: "auditdetails",
+      component: () => import("./views/auditDetails.vue")
+    },
+    {
+      path: "/passdetails",
+      name: "passdetails",
+      component: () => import("./views/passDetails.vue")
+    },
+    {
+      path: "/overdetails",
+      name: "overdetails",
+      component: () => import("./views/overDetails.vue")
+    },
   ]
 });

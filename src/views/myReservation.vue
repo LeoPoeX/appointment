@@ -1,10 +1,8 @@
 <template>
   <div class="box">
-    <div class="title">
-      <img class="arrow" src="../assets/images/left-arrow.png" />
-      <p>我的预约</p>
-    </div>
-
+    
+    <!-- 头部 -->
+    <Header title="我的预约"/>
 
     <!-- tabs -->
     <mt-navbar class="tab" v-model="selected">
@@ -16,21 +14,19 @@
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
         <!-- 待审核内容 -->
-          <Card />
-
-
+        <router-link to="/auditdetails"><Card :list="waitAuditList" status="audit" /></router-link>
       </mt-tab-container-item>
 
       <mt-tab-container-item id="2">
         <!-- 待放行内容 -->
-        <Card />
+        <router-link to="/passdetails"><Card :list="passList" status="pass" /></router-link>
 
       </mt-tab-container-item>
 
       <mt-tab-container-item id="3">
         
         <!-- 已放行内容 -->
-        <Card />
+        <router-link to="/overdetails"><Card :list="overList" status="over" /></router-link>
 
       </mt-tab-container-item>
     </mt-tab-container>
@@ -38,7 +34,6 @@
 
     <!-- 底部栏 -->
     <div class="bottom-column">
-      
       <router-link tag="a" to="/appointment"><img src="../assets/images/appointment.png" />我要预约</router-link>
     </div>
 
@@ -46,6 +41,7 @@
 </template>
 
 <script>
+import Header from '../components/Header';
 import Card from '../components/Card.vue';
 import utils from '../utils';
 
@@ -56,6 +52,7 @@ export default {
       selected: '1',
       waitAuditList: [{ // 待审核列表
         id: 1,
+        state: '待审核',
         name: '王长阳1',
         company: '昆山XXXXX精密仪器股份有限公司',
         others: ['码云', '马化腾', '李彦宏'],
@@ -63,6 +60,7 @@ export default {
         visitEndTime: this.getTime(1563105600000)
       }, {
         id: 2,
+        state: '待审核',
         name: '王长阳2',
         company: '昆山XXXXX精密仪器股份有限公司',
         others: ['码云', '马化腾', '李彦宏'],
@@ -70,15 +68,35 @@ export default {
         visitEndTime: this.getTime(1563105600000)
       }, {
         id: 3,
+        state: '待审核',
         name: '王长阳3',
         company: '昆山XXXXX精密仪器股份有限公司',
         others: ['码云', '马化腾', '李彦宏'],
+        visitStartTime: this.getTime(1563098400000),
+        visitEndTime: this.getTime(1563105600000)
+      }],
+      passList: [{  //待放行列表
+        id: 1,
+        state: '待放行',
+        name: '小明1',
+        company: 'XXXXX',
+        others: ['张三', '李四'],
+        visitStartTime: this.getTime(1563098400000),
+        visitEndTime: this.getTime(1563105600000)
+      }],
+      overList: [{  //已放行列表
+        id: 1,
+        state: '已放行',
+        name: '小红1',
+        company: 'XXXXX',
+        others: ['网名1'],
         visitStartTime: this.getTime(1563098400000),
         visitEndTime: this.getTime(1563105600000)
       }]
     }
   },
   components: {
+    Header,
     Card
   },
   methods: {
@@ -127,16 +145,16 @@ export default {
   // tab
   .tab {
     margin: 0 1.5rem;
-
+    
+    a {
+      color: #232323;
+    }
+    
     .tab-til {
       font-size: 2rem;
     }
-    
   }
 
-  .audit {
-    margin: 1.3rem;
-  }
   // 底部栏
   .bottom-column {
     position: fixed;
@@ -158,7 +176,6 @@ export default {
       align-content: center;
       text-decoration: none;
       color: #232323;
-
       img {
         width: 1.5rem;
         height: 1.5rem;
@@ -166,10 +183,7 @@ export default {
         margin-top: 1rem;
       }
     }
-    
   }
-
-
 }
 
 </style>

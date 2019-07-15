@@ -1,31 +1,36 @@
 <template>
   <div class="pass-box">
     <!-- 头部 -->
-    <mt-header title="通行证" class="pass-header">
-      <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
+    <Header title="通行证"/>
 
     <!-- 内容 -->
     <div class="pass-content">
-      <router-link to="/"><img class="close" src="../assets/images/close.png" /></router-link>
-      <div class="content-header">
-        <p class="Booking-details">预约单详情</p>
-        <div class="odd-number">
+      <router-link to="/"><img class="pass-close" src="../assets/images/close.png" /></router-link>
+      <div class="pass-content-header">
+        <p class="pass-details">预约单详情</p>
+        <div class="pass-odd">
           <p>单号</p>
           <p>190000145</p>
         </div>
       </div>
 
-      <div class="content-remain">
+      <div class="pass-remain">
         <!-- 二维码 -->
-        <div class="QR-code">
-          <div class="QR-img"></div>
+        <div class="pass-QR">
+          <div class="pass-QRimg"></div>
         </div>
 
-        <div class="footer">
-          
+        <div class="pass-footer">
+          <div class="pass-footbox">
+            <p class="pass-footcont">来访人</p>
+            <p class="pass-footcont">随行人</p>
+            <p class="pass-footcont">手机号</p>
+          </div>
+          <div class="pass-footbox">
+            <p class="pass-footcont">矮大紧</p>
+            <p class="pass-footcont">4人</p>
+            <p class="pass-footcont">15721064851</p>
+          </div>
         </div>
 
       </div>
@@ -37,8 +42,12 @@
 </template>
 
 <script>
+import Header from '../components/Header'
 export default {
   name: 'Pass',
+  components: {
+    Header
+  }
 }
 </script>
 
@@ -61,14 +70,14 @@ export default {
   .pass-content {
     margin: 1.3rem;
 
-    .close {
+    .pass-close {
       display: block; 
       float: right; 
       width: 1.5rem;
       height: 1.5rem;
     }
 
-    .content-header {
+    .pass-content-header {
       background: #F9D18C;
       padding: 0.6rem 1rem 0.6rem 2rem;
       display: flex;
@@ -77,31 +86,53 @@ export default {
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
 
-
-      .Booking-details {
+      .pass-details {
         color: #835B02;
         line-height: 36px;
         font-size: 1.5rem;
       }
 
-      .odd-number {
+      .pass-odd {
         text-align: right;
         color: #815900;
       }
     }
 
-    .content-remain {
+    .pass-remain {
+      background: #FFFFFF;
       border-bottom-left-radius: 8px;
       border-bottom-right-radius: 8px;
 
-      .QR-code {
-        background: #FFFFFF;
+      .pass-QR {
         padding: 45px 25%;
+        text-align: center;
 
-        .QR-img {
-          background: #000;
+        .pass-QRimg {
+          display: inline-block;
+          background: #1979F2;
           width: 160px;
           height: 160px;
+        }
+      }
+
+      .pass-footer {
+        padding: 12px 11px;
+
+        .pass-footbox {
+          background: #FFFAF5;
+          padding: 10px;
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 1px solid #DDDDDD;
+
+          &:last-child {
+            border-bottom: 0;
+          }
+
+          .pass-footcont {
+            width: 30%;
+            text-align: center;
+          }
         }
       }
 

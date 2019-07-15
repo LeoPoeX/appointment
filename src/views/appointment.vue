@@ -2,11 +2,7 @@
   <div class="index-box">
 
     <!-- 头部 -->
-    <mt-header title="预 约" class="header">
-      <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
+    <Header title="预 约"/>
 
     <!-- 预约详情 -->
     <div class="details">
@@ -112,7 +108,7 @@
     </div>
 
     <div class="submit">
-      <button>立即提交</button>
+      <router-link to="/appoinsuccess"><button>立即提交</button></router-link>
     </div>
 
   </div>
@@ -120,8 +116,12 @@
 
 
 <script>
+import Header from "../components/Header"
 export default {
-  name: 'Appointment'
+  name: 'Appointment',
+  components: {
+    Header
+  }
 }
 </script>
 
@@ -129,16 +129,6 @@ export default {
 <style lang="less">
 .index-box {
   padding-top: 40px;
-
-  .header {
-    background-image: linear-gradient(-180deg, #FFFFFF 0%, #FFFDF8 100%);
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.12); 
-    color: #333333; 
-    font-size: 1.7rem;
-    position: fixed;
-    top: 0;
-    width: 100%;
-  }
 
   .details {
     margin: 2rem 1.3rem 1.3rem 1.3rem;
