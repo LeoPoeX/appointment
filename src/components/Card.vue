@@ -67,16 +67,17 @@ export default {
     background: #fa7f0c;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
-    color: #FFFFFF;
 
     .tag {
+      width: 48px;
+      height: 20px;
+      line-height: 20px;
+      border-radius: 0 0 4px 4px;
+      text-align: center;
+      color: #FFFFFF;
       display: inline-block;
-      width: 5rem;
-      line-height: 2rem;
-      border-radius: 0 0 8px 8px;
       text-align: center;
       margin-left: 20px;
-      font-size: 12px;
       // 待审核标签
       &.audit-tag {
         background: #FF0000;
@@ -115,6 +116,7 @@ export default {
   .card-content {
     border: 1px solid #DDDDDD;
     padding: 1rem;
+    background: #fff;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
 

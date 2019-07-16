@@ -3,7 +3,7 @@
     <diV class="details-content">
       <!-- 到达时间和离开时间 -->
       <div class="details-timeBox">
-        <span class="details-tag">待审核</span>
+        <span :class="`details-tag ${status}-tag`">待审核</span>
         <div class="details-time">
           <p class="details-timeDesc">到达时间</p>
           <p class="details-date">2019/07/12</p>
@@ -75,12 +75,65 @@
       </div>
 
     </diV>
+
+    <!-- 随员详情 -->
+    <div class="details-content">
+      <div class="details-rettitle">
+        随员详情
+      </div>
+      <!-- 随员信息 -->
+      <div class="details-retInfo" v-for="( item, id ) in list" :key="id">
+        <!-- 编号 -->
+        <div class="details-retnum"><span class="details-id">{{ item.id }}</span></div>
+        <!-- 信息内容 -->
+        <div class="details-retDesc">
+
+          <div class="details-row">
+            <div class="details-desc">
+             <div class="details-icon"><img /></div>
+              <span class="details-retname">{{ item.name }}</span>
+            </div>
+            <div class="details-desc">
+              <div class="details-icon"><img /></div>
+              <span class="details-retname">{{ item.tel }}</span>
+            </div>
+          </div>
+
+          <div class="details-row">
+            <div class="details-desc">
+             <div class="details-icon"><img /></div>
+              <span class="details-retname">{{ item.post }}</span>
+            </div>
+            <div class="details-desc">
+              <div class="details-icon"><img /></div>
+              <span class="details-retname">{{ item.platenum }}</span>
+            </div>
+          </div>
+
+          <div class="details-row">
+            <div class="details-desc details-add">
+              <div class="details-icon"><img /></div>
+              <span class="details-retname">{{ item.add }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </template>
 
 <script>
 export default {
-  
+  name: 'Details',
+  props: {
+    list: Array,
+    status: { // 'audit', 'pass', 'over'
+      type: String,
+      default: 'audit'
+    }
+  }
 }
 </script>
 
@@ -92,6 +145,7 @@ export default {
     background: #FFFFFF;
     border: 0.5px solid #D6D6D6;
     border-radius: 8px;
+    margin-top: 10px;
     // 到达时间和离开时间
     .details-timeBox {
       padding: 24px 24px 15px 24px;
@@ -99,9 +153,7 @@ export default {
       position: relative;
       align-content: center;
       justify-content: space-around;
-      background: #FFFFFF;
       box-shadow: 0 8px 15px 0 rgba(199,199,199,0.50);
-      border-radius: 8px 8px 0 0;
       .details-tag {
         width: 48px;
         height: 20px;
@@ -109,10 +161,21 @@ export default {
         border-radius: 0 0 4px 4px;
         text-align: center;
         color: #FFFFFF;
-        background: #FF0000;
         position: absolute;
         top: 0;
         right: 10px;
+        // 待审核标签
+        &.audit-tag {
+          background: #FF0000;
+        }
+        // 待放行标签
+        &.pass-tag {
+          background: #00A83B;
+        }
+        // 已放行标签
+        &.over-tag {
+          background: #989898;
+        }
       }
       .details-symbol {
         line-height: 75px;
@@ -140,7 +203,6 @@ export default {
     // 预约详情
     .details-info {
       padding: 20px 15px;
-      border-radius:0 0 8px 8px;
       .details-oddnum {
         line-height: 30px;
         background: #FFFAF5;
@@ -172,6 +234,68 @@ export default {
         height: 1px;
         margin-top: 15px;
         background: #D8D8D8;
+      }
+    }
+    // 随员详情
+    .details-rettitle {
+      line-height: 41px;
+      padding-left: 10px;
+      font-size: 14px;
+      color: #232323;
+    }
+
+    .details-retInfo {
+      border-top: 1px solid  #EFB13E;
+      position: relative;
+      // 编号
+      .details-retnum {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        transform: rotate(-270deg);
+        background-image: linear-gradient(-217deg, #F7DE74 0%, #EEAC38 100%);
+        border-radius: 0 5px 5px 0;
+        top: 0;
+        left: 11px;
+        .details-id {
+          transform: rotate(270deg);
+          display: inline-block;
+          position: absolute;
+          top: 0;
+          left: 4px;
+          color: #fff;
+        }
+      }
+      // 信息内容
+      .details-retDesc {
+        padding-left: 40px;
+        padding-bottom: 12px;
+        .details-row {
+          display: flex;
+          margin-top: 10px;
+          &:first-child {
+            margin-top: 6px;
+          }
+          .details-desc {
+            width: 50%;
+            display: flex;
+            &.details-add {
+              width: 100%;
+            }
+            .details-icon{
+              width: 13px;
+              height: 13px;
+              background: #F6CD80;
+              border-radius: 50%;
+              margin-top: 2px;
+            }
+            .details-retname {
+              color: #999999;
+              margin-left: 5px;
+              font-size: 13px;
+            }
+          }
+        }
       }
     }
   }
