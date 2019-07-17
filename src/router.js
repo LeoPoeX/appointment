@@ -25,7 +25,7 @@ export default new Router({
     {
       path: "/appoinsuccess",
       name: "appoinsuccess",
-      component: () => import("./components/appoinSuccess.vue")
+      component: () => import("./components/AppoinSuccess.vue")
     },
     {
       path: "/auditdetails",

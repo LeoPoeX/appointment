@@ -2,7 +2,7 @@
   <div>
     <div class="card-box" v-for="(item, i) in list" :key="i">
       <div class="card-header">
-        <span :class="`tag ${status}-tag`">{{ item.state }}</span>
+        <Tag :status="status"/>
         <router-link tag="a" to="/pass" :class="status">查看通行证</router-link>
       </div>
       
@@ -18,12 +18,12 @@
           <p class="appoint-desc">{{ item.company }}</p>
         </div>
         <div class="appoint-info">
-          <img class="appoint-icon" />
+          <img class="appoint-icon" src="../assets/images/tel.png" />
           <span class="appoint-name">随行：</span>
           <p class="appoint-desc">{{ item.others[0] }} / {{ item.others[1] }} / {{ item.others[2] }} </p>
         </div>
         <div class="appoint-info">
-          <img class="appoint-icon" />
+          <img class="appoint-icon" src="../assets/images/car.png" />
           <span class="appoint-name">来访日期：</span>
           <p class="appoint-desc time">{{ item.visitStartTime }}～{{ item.visitEndTime }}</p>
         </div>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import Tag from '../components/Tag';
 import utils from '../utils';
 export default {
   name: 'Card',
@@ -47,11 +48,14 @@ export default {
     return {
     }
   },
+  components: {
+    Tag
+  },
   methods: {
     getTime (e) {
       let time = utils.parseTime(e, 'yyyy-MM-dd hh:mm');
       return time;
-    }
+    },
   }
 }
 </script>
@@ -69,32 +73,6 @@ export default {
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
 
-    .tag {
-      width: 48px;
-      height: 20px;
-      line-height: 20px;
-      border-radius: 0 0 4px 4px;
-      text-align: center;
-      color: #FFFFFF;
-      display: inline-block;
-      text-align: center;
-      margin-left: 20px;
-      // 待审核标签
-      &.audit-tag {
-        background: #FF0000;
-        box-shadow: 0 1px 2px 0 rgba(204,151,31,0.75);
-      }
-      // 待放行标签
-      &.pass-tag {
-        background: #00A83B;
-        box-shadow: 0 1px 2px 0 rgba(204,151,31,0.75);
-      }
-      // 已放行标签
-      &.over-tag {
-        background: #989898;
-      }
-    }
-
     a {
       display: block;
       width: 6rem;
@@ -110,6 +88,7 @@ export default {
       &.over {
         text-decoration: line-through;
         color: #C2C2C2;
+        pointer-events:none;
       }
     }
   }
@@ -125,9 +104,6 @@ export default {
     &.over-box {
       color: #c2c2c2;
       .appoint-info {
-        .appoint-icon {
-          background-color: #dfdfdf;
-        }
         .appoint-name {
           color: #c2c2c2;
         }
@@ -147,7 +123,7 @@ export default {
         flex-shrink: 0;
         width: 1.7rem;
         height: 1.7rem;
-        background: #F6CD80;
+        background: #ffffff;
         border-radius: 50%;
         margin-bottom: 2px;
       }

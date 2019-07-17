@@ -5,12 +5,6 @@ import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
-import VModal from 'vue-js-modal'
-
-Vue.use(VModal, {
-  dialog: true,
-  dynamic: true
-})
 
 Vue.use(iView);
 Vue.use(MintUI)

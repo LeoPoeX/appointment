@@ -20,8 +20,13 @@
         </div>
 
         <div class="GoTime">
-          <DatePicker class="time" type="datetime" placeholder="到达（必填）"></DatePicker>
+          <div>
+            <input class="time" type="text" placeholder="到达（必填）" />
+            <img class="appoin-icon" src="../assets/images/calendar.png" />
+          </div>
+          
           <input class="time" type="text" placeholder="离开（必填）" />
+          <img class="appoin-leaveicon" src="../assets/images/calendar.png" />
         </div>
 
         <div class="receiver">
@@ -119,6 +124,11 @@
 import Header from "../components/Header"
 export default {
   name: 'Appointment',
+  daata () {
+    return {
+
+    }
+  },
   components: {
     Header
   }
@@ -168,9 +178,9 @@ export default {
 
       .GoTime {
         display: flex;
+        position: relative;
 
         .time {
-          width: 49%;
           line-height: 3rem;
           border: 0;
           background: #FFFAF5;
@@ -181,6 +191,20 @@ export default {
           &:first-child {
             margin-left: 0;
           }
+        }
+        .appoin-icon {
+          width: 13px;
+          position: absolute;
+          z-index: 3;
+          top:24px;
+          left: 120px;
+        }
+        .appoin-leaveicon {
+          width: 13px;
+          position: absolute;
+          z-index: 3;
+          top:24px;
+          right: 13px;
         }
       }
 

@@ -4,7 +4,7 @@
     <Header title="待放行申请"/>
 
     <!-- 内容 -->
-    <Details :list="passList"  status="pass" />
+    <Details :list="passList" status="pass" />
 
   </div>
 </template>

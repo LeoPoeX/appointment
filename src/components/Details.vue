@@ -3,7 +3,7 @@
     <diV class="details-content">
       <!-- 到达时间和离开时间 -->
       <div class="details-timeBox">
-        <span :class="`details-tag ${status}-tag`">待审核</span>
+        <Tag :status="status" class="details-tag" />
         <div class="details-time">
           <p class="details-timeDesc">到达时间</p>
           <p class="details-date">2019/07/12</p>
@@ -125,6 +125,7 @@
 </template>
 
 <script>
+import Tag from '@/components/Tag';
 export default {
   name: 'Details',
   props: {
@@ -133,6 +134,9 @@ export default {
       type: String,
       default: 'audit'
     }
+  },
+  components: {
+    Tag
   }
 }
 </script>
@@ -155,27 +159,10 @@ export default {
       justify-content: space-around;
       box-shadow: 0 8px 15px 0 rgba(199,199,199,0.50);
       .details-tag {
-        width: 48px;
-        height: 20px;
-        line-height: 20px;
-        border-radius: 0 0 4px 4px;
-        text-align: center;
-        color: #FFFFFF;
         position: absolute;
         top: 0;
         right: 10px;
-        // 待审核标签
-        &.audit-tag {
-          background: #FF0000;
-        }
-        // 待放行标签
-        &.pass-tag {
-          background: #00A83B;
-        }
-        // 已放行标签
-        &.over-tag {
-          background: #989898;
-        }
+        margin-left: 0;
       }
       .details-symbol {
         line-height: 75px;

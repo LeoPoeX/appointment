@@ -4,7 +4,7 @@
     <Header title="待审核申请"/>
 
     <!-- 内容 -->
-    <Details :list="waitAuditList"  status="audit" />
+    <Details :list="waitAuditList" status="audit" />
 
     <!-- 尾部 -->
     <footer class="audit-audit">
@@ -24,33 +24,18 @@
     </footer>
 
     <!-- 通过弹窗 -->
-    <div class="modal-backdrop" v-if="viaShow" >
-      <div class="modal-iconback modal-via">
-        <img class="modal-icon" src="../assets/images/done_mini.png" />
-      </div>
-      <div class="modal-error">
-        <div>预约单号：YY190000145</div>
-        <div>审核通过</div>
-      </div>
-    </div>
+    <Modal v-if="viaShow" :list="viaList" status="via" />
 
     <!-- 拒绝弹窗 -->
-    <div class="modal-backdrop" v-if="isShow" >
-      <div class="modal-iconback">
-        <img class="modal-icon" src="../assets/images/close_mini.png" />
-      </div>
-      <div class="modal-error">
-        <div>预约单号：YY190000145</div>
-        <div>审核不通过</div>
-      </div>
-    </div>
+    <Modal v-if="isShow" :list="errorList" status="error" />
 
   </div>
 </template>
 
 <script>
 import Header from '../components/Header';
-import Details from '../components/Details.vue';
+import Details from '../components/Details';
+import Modal from '../components/Modal';
 export default {
   data () {
     return {
@@ -89,12 +74,23 @@ export default {
           platenum: '苏E 38A01',
           add: '昆山XXXXX精密仪器股份有限公司'
         },
-      ]
+      ],
+      // 通过弹窗显示
+      viaList: [{
+        oddnum: '预约单号：YY190000145',
+        YorN: '审核通过',
+      }],
+      // 拒绝弹窗显示
+      errorList: [{
+        oddnum: '预约单号：YY190000145',
+        YorN: '审核不通过',
+      }]
     }
   },
   components: {
     Header,
-    Details
+    Details,
+    Modal
   },
   methods: {
     viaModal () {
@@ -153,43 +149,7 @@ export default {
 
   }
 
-  .modal-backdrop {
-    position: fixed; 
-    top: 0; 
-    right: 0; 
-    bottom: 0; 
-    left: 0; 
-    background-color: rgba(0,0,0,.5);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    .modal-iconback {
-      background: #ff0000;
-      border-radius: 50%;
-      width: 71px;
-      height: 71px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      &.modal-via {
-        background: #00A83B;
-      }
-      .modal-icon {
-        width: 23px;
-        height: 23px;
-      }
-    }
-    .modal-error {
-      margin-top: 15px;
-      color: #FFEC00;
-      font-size: 16px;
-      text-align: center;
-    }
-  }
+  
 }
 </style>
 

@@ -4,7 +4,7 @@
     <Header title="已完成申请"/>
 
     <!-- 内容 -->
-    <Details :list="overList"  status="over" />
+    <Details :list="overList" status="over" />
 
   </div>
 </template>

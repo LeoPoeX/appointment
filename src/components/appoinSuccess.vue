@@ -58,9 +58,13 @@ export default {
 
 <style lang="less">
 .appoinsuccess-box {
-  padding-top: 40px;
   background: #616161;
+  width: 100%;
   height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: table;
 
   .appoinsuccess-header{
     background-image: linear-gradient(-180deg, #FFFFFF 0%, #FFFDF8 100%);
@@ -73,7 +77,9 @@ export default {
   }
 
   .appoinsuccess-content {
-    margin: 1.3rem;
+    padding: 0 15px;
+    display: table-cell;
+    vertical-align: middle;
 
     .appoinsuccess-close {
       display: block; 

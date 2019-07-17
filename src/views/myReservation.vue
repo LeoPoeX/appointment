@@ -14,19 +14,19 @@
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
         <!-- 待审核内容 -->
-        <router-link to="/auditdetails"><Card :list="waitAuditList" status="audit" /></router-link>
+        <router-link to="/auditdetails"><List :list="waitAuditList" status="audit" /></router-link>
       </mt-tab-container-item>
 
       <mt-tab-container-item id="2">
         <!-- 待放行内容 -->
-        <router-link to="/passdetails"><Card :list="passList" status="pass" /></router-link>
+        <router-link to="/passdetails"><List :list="passList" status="pass" /></router-link>
 
       </mt-tab-container-item>
 
       <mt-tab-container-item id="3">
         
         <!-- 已放行内容 -->
-        <router-link to="/overdetails"><Card :list="overList" status="over" /></router-link>
+        <router-link to="/overdetails"><List :list="overList" status="over" /></router-link>
 
       </mt-tab-container-item>
     </mt-tab-container>
@@ -42,7 +42,7 @@
 
 <script>
 import Header from '../components/Header';
-import Card from '../components/Card.vue';
+import List from '../components/List.vue';
 import utils from '../utils';
 
 export default {
@@ -97,7 +97,7 @@ export default {
   },
   components: {
     Header,
-    Card
+    List
   },
   methods: {
     getTime (e) {
