@@ -8,22 +8,22 @@
       
       <div :class="`card-content ${status==='over' ? 'over-box' : ''}`">
         <div class="appoint-info">
-          <span class="appoint-icon"><img /></span>
+          <img class="appoint-icon" src="../assets/images/name.png" />
           <span class="appoint-name">姓名：</span>
           <p class="appoint-desc user">{{ item.name }}</p>
         </div>
         <div class="appoint-info">
-          <span class="appoint-icon"><img /></span>
+          <img class="appoint-icon" src="../assets/images/firm.png" />
           <span class="appoint-name">单位：</span>
           <p class="appoint-desc">{{ item.company }}</p>
         </div>
         <div class="appoint-info">
-          <span class="appoint-icon"><img /></span>
+          <img class="appoint-icon" />
           <span class="appoint-name">随行：</span>
           <p class="appoint-desc">{{ item.others[0] }} / {{ item.others[1] }} / {{ item.others[2] }} </p>
         </div>
         <div class="appoint-info">
-          <span class="appoint-icon"><img /></span>
+          <img class="appoint-icon" />
           <span class="appoint-name">来访日期：</span>
           <p class="appoint-desc time">{{ item.visitStartTime }}～{{ item.visitEndTime }}</p>
         </div>
@@ -62,9 +62,10 @@ export default {
   background: #FFFFFF;
 
   .card-header {
-    height: 4.5rem;
+    height: 45px;
     width: 100%;
-    background: #fa7f0c;
+    background: url("../assets/images/vip.png") no-repeat;
+    background-size: 100% 45px; 
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
 

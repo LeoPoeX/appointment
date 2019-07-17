@@ -90,29 +90,29 @@
 
           <div class="details-row">
             <div class="details-desc">
-             <div class="details-icon"><img /></div>
+             <img class="details-icon" src="../assets/images/name.png" />
               <span class="details-retname">{{ item.name }}</span>
             </div>
             <div class="details-desc">
-              <div class="details-icon"><img /></div>
+              <img class="details-icon" src="../assets/images/tel.png" />
               <span class="details-retname">{{ item.tel }}</span>
             </div>
           </div>
 
           <div class="details-row">
             <div class="details-desc">
-             <div class="details-icon"><img /></div>
+              <img class="details-icon" src="../assets/images/post.png" />
               <span class="details-retname">{{ item.post }}</span>
             </div>
             <div class="details-desc">
-              <div class="details-icon"><img /></div>
+              <img class="details-icon" src="../assets/images/car.png" />
               <span class="details-retname">{{ item.platenum }}</span>
             </div>
           </div>
 
           <div class="details-row">
             <div class="details-desc details-add">
-              <div class="details-icon"><img /></div>
+              <img class="details-icon" src="../assets/images/firm.png" />
               <span class="details-retname">{{ item.add }}</span>
             </div>
           </div>
@@ -285,7 +285,7 @@ export default {
             .details-icon{
               width: 13px;
               height: 13px;
-              background: #F6CD80;
+              background: #ffffff;
               border-radius: 50%;
               margin-top: 2px;
             }

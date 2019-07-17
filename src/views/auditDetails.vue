@@ -51,7 +51,6 @@
 <script>
 import Header from '../components/Header';
 import Details from '../components/Details.vue';
-import utils from '../utils';
 export default {
   data () {
     return {

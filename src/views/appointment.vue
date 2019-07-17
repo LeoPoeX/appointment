@@ -30,27 +30,27 @@
         </div>
 
         <div class="content">
-          <div class="img-backgro"><img /></div>
+          <img class="img-backgro" src="../assets/images/name.png" />
           <input type="text" placeholder="来访姓名（必填）" />
         </div>
 
         <div class="content">
-          <div class="img-backgro"><img /></div>
+          <img class="img-backgro" src="../assets/images/tel.png" />
           <input type="text" placeholder="电话（必填）" />
         </div>
 
         <div class="content">
-          <div class="img-backgro"><img /></div>
+          <img class="img-backgro" src="../assets/images/post.png" />
           <input type="text" placeholder="职位（必填）" />
         </div>
 
         <div class="content">
-          <div class="img-backgro"><img /></div>
+          <img  class="img-backgro" src="../assets/images/firm.png" />
           <input type="text" placeholder="公司（必填）" />
         </div>
 
         <div class="content">
-          <div class="img-backgro"><img /></div>
+          <img class="img-backgro" src="../assets/images/car.png" />
           <input type="text" placeholder="车牌（选填）" />
         </div>
 
@@ -75,27 +75,27 @@
       <div class="visitor">
 
         <div class="content">
-          <div class="img-backgro"><img /></div>
+          <img class="img-backgro" src="../assets/images/name.png" />
           <input type="text" placeholder="姓名（必填）" />
         </div>
 
         <div class="content">
-          <div class="img-backgro"><img /></div>
+          <img class="img-backgro" src="../assets/images/tel.png" />
           <input type="text" placeholder="电话（必填）" />
         </div>
 
         <div class="content">
-          <div class="img-backgro"><img /></div>
+          <img class="img-backgro" src="../assets/images/post.png" />
           <input type="text" placeholder="职位（必填）" />
         </div>
 
         <div class="content">
-          <div class="img-backgro"><img /></div>
+          <img  class="img-backgro" src="../assets/images/firm.png" />
           <input type="text" placeholder="公司（必填）" />
         </div>
 
         <div class="content">
-          <div class="img-backgro"><img /></div>
+          <img class="img-backgro" src="../assets/images/car.png" />
           <input type="text" placeholder="车牌（选填）" />
         </div>
 
@@ -209,7 +209,7 @@ export default {
         .img-backgro {
           width: 1.7rem;
           height: 1.7rem;
-          background: #F6CD80;
+          background: #ffffff;
           border-radius: 50%;
           margin-bottom: 5px;
         }
