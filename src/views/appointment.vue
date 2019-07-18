@@ -20,38 +20,38 @@
         </div>
 
         <div class="GoTime">
-          <div>
-            <input class="time" type="text" placeholder="到达（必填）" />
-            <img class="appoin-icon" src="../assets/images/calendar.png" />
-          </div>
-          
-          <input class="time" type="text" placeholder="离开（必填）" />
-          <img class="appoin-leaveicon" src="../assets/images/calendar.png" />
+          <DatePicker class="time" type="datetime" format="yyyy-MM-dd HH:mm" placeholder="到达（必填）" v-model="arrivetime" ></DatePicker>
+          <!-- <input class="time" type="text" placeholder="到达（必填）" v-model="arrivetime" />
+          <img class="appoin-icon" src="../assets/images/calendar.png" /> -->
+
+          <DatePicker class="time" type="datetime" format="yyyy-MM-dd HH:mm" placeholder="离开（必填）" v-model="leavetime" ></DatePicker>
+          <!-- <input class="time" type="text" placeholder="离开（必填）" v-model="leavetime" />
+          <img class="appoin-leaveicon" src="../assets/images/calendar.png" /> -->
         </div>
 
         <div class="receiver">
-          <input type="text" placeholder="接待人（必填）" />
-          <input type="text" placeholder="接待人电话（必填）" />
+          <input type="text" placeholder="接待人（必填）" v-model="recename" />
+          <input type="text" placeholder="接待人电话（必填）" v-model="recetel" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/name.png" />
-          <input type="text" placeholder="来访姓名（必填）" />
+          <input type="text" placeholder="来访姓名（必填）" v-model="name" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type="text" placeholder="电话（必填）" />
+          <input type="text" placeholder="电话（必填）" v-model="tel" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/post.png" />
-          <input type="text" placeholder="职位（必填）" />
+          <input type="text" placeholder="职位（必填）" v-model="post" />
         </div>
 
         <div class="content">
           <img  class="img-backgro" src="../assets/images/firm.png" />
-          <input type="text" placeholder="公司（必填）" />
+          <input type="text" placeholder="公司（必填）" v-model="firm" />
         </div>
 
         <div class="content">
@@ -81,22 +81,22 @@
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/name.png" />
-          <input type="text" placeholder="姓名（必填）" />
+          <input type="text" placeholder="姓名（必填）" v-model="name" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type="text" placeholder="电话（必填）" />
+          <input type="text" placeholder="电话（必填）" v-model="tel" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/post.png" />
-          <input type="text" placeholder="职位（必填）" />
+          <input type="text" placeholder="职位（必填）" v-model="post"  />
         </div>
 
         <div class="content">
           <img  class="img-backgro" src="../assets/images/firm.png" />
-          <input type="text" placeholder="公司（必填）" />
+          <input type="text" placeholder="公司（必填）" v-model="firm" />
         </div>
 
         <div class="content">
@@ -113,9 +113,9 @@
     </div>
 
     <div class="submit">
-      <router-link to="/appoinsuccess"><button>立即提交</button></router-link>
+      <button @click="submit">立即提交</button>
     </div>
-
+    <alert-tip v-if="showAlert" :showHide="showAlert" @closeTip="closeTip" :alertText="alertText"></alert-tip>
   </div>
 </template>
 
@@ -126,11 +126,51 @@ export default {
   name: 'Appointment',
   daata () {
     return {
-
+      arrivetime: '',
+      leavetime: '',
+      recename: '',
+      recetel: '',
+      name: '',
+      tel: '',
+      post: '',
+      firm: '',
+      showAlert: false, //显示提示组件
+      alertText: null, //提示的内容
     }
   },
   components: {
     Header
+  },
+  methods: {
+    submit() {
+      if (!this.arrivetime) {
+        this.$Message.error('请输入到达时间!');
+        return
+      }else if(!this.leavetime){
+        this.$Message.error('请输入离开时间!');
+        return
+      }else if(!this.recename){
+        this.$Message.error('请输入接待人姓名!');
+        return
+      }else if(!this.recetel){
+        this.$Message.error('请输入接待人电话!');
+        return
+      }else if(!this.name){
+        this.$Message.error('请输入姓名!');
+        return
+      }else if(!this.tel){
+        this.$Message.error('请输入电话!');
+        return
+      }else if(!this.post){
+        this.$Message.error('请输入职位!');
+        return
+      }else if(!this.firm){
+        this.$Message.error('请输入公司!');
+        return
+      }else {
+        this.$router.push({ path: '/appoinsuccess' });
+      }
+    }
   }
 }
 </script>
@@ -187,6 +227,11 @@ export default {
           margin-top: 1rem;
           margin-left: 2%;
           border-bottom: 0.5px solid #DEDEDE;
+
+          input {
+            border: 0;
+            background: #FFFAF5;
+          }
 
           &:first-child {
             margin-left: 0;
