@@ -221,6 +221,7 @@ export default {
         position: relative;
 
         .time {
+          width:49%;
           line-height: 3rem;
           border: 0;
           background: #FFFAF5;
