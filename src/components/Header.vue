@@ -1,5 +1,5 @@
 <template>
-  <mt-header :title="title" class="header">
+  <mt-header :title="title" class="header" @click.native="refresh">
     <router-link to="/" slot="left">
       <mt-button icon="back"></mt-button>
     </router-link>
@@ -9,7 +9,12 @@
 <script>
 export default {
   name: 'Header',
-  props: ['title']
+  props: ['title'],
+  methods: {
+    refresh:function(){
+      this.$router.go(0);
+    }
+  }
 }
 </script>
 

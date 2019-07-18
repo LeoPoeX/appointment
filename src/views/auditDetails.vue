@@ -95,9 +95,11 @@ export default {
   methods: {
     viaModal () {
       this.viaShow = true;
+      document.body.style.overflow="hidden";
     },
     errorModal () {
       this.isShow = true;
+      document.body.style.overflow="hidden";
     },
   },
 }
