@@ -1,8 +1,5 @@
 <template>
   <div class="over-box">
-    <!-- 头部 -->
-    <Header title="已完成申请"/>
-
     <!-- 内容 -->
     <Details :list="overList" status="over" />
 
@@ -10,7 +7,6 @@
 </template>
 
 <script>
-import Header from '../components/Header';
 import Details from "../components/Details.vue";
 export default {
   data () {
@@ -52,7 +48,6 @@ export default {
     }
   },
   components: {
-    Header,
     Details
   }
 }

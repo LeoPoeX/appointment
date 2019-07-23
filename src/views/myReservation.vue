@@ -1,9 +1,5 @@
 <template>
   <div class="box">
-    
-    <!-- 头部 -->
-    <Header title="我的预约"/>
-
     <!-- tabs -->
     <mt-navbar class="tab" v-model="selected">
       <mt-tab-item class="tab-til" id="1">待审核</mt-tab-item>
@@ -12,36 +8,36 @@
     </mt-navbar>
 
     <mt-tab-container v-model="selected">
+      <!-- 待审核内容 -->
       <mt-tab-container-item id="1">
-        <!-- 待审核内容 -->
-        <router-link to="/auditdetails"><List :list="waitAuditList" status="audit" /></router-link>
+        <List :list="waitAuditList" status="audit" />
       </mt-tab-container-item>
 
+      <!-- 待放行内容 -->
       <mt-tab-container-item id="2">
-        <!-- 待放行内容 -->
-        <router-link to="/passdetails"><List :list="passList" status="pass" /></router-link>
-
+        <List :list="passList" status="pass" />
       </mt-tab-container-item>
 
+      <!-- 已放行内容 -->
       <mt-tab-container-item id="3">
-        
-        <!-- 已放行内容 -->
-        <router-link to="/overdetails"><List :list="overList" status="over" /></router-link>
-
+        <List :list="overList" status="over" />
       </mt-tab-container-item>
     </mt-tab-container>
 
 
     <!-- 底部栏 -->
-    <div class="bottom-column">
-      <router-link tag="a" to="/appointment"><img src="../assets/images/appointment.png" />我要预约</router-link>
-    </div>
-
+    <router-link
+      tag="div"
+      to="/appointment"
+      class="bottom-column"
+    >
+      <img src="../assets/images/appointment.png" />我要预约
+    </router-link>
   </div>
 </template>
 
 <script>
-import Header from '../components/Header';
+import axios from 'axios';
 import List from '../components/List.vue';
 import utils from '../utils';
 
@@ -96,13 +92,24 @@ export default {
     }
   },
   components: {
-    Header,
     List
+  },
+  created() {
+    this.getList();
   },
   methods: {
     getTime (e) {
       let time = utils.parseTime(e, 'yyyy-MM-dd hh:mm');
       return time;
+    },
+    getList () {
+      axios({
+        method:'get',
+        url: '/api/employee/appointments',
+        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+      }).then(() => {
+
+      })
     }
   }
 }
@@ -111,10 +118,8 @@ export default {
 
 <style lang="less">
 .box {
-  margin: 0;
-  width: 100%;
-  margin: 3.6rem 0;
-
+  margin-bottom: 3.6rem;
+  margin-top: 50px;
   // 顶部
   .title {
   width: 100%;
@@ -144,12 +149,14 @@ export default {
 
   // tab
   .tab {
-    margin: 0 1.5rem;
-    
+    padding: 0 18px;
+    width: 90%;
+    position: fixed;
+    top: 0;
+    z-index: 10;
     a {
       color: #232323;
     }
-    
     .tab-til {
       font-size: 2rem;
     }
@@ -161,27 +168,17 @@ export default {
     bottom: 0;
     width: 100%;
     height: 3.5rem;
-    text-align: center;
-    background: #FFFFFF;
-    border-top: 0.1rem solid #DFDFDF;
-    align-content: center;
-
-    a {
-      margin: 0;
-      font-size: 1.8rem;
-      display: flex;
-      text-align: center;
-      line-height: 3.5rem;
-      justify-content: center;
-      align-content: center;
-      text-decoration: none;
-      color: #232323;
-      img {
-        width: 1.5rem;
-        height: 1.5rem;
-        margin-right: 1rem;
-        margin-top: 1rem;
-      }
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #232323;
+    background: #fff;
+    border-top: 1px solid #DFDFDF;
+    img {
+      width: 1.2rem;
+      height: 1.2rem;
+      margin-right: 1rem;
     }
   }
 }

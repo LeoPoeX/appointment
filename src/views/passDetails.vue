@@ -1,16 +1,9 @@
 <template>
-  <div class="pass-box">
-    <!-- 头部 -->
-    <Header title="待放行申请"/>
-
-    <!-- 内容 -->
-    <Details :list="passList" status="pass" />
-
-  </div>
+  <!-- 内容 -->
+  <Details :list="passList" status="pass" />
 </template>
 
 <script>
-import Header from '../components/Header';
 import Details from "../components/Details.vue";
 export default {
   data () {
@@ -52,7 +45,6 @@ export default {
     }
   },
   components: {
-    Header,
     Details
   }
 }

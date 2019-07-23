@@ -1,8 +1,5 @@
 <template>
   <div class="pass-box">
-    <!-- 头部 -->
-    <Header title="通行证"/>
-
     <!-- 内容 -->
     <div class="pass-content">
       <router-link to="/"><img class="pass-close" src="../assets/images/close.png" /></router-link>
@@ -17,7 +14,7 @@
       <div class="pass-remain">
         <!-- 二维码 -->
         <div class="pass-QR">
-          <div class="pass-QRimg"></div>
+          <canvas id="canvas"></canvas>
         </div>
 
         <div class="pass-footer">
@@ -42,11 +39,22 @@
 </template>
 
 <script>
-import Header from '../components/Header'
+import QRCode from 'qrcode'
 export default {
   name: 'Pass',
   components: {
-    Header
+    QRCode: QRCode
+  },
+  methods: {
+    useqrcode(){
+      var canvas = document.getElementById('canvas')
+      QRCode.toCanvas(canvas, 'https://blog.csdn.net/weixin_42890953/article/details/82776760', function (error) {
+        if (error) console.error(error)
+      })
+    }
+  },
+  mounted () {
+    this.useqrcode()
   }
 }
 </script>
@@ -113,9 +121,7 @@ export default {
         padding: 45px 25%;
         text-align: center;
 
-        .pass-QRimg {
-          display: inline-block;
-          background: #1979F2;
+        #canvas {
           width: 160px;
           height: 160px;
         }

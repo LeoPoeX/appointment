@@ -26,7 +26,7 @@
         </div>
         <!-- 二维码 -->
         <div class="appoinsuccess-QR">
-          <div class="appoinsuccess-QRimg"></div>
+          <canvas id="canvas"></canvas>
         </div>
 
         <div class="appoinsuccess-footer">
@@ -51,8 +51,23 @@
 </template>
 
 <script>
+import QRCode from 'qrcode'
 export default {
   name: 'appoinsuccess',
+  components: {
+    QRCode: QRCode
+  },
+  methods: {
+    useqrcode(){
+      var canvas = document.getElementById('canvas')
+      QRCode.toCanvas(canvas, 'https://blog.csdn.net/weixin_42890953/article/details/82776760', function (error) {
+        if (error) console.error(error)
+      })
+    }
+  },
+  mounted () {
+    this.useqrcode()
+  }
 }
 </script>
 
@@ -132,9 +147,7 @@ export default {
         padding: 25px 25%;
         text-align: center;
 
-        .appoinsuccess-QRimg {
-          display: inline-block;
-          background: #1979F2;
+        #canvas {
           width: 160px;
           height: 160px;
         }

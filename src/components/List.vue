@@ -3,10 +3,15 @@
     <div class="card-box" v-for="(item, i) in list" :key="i">
       <div class="card-header">
         <Tag :status="status"/>
-        <router-link tag="a" to="/pass" :class="status">查看通行证</router-link>
+        <span
+          :class="`show-permit ${status}`"
+          @click="showPermit"
+        >查看通行证</span>
       </div>
       
       <div :class="`card-content ${status==='over' ? 'over-box' : ''}`">
+        <div class="card_left_top"></div>
+        <div class="card_right_top"></div>
         <div class="appoint-info">
           <img class="appoint-icon" src="../assets/images/name.png" />
           <span class="appoint-name">姓名：</span>
@@ -56,6 +61,10 @@ export default {
       let time = utils.parseTime(e, 'yyyy-MM-dd hh:mm');
       return time;
     },
+    showPermit(e) {
+      e.stopPropagation();
+      this.$router.push({ path: '/pass' });
+    }
   }
 }
 </script>
@@ -73,7 +82,7 @@ export default {
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
 
-    a {
+    .show-permit {
       display: block;
       width: 6rem;
       line-height: 2rem;
@@ -84,7 +93,7 @@ export default {
       float: right;
       text-decoration: none;
       color: #FF4F00;
-      margin: 1.3rem 1.5rem 0 0;
+      margin: 1rem 1.5rem 0 0;
       &.over {
         text-decoration: line-through;
         color: #C2C2C2;
@@ -99,6 +108,32 @@ export default {
     background: #fff;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
+    position: relative;
+
+    .card_left_top, .card_right_top {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border: 1px solid #fff;
+        z-index: 1;
+        background: #fff;
+    }
+ 
+    .card_left_top {
+        top: -1px;
+        left: -1px;
+        border-radius: 0 0 7px 0;
+        border-bottom: 1px solid #DDDDDD;
+        border-right: 1px solid #DDDDDD;
+    }
+ 
+    .card_right_top {
+        top: -1px;
+        right: -1px;
+        border-radius: 0 0 0 7px;
+        border-bottom: 1px solid #DDDDDD;
+        border-left: 1px solid #DDDDDD;
+    }
 
     // 已放行
     &.over-box {

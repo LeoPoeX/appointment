@@ -1,9 +1,5 @@
 <template>
   <div class="index-box">
-
-    <!-- 头部 -->
-    <Header title="预 约"/>
-
     <!-- 预约详情 -->
     <div class="details">
       <div class="yuyueTitle">预约详情</div>
@@ -20,13 +16,11 @@
         </div>
 
         <div class="GoTime">
-          <DatePicker class="time" type="datetime" format="yyyy-MM-dd HH:mm" placeholder="到达（必填）" v-model="arrivetime" ></DatePicker>
-          <!-- <input class="time" type="text" placeholder="到达（必填）" v-model="arrivetime" />
-          <img class="appoin-icon" src="../assets/images/calendar.png" /> -->
+          <input class="time" type="text" placeholder="到达（必填）" v-model="arrivetime" />
+          <img class="appoin-icon" src="../assets/images/calendar.png" />
 
-          <DatePicker class="time" type="datetime" format="yyyy-MM-dd HH:mm" placeholder="离开（必填）" v-model="leavetime" ></DatePicker>
-          <!-- <input class="time" type="text" placeholder="离开（必填）" v-model="leavetime" />
-          <img class="appoin-leaveicon" src="../assets/images/calendar.png" /> -->
+          <input class="time" type="text" placeholder="离开（必填）" v-model="leavetime" />
+          <img class="appoin-leaveicon" src="../assets/images/calendar.png" />
         </div>
 
         <div class="receiver">
@@ -121,7 +115,6 @@
 
 
 <script>
-import Header from "../components/Header"
 export default {
   name: 'Appointment',
   daata () {
@@ -137,9 +130,6 @@ export default {
       showAlert: false, //显示提示组件
       alertText: null, //提示的内容
     }
-  },
-  components: {
-    Header
   },
   methods: {
     submit() {

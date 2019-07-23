@@ -1,8 +1,5 @@
 <template>
   <div class="audit-box">
-    <!-- 头部 -->
-    <Header title="待审核申请"/>
-
     <!-- 内容 -->
     <Details :list="waitAuditList" status="audit" />
 
@@ -33,7 +30,6 @@
 </template>
 
 <script>
-import Header from '../components/Header';
 import Details from '../components/Details';
 import Modal from '../components/Modal';
 export default {
@@ -88,7 +84,6 @@ export default {
     }
   },
   components: {
-    Header,
     Details,
     Modal
   },
@@ -148,10 +143,7 @@ export default {
         }
       }
     }
-
   }
-
-  
 }
 </style>
 
