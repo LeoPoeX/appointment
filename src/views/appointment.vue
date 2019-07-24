@@ -166,27 +166,12 @@ export default {
       //     this.$Message.error('提交失败!');
       //   }
       // });
-      this.$axios({
-        method:"post",
-        url:"/api/employee/appointment",
-        data:{
-          arrivetime: this.arrivetime,
-          leavetime: this.leavetime,
-          recename: this.recename,
-          recetel: this.recetel,
-          name: this.name,
-          tel: this.tel,
-          post: this.post,
-          firm: this.firm,
-          plate: this.plate,
-          reasons: this.reasons,
-          followfirm: this.followfirm,
-          followpost: this.followpost,
-          followtel: this.followtel,
-          followname: this.followname,
-        }
-      }).then(({data})=>{
-        console.log(data);
+     
+      axios({
+        method:'post',
+        url: '/api/employee/appointment',
+        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+      }).then(({data}) => {
         this.$router.push('/appointSuccess')
       })
     }

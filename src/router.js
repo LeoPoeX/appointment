@@ -32,23 +32,11 @@ const router = new Router({
       meta: { title: '预约成功' }
     },
     {
-      path: "/auditdetails",
-      name: "auditdetails",
+      path: "/details/:id",
+      name: "details",
       component: () => import("./views/auditDetails.vue"),
       meta: { title: '审核详情' }
-    },
-    {
-      path: "/passdetails",
-      name: "passdetails",
-      component: () => import("./views/passDetails.vue"),
-      meta: { title: '审核详情' }
-    },
-    {
-      path: "/overdetails",
-      name: "overdetails",
-      component: () => import("./views/overDetails.vue"),
-      meta: { title: '审核详情' }
-    },
+    }
   ]
 });
 

@@ -9,7 +9,7 @@
         >查看通行证</span>
       </div>
       
-      <div :class="`card-content ${status==='over' ? 'over-box' : ''}`" @click="showDetails">
+      <div :class="`card-content ${status==='over' ? 'over-box' : ''}`" @click="showDetails(item.id)">
         <div class="appoint-info">
           <img class="appoint-icon" src="../assets/images/name.png" />
           <span class="appoint-name">姓名：</span>
@@ -63,15 +63,10 @@ export default {
       e.stopPropagation();
       this.$router.push({ path: '/pass' });
     },
-    showDetails() {
-      if ( status = 'audit' ) {
-        this.$router.push({ path: '/auditdetails' });
-      } else if ( status = 'pass' ){
-        this.$router.push({ path: '/passdetails' });
-      } else {
-        this.$router.push({ path: '/overdetails' });
-      }
-      
+    showDetails(id) {
+      if ( !id ) return;
+      this.$router.push({ path: `/details/${id}` });
+
     }
   }
 }
