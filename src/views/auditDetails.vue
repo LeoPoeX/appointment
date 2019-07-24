@@ -94,14 +94,16 @@ export default {
   },
   methods: {
     getList () {
+      const { params } = this.$route;
+      if (!params.id) return;
+
       axios({
         method:'get',
-        url: '/api/employee/appointment/45',
+        url: `/api/employee/appointment/${params.id}`,
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
       }).then(({data}) => {
-        if ( data.length > 0) {
-          this.waitAuditList = data
-        }
+        this.waitAuditList = data
+
       })
     },
     viaModal () {

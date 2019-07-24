@@ -1,20 +1,18 @@
 <template>
   <div class="details-box">
-    <div>
+    <div v-for="( item, id ) in list" :key="id">
       <diV class="details-content">
         <!-- 到达时间和离开时间 -->
         <div class="details-timeBox">
           <Tag :status="status" class="details-tag" />
           <div class="details-time">
             <p class="details-timeDesc">到达时间</p>
-            <p class="details-date">2019/07/12</p>
-            <p class="details-hour">09:00</p>
+            <p class="details-date">{{ item.start_time }}</p>
           </div>
           <div class="details-symbol">~</div>
           <div class="details-time">
             <p class="details-timeDesc">离开时间</p>
-            <p class="details-date">2019/07/12</p>
-            <p class="details-hour">15:00</p>
+            <p class="details-date">{{ item.end_time }}</p>
           </div>
         </div>
 
@@ -83,7 +81,7 @@
           随员详情
         </div>
         <!-- 随员信息 -->
-        <div class="details-retInfo" v-for="( item, id ) in list" :key="id">
+        <div class="details-retInfo">
           <!-- 编号 -->
           <div class="details-retnum"><span class="details-id">{{ item.id }}</span></div>
           <!-- 信息内容 -->

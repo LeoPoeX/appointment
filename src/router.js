@@ -35,7 +35,7 @@ const router = new Router({
       path: "/details/:id",
       name: "details",
       component: () => import("./views/auditDetails.vue"),
-      meta: { title: '审核详情' }
+      meta: { title: '审核详情' },
     }
   ]
 });

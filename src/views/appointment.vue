@@ -16,46 +16,46 @@
         </div>
 
         <div class="GoTime">
-          <input class="time" type="text" placeholder="到达（必填）" v-model="arrivetime" />
+          <input class="time" type="text" placeholder="到达（必填）" />
           <img class="appoin-icon" src="../assets/images/calendar.png" />
 
-          <input class="time" type="text" placeholder="离开（必填）" v-model="leavetime" />
+          <input class="time" type="text" placeholder="离开（必填）" />
           <img class="appoin-leaveicon" src="../assets/images/calendar.png" />
         </div>
 
         <div class="receiver">
-          <input type="text" placeholder="接待人（必填）" v-model="item.recename" />
-          <input type="text" placeholder="接待人电话（必填）" v-model="recetel" />
+          <input type="text" placeholder="接待人（必填）" />
+          <input type="text" placeholder="接待人电话（必填）" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/name.png" />
-          <input type="text" placeholder="来访姓名（必填）" v-model="name" />
+          <input type="text" placeholder="来访姓名（必填）" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type="text" placeholder="电话（必填）" v-model="tel" />
+          <input type="text" placeholder="电话（必填）" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/post.png" />
-          <input type="text" placeholder="职位（必填）" v-model="post" />
+          <input type="text" placeholder="职位（必填）" />
         </div>
 
         <div class="content">
           <img  class="img-backgro" src="../assets/images/firm.png" />
-          <input type="text" placeholder="公司（必填）" v-model="firm" />
+          <input type="text" placeholder="公司（必填）" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/car.png" />
-          <input type="text" placeholder="车牌（选填）" v-model="plate" />
+          <input type="text" placeholder="车牌（选填）" />
         </div>
 
         <div class="reasons">
           <p>选择来访事由：</p>
-          <select v-model="reasons">
+          <select >
             <option value ="供应商来访">供应商来访</option>
             <option value ="商务交流">商务交流</option>
             <option value="客户来访">客户来访</option>
@@ -75,27 +75,27 @@
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/name.png" />
-          <input type="text" placeholder="姓名（必填）" v-model="followname" />
+          <input type="text" placeholder="姓名（必填）" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type="text" placeholder="电话（必填）" v-model="followtel" />
+          <input type="text" placeholder="电话（必填）" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/post.png" />
-          <input type="text" placeholder="职位（必填）" v-model="followpost"  />
+          <input type="text" placeholder="职位（必填）" />
         </div>
 
         <div class="content">
           <img  class="img-backgro" src="../assets/images/firm.png" />
-          <input type="text" placeholder="公司（必填）" v-model="followfirm" />
+          <input type="text" placeholder="公司（必填）" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/car.png" />
-          <input type="text" placeholder="车牌（选填）" v-model="plate" />
+          <input type="text" placeholder="车牌（选填）" />
         </div>
 
       </div>
@@ -119,20 +119,7 @@ export default {
   name: 'Appointment',
   daata () {
     return {
-        arrivetime: '',
-        leavetime: '',
-        recename: '',
-        recetel: '',
-        name: '',
-        tel: '',
-        post: '',
-        firm: '',
-        plate: '',
-        reasons: '',
-        followfirm: '',
-        followpost: '',
-        followtel: '',
-        followname: '',
+      
     }
   },
   methods: {
