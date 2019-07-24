@@ -1,7 +1,7 @@
 <template>
   <div class="audit-box">
     <!-- 内容 -->
-    <Details :list="waitAuditList" status="audit" />
+    <Details :info="detailInfo" />
 
     <!-- 尾部 -->
     <footer class="audit-audit">
@@ -38,41 +38,7 @@ export default {
     return {
       viaShow: false,
       isShow: false,
-      // waitAuditList: [
-      //   {
-      //     id: 1,
-      //     name: '李鸿章',
-      //     tel: 15900000001,
-      //     post: '财务总监',
-      //     platenum: '苏E 38A01',
-      //     add: '昆山XXXXX精密仪器股份有限公司'
-      //   },
-      //   {
-      //     id: 2,
-      //     name: '张 扬',
-      //     tel: 15900000001,
-      //     post: '财务总监',
-      //     platenum: '苏E 38A01',
-      //     add: '昆山XXXXX精密仪器股份有限公司'
-      //   },
-      //   {
-      //     id: 3,
-      //     name: '张之洞',
-      //     tel: 15900000001,
-      //     post: '财务总监',
-      //     platenum: '苏E 38A01',
-      //     add: '昆山XXXXX精密仪器股份有限公司'
-      //   },
-      //   {
-      //     id: 4,
-      //     name: '左宗堂',
-      //     tel: 15900000001,
-      //     post: '财务总监',
-      //     platenum: '苏E 38A01',
-      //     add: '昆山XXXXX精密仪器股份有限公司'
-      //   },
-      // ],
-      waitAuditList: [],
+      detailInfo: {},
       // 通过弹窗显示
       viaList: [{
         oddnum: '预约单号：YY190000145',
@@ -102,8 +68,7 @@ export default {
         url: `/api/employee/appointment/${params.id}`,
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
       }).then(({data}) => {
-        this.waitAuditList = data
-
+        this.detailInfo = data
       })
     },
     viaModal () {

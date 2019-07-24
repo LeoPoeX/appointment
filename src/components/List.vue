@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="card-box" v-for="(item, i) in list" :key="i">
+    <div class="card-box" v-for="item in list" :key="item.id">
       <div class="card-header">
-        <Tag :status="status"/>
+        <Tag :state="item.state"/>
         <span
-          :class="`show-permit ${status}`"
+          :class="`show-permit ${item.state}`"
           @click="showPermit"
         >查看通行证</span>
       </div>
       
-      <div :class="`card-content ${status==='over' ? 'over-box' : ''}`" @click="showDetails(item.id)">
+      <div :class="`card-content ${item.state === 4 ? 'over-box' : ''}`" @click="showDetails(item.id)">
         <div class="appoint-info">
           <img class="appoint-icon" src="../assets/images/name.png" />
           <span class="appoint-name">姓名：</span>
@@ -41,11 +41,7 @@ import utils from '../utils';
 export default {
   name: 'Card',
   props: {
-    list: Array,
-    status: { // 'audit', 'pass', 'over'
-      type: String,
-      default: 'audit'
-    }
+    list: Array
   },
   data() {
     return {

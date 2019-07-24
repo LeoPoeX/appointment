@@ -16,7 +16,13 @@
         </div>
 
         <div class="GoTime">
-          <input class="time" type="text" placeholder="到达（必填）" />
+          <input  type="text" placeholder="到达（必填）" />
+          <mt-datetime-picker
+            class="time"
+            ref="datetime"
+            type="time"
+            v-model="pickerValue">
+          </mt-datetime-picker>
           <img class="appoin-icon" src="../assets/images/calendar.png" />
 
           <input class="time" type="text" placeholder="离开（必填）" />
@@ -124,35 +130,6 @@ export default {
   },
   methods: {
     submit() {
-      // var list = this.item
-      // this.$refs[name].validate(valid => {
-      //   if (valid) {
-      //     axios.post('/api/employee/appointment', {
-      //       arrivetime: this.item.arrivetime,
-      //       leavetime: this.item.leavetime,
-      //       recename: this.item.recename,
-      //       recetel: this.item.recetel,
-      //       name: this.item.name,
-      //       tel: this.item.tel,
-      //       post: this.item.post,
-      //       firm: this.item.firm,
-      //       plate: this.item.plate,
-      //       reasons: this.item.reasons,
-      //       followfirm: this.item.followfirm,
-      //       followpost: this.item.followpost,
-      //       followtel: this.item.followtel,
-      //       followname: this.item.followname,
-      //     })
-      //     .then(({data}) => {
-      //       if (data.success) {
-      //         this.$Message.success('提交成功!');
-      //         this.$router.push('/appointSuccess')
-      //       }
-      //     })
-      //   } else {
-      //     this.$Message.error('提交失败!');
-      //   }
-      // });
      
       axios({
         method:'post',

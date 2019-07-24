@@ -1,13 +1,30 @@
 <template>
-<span :class="`tag ${status}-tag`">{{ status === 'audit' ? '待审核' : ( status === 'pass' ? '待放行' : '已放行') }}</span>
+<span :class="`tag ${auditStatus[state].tag}-tag`">{{ auditStatus[state].name }}</span>
 </template>
 
 <script>
 export default {
-  props: {
-    status: { // 'audit', 'pass', 'over'
-      type: String,
-      default: 'audit'
+  props: ['state'],
+  data() {
+    return {
+      auditStatus: {
+        1: {
+          tag: 'audit',
+          name: '待审核'
+        },
+        2: {
+          tag: 'audit',
+          name: '拒绝'
+        },
+        3: {
+          tag: 'pass',
+          name: '待放行'
+        },
+        4: {
+          tag: 'over',
+          name: '已完成'
+        }
+      }
     }
   }
 }

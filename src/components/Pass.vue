@@ -50,8 +50,10 @@ export default {
   methods: {
     useqrcode(){
       var canvas = document.getElementById('canvas')
-      QRCode.toCanvas(canvas, 'https://blog.csdn.net/weixin_42890953/article/details/82776760', function (error) {
-        if (error) console.error(error)
+      QRCode.toCanvas(canvas, 'https://visitor-frontend.fookwood.com', function (error) {
+        if (error) {
+          console.error(error)
+        }
       })
     }
   },

@@ -10,17 +10,17 @@
     <mt-tab-container v-model="selected">
       <!-- 待审核内容 -->
       <mt-tab-container-item id="1">
-        <List :list="list" status="audit" />
+        <List :list="list" />
       </mt-tab-container-item>
 
       <!-- 待放行内容 -->
       <mt-tab-container-item id="2">
-        <List :list="list" status="pass" />
+        <List :list="list" />
       </mt-tab-container-item>
 
       <!-- 已放行内容 -->
       <mt-tab-container-item id="3">
-        <List :list="list" status="over" />
+        <List :list="list" />
       </mt-tab-container-item>
     </mt-tab-container>
 
