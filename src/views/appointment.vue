@@ -24,7 +24,7 @@
         </div>
 
         <div class="receiver">
-          <input type="text" placeholder="接待人（必填）" v-model="recename" />
+          <input type="text" placeholder="接待人（必填）" v-model="item.recename" />
           <input type="text" placeholder="接待人电话（必填）" v-model="recetel" />
         </div>
 
@@ -50,12 +50,12 @@
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/car.png" />
-          <input type="text" placeholder="车牌（选填）" />
+          <input type="text" placeholder="车牌（选填）" v-model="plate" />
         </div>
 
         <div class="reasons">
           <p>选择来访事由：</p>
-          <select>
+          <select v-model="reasons">
             <option value ="供应商来访">供应商来访</option>
             <option value ="商务交流">商务交流</option>
             <option value="客户来访">客户来访</option>
@@ -75,27 +75,27 @@
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/name.png" />
-          <input type="text" placeholder="姓名（必填）" v-model="name" />
+          <input type="text" placeholder="姓名（必填）" v-model="followname" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type="text" placeholder="电话（必填）" v-model="tel" />
+          <input type="text" placeholder="电话（必填）" v-model="followtel" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/post.png" />
-          <input type="text" placeholder="职位（必填）" v-model="post"  />
+          <input type="text" placeholder="职位（必填）" v-model="followpost"  />
         </div>
 
         <div class="content">
           <img  class="img-backgro" src="../assets/images/firm.png" />
-          <input type="text" placeholder="公司（必填）" v-model="firm" />
+          <input type="text" placeholder="公司（必填）" v-model="followfirm" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/car.png" />
-          <input type="text" placeholder="车牌（选填）" />
+          <input type="text" placeholder="车牌（选填）" v-model="plate" />
         </div>
 
       </div>
@@ -109,57 +109,86 @@
     <div class="submit">
       <button @click="submit">立即提交</button>
     </div>
-    <alert-tip v-if="showAlert" :showHide="showAlert" @closeTip="closeTip" :alertText="alertText"></alert-tip>
   </div>
 </template>
 
 
 <script>
+import axios from 'axios';
 export default {
   name: 'Appointment',
   daata () {
     return {
-      arrivetime: '',
-      leavetime: '',
-      recename: '',
-      recetel: '',
-      name: '',
-      tel: '',
-      post: '',
-      firm: '',
-      showAlert: false, //显示提示组件
-      alertText: null, //提示的内容
+        arrivetime: '',
+        leavetime: '',
+        recename: '',
+        recetel: '',
+        name: '',
+        tel: '',
+        post: '',
+        firm: '',
+        plate: '',
+        reasons: '',
+        followfirm: '',
+        followpost: '',
+        followtel: '',
+        followname: '',
     }
   },
   methods: {
     submit() {
-      if (!this.arrivetime) {
-        this.$Message.error('请输入到达时间!');
-        return
-      }else if(!this.leavetime){
-        this.$Message.error('请输入离开时间!');
-        return
-      }else if(!this.recename){
-        this.$Message.error('请输入接待人姓名!');
-        return
-      }else if(!this.recetel){
-        this.$Message.error('请输入接待人电话!');
-        return
-      }else if(!this.name){
-        this.$Message.error('请输入姓名!');
-        return
-      }else if(!this.tel){
-        this.$Message.error('请输入电话!');
-        return
-      }else if(!this.post){
-        this.$Message.error('请输入职位!');
-        return
-      }else if(!this.firm){
-        this.$Message.error('请输入公司!');
-        return
-      }else {
-        this.$router.push({ path: '/appoinsuccess' });
-      }
+      // var list = this.item
+      // this.$refs[name].validate(valid => {
+      //   if (valid) {
+      //     axios.post('/api/employee/appointment', {
+      //       arrivetime: this.item.arrivetime,
+      //       leavetime: this.item.leavetime,
+      //       recename: this.item.recename,
+      //       recetel: this.item.recetel,
+      //       name: this.item.name,
+      //       tel: this.item.tel,
+      //       post: this.item.post,
+      //       firm: this.item.firm,
+      //       plate: this.item.plate,
+      //       reasons: this.item.reasons,
+      //       followfirm: this.item.followfirm,
+      //       followpost: this.item.followpost,
+      //       followtel: this.item.followtel,
+      //       followname: this.item.followname,
+      //     })
+      //     .then(({data}) => {
+      //       if (data.success) {
+      //         this.$Message.success('提交成功!');
+      //         this.$router.push('/appointSuccess')
+      //       }
+      //     })
+      //   } else {
+      //     this.$Message.error('提交失败!');
+      //   }
+      // });
+      this.$axios({
+        method:"post",
+        url:"/api/employee/appointment",
+        data:{
+          arrivetime: this.arrivetime,
+          leavetime: this.leavetime,
+          recename: this.recename,
+          recetel: this.recetel,
+          name: this.name,
+          tel: this.tel,
+          post: this.post,
+          firm: this.firm,
+          plate: this.plate,
+          reasons: this.reasons,
+          followfirm: this.followfirm,
+          followpost: this.followpost,
+          followtel: this.followtel,
+          followname: this.followname,
+        }
+      }).then(({data})=>{
+        console.log(data);
+        this.$router.push('/appointSuccess')
+      })
     }
   }
 }

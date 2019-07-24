@@ -32,45 +32,47 @@
 <script>
 import Details from '../components/Details';
 import Modal from '../components/Modal';
+import axios from 'axios';
 export default {
   data () {
     return {
       viaShow: false,
       isShow: false,
-      waitAuditList: [
-        {
-          id: 1,
-          name: '李鸿章',
-          tel: 15900000001,
-          post: '财务总监',
-          platenum: '苏E 38A01',
-          add: '昆山XXXXX精密仪器股份有限公司'
-        },
-        {
-          id: 2,
-          name: '张 扬',
-          tel: 15900000001,
-          post: '财务总监',
-          platenum: '苏E 38A01',
-          add: '昆山XXXXX精密仪器股份有限公司'
-        },
-        {
-          id: 3,
-          name: '张之洞',
-          tel: 15900000001,
-          post: '财务总监',
-          platenum: '苏E 38A01',
-          add: '昆山XXXXX精密仪器股份有限公司'
-        },
-        {
-          id: 4,
-          name: '左宗堂',
-          tel: 15900000001,
-          post: '财务总监',
-          platenum: '苏E 38A01',
-          add: '昆山XXXXX精密仪器股份有限公司'
-        },
-      ],
+      // waitAuditList: [
+      //   {
+      //     id: 1,
+      //     name: '李鸿章',
+      //     tel: 15900000001,
+      //     post: '财务总监',
+      //     platenum: '苏E 38A01',
+      //     add: '昆山XXXXX精密仪器股份有限公司'
+      //   },
+      //   {
+      //     id: 2,
+      //     name: '张 扬',
+      //     tel: 15900000001,
+      //     post: '财务总监',
+      //     platenum: '苏E 38A01',
+      //     add: '昆山XXXXX精密仪器股份有限公司'
+      //   },
+      //   {
+      //     id: 3,
+      //     name: '张之洞',
+      //     tel: 15900000001,
+      //     post: '财务总监',
+      //     platenum: '苏E 38A01',
+      //     add: '昆山XXXXX精密仪器股份有限公司'
+      //   },
+      //   {
+      //     id: 4,
+      //     name: '左宗堂',
+      //     tel: 15900000001,
+      //     post: '财务总监',
+      //     platenum: '苏E 38A01',
+      //     add: '昆山XXXXX精密仪器股份有限公司'
+      //   },
+      // ],
+      waitAuditList: [],
       // 通过弹窗显示
       viaList: [{
         oddnum: '预约单号：YY190000145',
@@ -87,7 +89,21 @@ export default {
     Details,
     Modal
   },
+  created() {
+    this.getList();
+  },
   methods: {
+    getList () {
+      axios({
+        method:'get',
+        url: '/api/employee/appointment/45',
+        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+      }).then(({data}) => {
+        if ( data.length > 0) {
+          this.waitAuditList = data
+        }
+      })
+    },
     viaModal () {
       this.viaShow = true;
       document.body.style.overflow="hidden";
@@ -96,6 +112,7 @@ export default {
       this.isShow = true;
       document.body.style.overflow="hidden";
     },
+    
   },
 }
 </script>

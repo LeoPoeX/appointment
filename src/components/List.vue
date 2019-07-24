@@ -9,28 +9,26 @@
         >查看通行证</span>
       </div>
       
-      <div :class="`card-content ${status==='over' ? 'over-box' : ''}`">
-        <div class="card_left_top"></div>
-        <div class="card_right_top"></div>
+      <div :class="`card-content ${status==='over' ? 'over-box' : ''}`" @click="showDetails">
         <div class="appoint-info">
           <img class="appoint-icon" src="../assets/images/name.png" />
           <span class="appoint-name">姓名：</span>
-          <p class="appoint-desc user">{{ item.name }}</p>
+          <p class="appoint-desc user">{{ item.visitor_name }}</p>
         </div>
         <div class="appoint-info">
           <img class="appoint-icon" src="../assets/images/firm.png" />
           <span class="appoint-name">单位：</span>
-          <p class="appoint-desc">{{ item.company }}</p>
+          <p class="appoint-desc">{{ item.visitor_organization }}</p>
         </div>
         <div class="appoint-info">
-          <img class="appoint-icon" src="../assets/images/tel.png" />
+          <img class="appoint-icon" src="../assets/images/followers.png" />
           <span class="appoint-name">随行：</span>
-          <p class="appoint-desc">{{ item.others[0] }} / {{ item.others[1] }} / {{ item.others[2] }} </p>
+          <p class="appoint-desc">{{ item.followers }} </p>
         </div>
         <div class="appoint-info">
-          <img class="appoint-icon" src="../assets/images/car.png" />
+          <img class="appoint-icon" src="../assets/images/date.png" />
           <span class="appoint-name">来访日期：</span>
-          <p class="appoint-desc time">{{ item.visitStartTime }}～{{ item.visitEndTime }}</p>
+          <p class="appoint-desc time">{{ item.start_time }}～{{ item.end_time }}</p>
         </div>
       </div>
     </div>
@@ -64,6 +62,16 @@ export default {
     showPermit(e) {
       e.stopPropagation();
       this.$router.push({ path: '/pass' });
+    },
+    showDetails() {
+      if ( status = 'audit' ) {
+        this.$router.push({ path: '/auditdetails' });
+      } else if ( status = 'pass' ){
+        this.$router.push({ path: '/passdetails' });
+      } else {
+        this.$router.push({ path: '/overdetails' });
+      }
+      
     }
   }
 }
@@ -106,34 +114,11 @@ export default {
     border: 1px solid #DDDDDD;
     padding: 1rem;
     background: #fff;
+    background: url("../assets/images/Slice.png") no-repeat;
+    background-size: 100% 10px; 
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
     position: relative;
-
-    .card_left_top, .card_right_top {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        border: 1px solid #fff;
-        z-index: 1;
-        background: #fff;
-    }
- 
-    .card_left_top {
-        top: -1px;
-        left: -1px;
-        border-radius: 0 0 7px 0;
-        border-bottom: 1px solid #DDDDDD;
-        border-right: 1px solid #DDDDDD;
-    }
- 
-    .card_right_top {
-        top: -1px;
-        right: -1px;
-        border-radius: 0 0 0 7px;
-        border-bottom: 1px solid #DDDDDD;
-        border-left: 1px solid #DDDDDD;
-    }
 
     // 已放行
     &.over-box {

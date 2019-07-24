@@ -1,125 +1,128 @@
 <template>
   <div class="details-box">
-    <diV class="details-content">
-      <!-- 到达时间和离开时间 -->
-      <div class="details-timeBox">
-        <Tag :status="status" class="details-tag" />
-        <div class="details-time">
-          <p class="details-timeDesc">到达时间</p>
-          <p class="details-date">2019/07/12</p>
-          <p class="details-hour">09:00</p>
-        </div>
-        <div class="details-symbol">~</div>
-        <div class="details-time">
-          <p class="details-timeDesc">离开时间</p>
-          <p class="details-date">2019/07/12</p>
-          <p class="details-hour">15:00</p>
-        </div>
-      </div>
-
-      <!-- 预约详情 -->
-      <div class="details-info">
-        <p class="details-oddnum">预约单号：YY19000145</p>
-        
-        <div class="details-row">
-          <div class="details-desc">
-            <span class="details-name">预约人：</span>
-            <span>矮大紧</span>
+    <div>
+      <diV class="details-content">
+        <!-- 到达时间和离开时间 -->
+        <div class="details-timeBox">
+          <Tag :status="status" class="details-tag" />
+          <div class="details-time">
+            <p class="details-timeDesc">到达时间</p>
+            <p class="details-date">2019/07/12</p>
+            <p class="details-hour">09:00</p>
           </div>
-          <div class="details-desc">
-            <span class="details-name">电话：</span>
-            <span>15900000001</span>
+          <div class="details-symbol">~</div>
+          <div class="details-time">
+            <p class="details-timeDesc">离开时间</p>
+            <p class="details-date">2019/07/12</p>
+            <p class="details-hour">15:00</p>
           </div>
         </div>
 
-        <div class="details-row">
-          <div class="details-desc">
-            <span class="details-name">职务：</span>
-            <span>财务总监</span>
-          </div>
-          <div class="details-desc">
-            <span class="details-name">车牌：</span>
-            <span>苏E384A1</span>
-          </div>
-        </div>
-
-        <div class="details-row">
-            <span class="details-site">地址：</span>
-            <span>昆山XXXXX精密仪器股份有限公司 </span>
-        </div>
-
-        <div class="details-row">
-          <div class="details-desc">
-            <span class="details-name">来访事由：</span>
-            <span>商务交流</span>
-          </div>
-          <div class="details-desc">
-            <span class="details-name">来访人数：</span>
-            <span>4人</span>
-          </div>
-        </div>
-
-        <div class="details-line"></div>
-
-        <div class="details-row">
-          <div class="details-desc">
-            <span class="details-name">接待人：</span>
-            <span>王长阳</span>
-          </div>
-          <div class="details-desc">
-            <span class="details-name">电话：</span>
-            <span>15900000002</span>
-          </div>
-        </div>
-
-      </div>
-
-    </diV>
-
-    <!-- 随员详情 -->
-    <div class="details-content">
-      <div class="details-rettitle">
-        随员详情
-      </div>
-      <!-- 随员信息 -->
-      <div class="details-retInfo" v-for="( item, id ) in list" :key="id">
-        <!-- 编号 -->
-        <div class="details-retnum"><span class="details-id">{{ item.id }}</span></div>
-        <!-- 信息内容 -->
-        <div class="details-retDesc">
-
+        <!-- 预约详情 -->
+        <div class="details-info">
+          <p class="details-oddnum">预约单号：YY19000145</p>
+          
           <div class="details-row">
             <div class="details-desc">
-             <img class="details-icon" src="../assets/images/name.png" />
-              <span class="details-retname">{{ item.name }}</span>
+              <span class="details-name">预约人：</span>
+              <span>矮大紧</span>
             </div>
             <div class="details-desc">
-              <img class="details-icon" src="../assets/images/tel.png" />
-              <span class="details-retname">{{ item.tel }}</span>
+              <span class="details-name">电话：</span>
+              <span>15900000001</span>
             </div>
           </div>
 
           <div class="details-row">
             <div class="details-desc">
-              <img class="details-icon" src="../assets/images/post.png" />
-              <span class="details-retname">{{ item.post }}</span>
+              <span class="details-name">职务：</span>
+              <span>财务总监</span>
             </div>
             <div class="details-desc">
-              <img class="details-icon" src="../assets/images/car.png" />
-              <span class="details-retname">{{ item.platenum }}</span>
+              <span class="details-name">车牌：</span>
+              <span>苏E384A1</span>
             </div>
           </div>
 
           <div class="details-row">
-            <div class="details-desc details-add">
-              <img class="details-icon" src="../assets/images/firm.png" />
-              <span class="details-retname">{{ item.add }}</span>
+              <span class="details-site">地址：</span>
+              <span>昆山XXXXX精密仪器股份有限公司 </span>
+          </div>
+
+          <div class="details-row">
+            <div class="details-desc">
+              <span class="details-name">来访事由：</span>
+              <span>商务交流</span>
+            </div>
+            <div class="details-desc">
+              <span class="details-name">来访人数：</span>
+              <span>4人</span>
+            </div>
+          </div>
+
+          <div class="details-line"></div>
+
+          <div class="details-row">
+            <div class="details-desc">
+              <span class="details-name">接待人：</span>
+              <span>王长阳</span>
+            </div>
+            <div class="details-desc">
+              <span class="details-name">电话：</span>
+              <span>15900000002</span>
+            </div>
+          </div>
+
+        </div>
+
+      </diV>
+
+      <!-- 随员详情 -->
+      <div class="details-content">
+        <div class="details-rettitle">
+          随员详情
+        </div>
+        <!-- 随员信息 -->
+        <div class="details-retInfo" v-for="( item, id ) in list" :key="id">
+          <!-- 编号 -->
+          <div class="details-retnum"><span class="details-id">{{ item.id }}</span></div>
+          <!-- 信息内容 -->
+          <div class="details-retDesc">
+
+            <div class="details-row">
+              <div class="details-desc">
+              <img class="details-icon" src="../assets/images/name.png" />
+                <span class="details-retname">{{ item.name }}</span>
+              </div>
+              <div class="details-desc">
+                <img class="details-icon" src="../assets/images/tel.png" />
+                <span class="details-retname">{{ item.tel }}</span>
+              </div>
+            </div>
+
+            <div class="details-row">
+              <div class="details-desc">
+                <img class="details-icon" src="../assets/images/post.png" />
+                <span class="details-retname">{{ item.post }}</span>
+              </div>
+              <div class="details-desc">
+                <img class="details-icon" src="../assets/images/car.png" />
+                <span class="details-retname">{{ item.platenum }}</span>
+              </div>
+            </div>
+
+            <div class="details-row">
+              <div class="details-desc details-add">
+                <img class="details-icon" src="../assets/images/firm.png" />
+                <span class="details-retname">{{ item.add }}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
+    
 
   </div>
 </template>

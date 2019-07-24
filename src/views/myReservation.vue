@@ -10,17 +10,17 @@
     <mt-tab-container v-model="selected">
       <!-- 待审核内容 -->
       <mt-tab-container-item id="1">
-        <List :list="waitAuditList" status="audit" />
+        <List :list="list" status="audit" />
       </mt-tab-container-item>
 
       <!-- 待放行内容 -->
       <mt-tab-container-item id="2">
-        <List :list="passList" status="pass" />
+        <List :list="list" status="pass" />
       </mt-tab-container-item>
 
       <!-- 已放行内容 -->
       <mt-tab-container-item id="3">
-        <List :list="overList" status="over" />
+        <List :list="list" status="over" />
       </mt-tab-container-item>
     </mt-tab-container>
 
@@ -46,49 +46,50 @@ export default {
   data() {
     return {
       selected: '1',
-      waitAuditList: [{ // 待审核列表
-        id: 1,
-        state: '待审核',
-        name: '王长阳1',
-        company: '昆山XXXXX精密仪器股份有限公司',
-        others: ['码云', '马化腾', '李彦宏'],
-        visitStartTime: this.getTime(1563098400000),
-        visitEndTime: this.getTime(1563105600000)
-      }, {
-        id: 2,
-        state: '待审核',
-        name: '王长阳2',
-        company: '昆山XXXXX精密仪器股份有限公司',
-        others: ['码云', '马化腾', '李彦宏'],
-        visitStartTime: this.getTime(1563098400000),
-        visitEndTime: this.getTime(1563105600000)
-      }, {
-        id: 3,
-        state: '待审核',
-        name: '王长阳3',
-        company: '昆山XXXXX精密仪器股份有限公司',
-        others: ['码云', '马化腾', '李彦宏'],
-        visitStartTime: this.getTime(1563098400000),
-        visitEndTime: this.getTime(1563105600000)
-      }],
-      passList: [{  //待放行列表
-        id: 1,
-        state: '待放行',
-        name: '小明1',
-        company: 'XXXXX',
-        others: ['张三', '李四'],
-        visitStartTime: this.getTime(1563098400000),
-        visitEndTime: this.getTime(1563105600000)
-      }],
-      overList: [{  //已放行列表
-        id: 1,
-        state: '已放行',
-        name: '小红1',
-        company: 'XXXXX',
-        others: ['网名1'],
-        visitStartTime: this.getTime(1563098400000),
-        visitEndTime: this.getTime(1563105600000)
-      }]
+      // waitAuditList: [{ // 待审核列表
+      //   id: 1,
+      //   state: '待审核',
+      //   name: '王长阳1',
+      //   company: '昆山XXXXX精密仪器股份有限公司',
+      //   others: ['码云', '马化腾', '李彦宏'],
+      //   visitStartTime: this.getTime(1563098400000),
+      //   visitEndTime: this.getTime(1563105600000)
+      // }, {
+      //   id: 2,
+      //   state: '待审核',
+      //   name: '王长阳2',
+      //   company: '昆山XXXXX精密仪器股份有限公司',
+      //   others: ['码云', '马化腾', '李彦宏'],
+      //   visitStartTime: this.getTime(1563098400000),
+      //   visitEndTime: this.getTime(1563105600000)
+      // }, {
+      //   id: 3,
+      //   state: '待审核',
+      //   name: '王长阳3',
+      //   company: '昆山XXXXX精密仪器股份有限公司',
+      //   others: ['码云', '马化腾', '李彦宏'],
+      //   visitStartTime: this.getTime(1563098400000),
+      //   visitEndTime: this.getTime(1563105600000)
+      // }],
+      // passList: [{  //待放行列表
+      //   id: 1,
+      //   state: '待放行',
+      //   name: '小明1',
+      //   company: 'XXXXX',
+      //   others: ['张三', '李四'],
+      //   visitStartTime: this.getTime(1563098400000),
+      //   visitEndTime: this.getTime(1563105600000)
+      // }],
+      // overList: [{  //已放行列表
+      //   id: 1,
+      //   state: '已放行',
+      //   name: '小红1',
+      //   company: 'XXXXX',
+      //   others: ['网名1'],
+      //   visitStartTime: this.getTime(1563098400000),
+      //   visitEndTime: this.getTime(1563105600000)
+      // }]
+      list: [],
     }
   },
   components: {
@@ -107,10 +108,24 @@ export default {
         method:'get',
         url: '/api/employee/appointments',
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
-      }).then(() => {
-
+      }).then(({data}) => {
+        if ( data.length > 0) {
+          var param=this.follow(data);
+         this.list = param
+        }
+        
       })
-    }
+    },
+    follow (num) {    
+      for ( var param in num) {
+       var json=num[param];
+       var arr=json.followers;
+       var a=arr.join('/')
+       num[param].followers=a;     
+      }
+      return num;
+    },
+    
   }
 }
 </script>

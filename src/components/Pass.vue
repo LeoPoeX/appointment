@@ -10,8 +10,10 @@
           <p>190000145</p>
         </div>
       </div>
+      
+      <div class="pass-slice"></div>
 
-      <div class="pass-remain">
+      <div class="pass-remain">  
         <!-- 二维码 -->
         <div class="pass-QR">
           <canvas id="canvas"></canvas>
@@ -92,7 +94,8 @@ export default {
     }
 
     .pass-content-header {
-      background: #F9D18C;
+      background: url("../assets/images/permit.png") no-repeat;
+      background-size: 100% 100%;
       padding: 0.6rem 1rem 0.6rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -110,6 +113,13 @@ export default {
         text-align: right;
         color: #815900;
       }
+    }
+
+    .pass-slice {
+      background: url("../assets/images/Slice.png") no-repeat;
+      background-size: 100% 10px;
+      width: 100%;
+      height: 10px;
     }
 
     .pass-remain {
