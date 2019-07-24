@@ -1,7 +1,7 @@
 // vue.config.js
 module.exports = {
   // 修改的配置
-  baseUrl: '/',
+  publicPath: '/',
   devServer: {
     proxy: {
       '/api': {
