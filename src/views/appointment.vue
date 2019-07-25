@@ -7,7 +7,7 @@
         <div class="danhao">
           <div>
             <p>单号：</p>
-            <p class="num">YY19000145</p>
+            <p class="num">{{ draft.ticket_id }}</p>
           </div>
           <div class="people">
             <p>人数：</p>
@@ -17,7 +17,7 @@
 
         <div class="GoTime">
           
-          <p class="time">{{ this.selectedValue }}</p>
+           <p class="time">{{ this.selectedValue }}</p>
           <img class="appoin-icon" src="../assets/images/calendar.png" @click="selectData" />
 
           <div class="pickerPop" @touchmove.prevent>
@@ -36,7 +36,7 @@
               @confirm="dateConfirm()">
             </mt-datetime-picker>
           </div>
-
+          
           <input class="time" type="text" placeholder="离开（必填）" />
           <img class="appoin-leaveicon" src="../assets/images/calendar.png" />
         </div>
@@ -133,17 +133,40 @@
 
 <script>
 import axios from 'axios';
-import {formatDateMin} from '../formatdate'
+import {formatDateMin} from '../formatdate';
+import { Toast } from 'mint-ui';
 export default {
   name: 'Appointment',
   daata () {
     return {
       dateVal: '', // 默认是当前日期
-      selectedValue: ''
+      selectedValue: '',
+      draft: {}
     }
   },
   methods: {
+    // 创建草稿
+    createDraft() {
+      axios({
+        method:'get',
+        url: '/api/employee/draft',
+        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+      }).then(({ data }) => {
+        this.draft = data;
+      })
+    },
+    // 提交前校验
+    validateBeforeSubmit() {
+      if (!this.draft.visitor_name) {
+        Toast('请输入来访者姓名');
+        return false;
+      }
+      return true;
+    },
+    // 提交
     submit() {
+      // 校验不通过，不能提交
+      if (!this.validateBeforeSubmit()) return;
       axios({
         method:'post',
         url: '/api/employee/appointment',

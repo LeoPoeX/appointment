@@ -2,25 +2,35 @@
   <div class="box">
     <!-- tabs -->
     <mt-navbar class="tab" v-model="selected">
+      <mt-tab-item class="tab-til" id="0">全部</mt-tab-item>
       <mt-tab-item class="tab-til" id="1">待审核</mt-tab-item>
-      <mt-tab-item class="tab-til" id="2">待放行</mt-tab-item>
-      <mt-tab-item class="tab-til" id="3">已放行</mt-tab-item>
+      <mt-tab-item class="tab-til" id="2">拒绝</mt-tab-item>
+      <mt-tab-item class="tab-til" id="3">通过</mt-tab-item>
+      <mt-tab-item class="tab-til" id="4">已完成</mt-tab-item>
     </mt-navbar>
 
-    <mt-tab-container v-model="selected">
+    <mt-tab-container v-model="selected" :swipeable='true'>
       <!-- 待审核内容 -->
+      <mt-tab-container-item id="0">
+        <List tab="0" />
+      </mt-tab-container-item>
+
       <mt-tab-container-item id="1">
-        <List :list="list" />
+        <List tab="1" />
       </mt-tab-container-item>
 
       <!-- 待放行内容 -->
       <mt-tab-container-item id="2">
-        <List :list="list" />
+        <List tab="2" />
       </mt-tab-container-item>
 
       <!-- 已放行内容 -->
       <mt-tab-container-item id="3">
-        <List :list="list" />
+        <List tab="3" />
+      </mt-tab-container-item>
+
+      <mt-tab-container-item id="4">
+        <List tab="4" />
       </mt-tab-container-item>
     </mt-tab-container>
 
@@ -37,53 +47,21 @@
 </template>
 
 <script>
-import axios from 'axios';
-import List from '../components/List.vue';
-import utils from '../utils';
+import List from '../components/list';
 
 export default {
   name: 'MyReservation',
   data() {
     return {
-      selected: '1',
+      selected: '0',
       list: [],
+      showCode: false
     }
   },
   components: {
     List
   },
-  created() {
-    this.getList();
-  },
-  methods: {
-    getTime (e) {
-      let time = utils.parseTime(e, 'yyyy-MM-dd hh:mm');
-      return time;
-    },
-    getList () {
-      axios({
-        method:'get',
-        url: '/api/employee/appointments',
-        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
-      }).then(({data}) => {
-        if ( data.length > 0) {
-          var param=this.follow(data);
-         this.list = param
-        }
-        
-      })
-    },
-    follow (num) {    
-      for ( var param in num) {
-       var json=num[param];
-       var arr=json.followers;
-       var a=arr.join('/')
-       num[param].followers=a;     
-      }
-      return num;
-    },
-    
-  }
+ 
 }
 </script>
 

@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import Details from '../components/Details';
-import Modal from '../components/Modal';
+import Details from '../components/details';
+import Modal from '../components/modal';
 import axios from 'axios';
 export default {
   data () {
@@ -86,10 +86,10 @@ export default {
 
 <style lang="less">
 .audit-box {
-  padding-top: 40px;
   padding-bottom: 50px;
   background: url('../assets/images/back.png') no-repeat;
   background-size: 100% 219px;
+  background-position-y: -30px;
 
   .audit-audit {
     width: 100%;

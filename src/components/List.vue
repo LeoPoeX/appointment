@@ -23,7 +23,7 @@
         <div class="appoint-info">
           <img class="appoint-icon" src="../assets/images/followers.png" />
           <span class="appoint-name">随行：</span>
-          <p class="appoint-desc">{{ item.followers }} </p>
+          <p class="appoint-desc">{{ Array.isArray(item.followers) ? item.followers.join('/') : '' }} </p>
         </div>
         <div class="appoint-info">
           <img class="appoint-icon" src="../assets/images/date.png" />
@@ -36,21 +36,41 @@
 </template>
 
 <script>
-import Tag from '../components/Tag';
+import axios from 'axios';
+import Tag from '../components/tag';
 import utils from '../utils';
 export default {
   name: 'Card',
   props: {
-    list: Array
+    tab: String,
+    openPassModal: Function
   },
   data() {
     return {
+      list: []
     }
   },
   components: {
     Tag
   },
+  created() {
+    this.getList();
+  },
   methods: {
+    getList () {
+      const params = Number(this.tab) !== 0 ? { state: this.tab } : {}
+      axios({
+        method:'get',
+        url: `/api/employee/appointments`,
+        params: params,
+        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+      }).then(({data}) => {
+        if ( data.length > 0) {
+         this.list = data
+        }
+        
+      })
+    },
     getTime (e) {
       let time = utils.parseTime(e, 'yyyy-MM-dd hh:mm');
       return time;
@@ -61,8 +81,7 @@ export default {
     },
     showDetails(id) {
       if ( !id ) return;
-      this.$router.push({ path: `/details/${id}` });
-
+      this.$router.push({ path: `/detail/${id}` });
     }
   }
 }

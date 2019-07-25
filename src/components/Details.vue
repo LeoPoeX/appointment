@@ -75,7 +75,7 @@
     </div>
 
     <!-- 随员详情 -->
-    <div class="details-content" v-if="Array.isArray(info.followers) && info.followers.length">
+    <div class="details-content follower-box" v-if="Array.isArray(info.followers) && info.followers.length">
       <div class="details-rettitle">
         随员详情
       </div>
@@ -124,7 +124,7 @@
 </template>
 
 <script>
-import Tag from '@/components/Tag';
+import Tag from '@/components/tag';
 export default {
   name: 'Details',
   props: {
@@ -145,6 +145,9 @@ export default {
     border: 0.5px solid #D6D6D6;
     border-radius: 8px;
     margin-top: 10px;
+    &.follower-box {
+      margin-top: 12px;
+    }
     // 到达时间和离开时间
     .details-timeBox {
       padding: 24px 24px 15px 24px;

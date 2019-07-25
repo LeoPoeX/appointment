@@ -22,18 +22,18 @@ const router = new Router({
     {
       path: "/pass",
       name: "pass",
-      component: () => import("./components/Pass.vue"),
+      component: () => import("./components/pass.vue"),
       meta: { title: '通行证' }
     },
     {
       path: "/appointSuccess",
       name: "appointSuccess",
-      component: () => import("./components/AppoinSuccess.vue"),
+      component: () => import("./components/appoinSuccess.vue"),
       meta: { title: '预约成功' }
     },
     {
-      path: "/details/:id",
-      name: "details",
+      path: "/detail/:id",
+      name: "detail",
       component: () => import("./views/auditDetails.vue"),
       meta: { title: '审核详情' },
     }
