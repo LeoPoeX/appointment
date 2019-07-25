@@ -16,14 +16,26 @@
         </div>
 
         <div class="GoTime">
-          <input  type="text" placeholder="到达（必填）" />
-          <mt-datetime-picker
-            class="time"
-            ref="datetime"
-            type="time"
-            v-model="pickerValue">
-          </mt-datetime-picker>
-          <img class="appoin-icon" src="../assets/images/calendar.png" />
+          
+          <p class="time">{{ this.selectedValue }}</p>
+          <img class="appoin-icon" src="../assets/images/calendar.png" @click="selectData" />
+
+          <div class="pickerPop" @touchmove.prevent>
+            <!-- 年月日时分选择 -->
+            <mt-datetime-picker
+              lockScroll="true"
+              ref="datePicker"
+              class="myPicker"
+              type="datetime"
+              year-format="{value}"
+              month-format="{value}"
+              date-format="{value}"
+              hour-format="{value}"
+              minute-format="{value}"
+              second-format="{value}"
+              @confirm="dateConfirm()">
+            </mt-datetime-picker>
+          </div>
 
           <input class="time" type="text" placeholder="离开（必填）" />
           <img class="appoin-leaveicon" src="../assets/images/calendar.png" />
@@ -121,16 +133,17 @@
 
 <script>
 import axios from 'axios';
+import {formatDateMin} from '../formatdate'
 export default {
   name: 'Appointment',
   daata () {
     return {
-      
+      dateVal: '', // 默认是当前日期
+      selectedValue: ''
     }
   },
   methods: {
     submit() {
-     
       axios({
         method:'post',
         url: '/api/employee/appointment',
@@ -138,7 +151,20 @@ export default {
       }).then(({data}) => {
         this.$router.push('/appointSuccess')
       })
+    },
+    selectData () { // 打开时间选择器
+      // 如果已经选过日期，则再次打开时间选择器时，日期回显（不需要回显的话可以去掉 这个判断）
+      if (this.selectedValue) {
+        this.dateVal = this.selectedValue
+      } else {
+        this.dateVal = new Date()
+      }
+      this.$refs['datePicker'].open()
+    },
+    dateConfirm () { // 时间选择器确定按钮，并把时间转换成我们需要的时间格式
+      this.selectedValue = formatDateMin(this.dateVal)
     }
+
   }
 }
 </script>
@@ -146,29 +172,33 @@ export default {
 
 <style lang="less">
 .index-box {
-  padding-top: 40px;
+  padding-top: 10px;
+  background: url('../assets/images/back.png') no-repeat;
+  background-size: 100% 219px;
+  background-position-y: -22px;
 
   .details {
-    margin: 2rem 1.3rem 1.3rem 1.3rem;
+    margin: 24px 15px 15px 15px;
     border: 1px solid #D6D6D6;
     border-radius: 10px;
+    background: #ffffff;
     
     .yuyueTitle {
-      line-height: 4rem;
-      padding-left: 1rem;
-      font-size: 1.4rem;
+      line-height: 48px;
+      padding-left: 12px;
+      font-size: 14px;
       letter-spacing: 1.56px;
       border-bottom: 1px solid #ECECEC;
     }
 
     .visitor {
-      padding: 1rem 1.3rem;
+      padding: 12px 15px;
 
       .danhao {
         background: #FFFAF5;
         display: flex;
-        line-height: 3rem;
-        font-size: 1.4rem;
+        line-height: 36px;
+        font-size: 14px;
 
         p {
           margin: 0;
@@ -176,7 +206,7 @@ export default {
         }
 
         .people {
-          margin-left: 4rem;
+          margin-left: 48px;
         }
 
         .num {
@@ -188,12 +218,24 @@ export default {
         display: flex;
         position: relative;
 
+        .pickerPop{
+          .picker{
+            .picker-toolbar{
+              background-color: #eee;
+              .mint-datetime-action{
+                font-size: 0.26rem;
+                color: #000!important;
+              }
+            }
+          }
+        }
+
         .time {
           width:49%;
-          line-height: 3rem;
+          line-height: 36px;
           border: 0;
           background: #FFFAF5;
-          margin-top: 1rem;
+          margin-top: 12px;
           margin-left: 2%;
           border-bottom: 0.5px solid #DEDEDE;
 
@@ -227,10 +269,10 @@ export default {
 
         input {
           width: 49%;
-          line-height: 3rem;
+          line-height: 36px;
           border: 0;
           background: #FFFAF5;
-          margin-top: 1rem;
+          margin-top: 12px;
           margin-left: 2%;
           border-bottom: 0.5px solid #DEDEDE;
 
@@ -242,11 +284,11 @@ export default {
 
       .content {
         display: flex;
-        margin-top: 1rem;
+        margin-top: 12px;
 
         .img-backgro {
-          width: 1.7rem;
-          height: 1.7rem;
+          width: 20px;
+          height: 20px;
           background: #ffffff;
           border-radius: 50%;
           margin-bottom: 5px;
@@ -262,19 +304,19 @@ export default {
 
       .reasons {
         display: flex;
-        margin-top: 1.5rem;
-        margin-bottom: 0.5rem;
+        margin-top: 18px;
+        margin-bottom: 6px;
 
         p {
           margin: 0;
           color: #999999;
-          font-size: 1.4rem;
+          font-size: 14px;
         }
 
         select {
           border: none;
           outline: none;
-          width: 9rem;
+          width: 108px;
           border-bottom: 0.5px solid #DEDEDE;
         }
       }
@@ -282,9 +324,11 @@ export default {
     }
 
     .PeopleInfo {
-      line-height: 3rem;
+      line-height: 36px;
       text-align: center;
       background: #FFFAF5;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
 
       p {
         margin: 0;
@@ -296,13 +340,13 @@ export default {
 
   .submit {
     text-align: center;
-    margin: 1.5rem 0;
+    margin: 18px 0;
 
     button {
-      width: 25rem;
-      height: 3rem;
+      width: 300px;
+      height: 36px;
       border: 0;
-      border-radius: 3rem;
+      border-radius: 36px;
       background-image: linear-gradient(1deg, #FACE83 0%, #F6AE3A 100%);
     }
   }

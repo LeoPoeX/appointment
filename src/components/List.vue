@@ -70,7 +70,7 @@ export default {
 
 <style lang="less">
 .card-box {
-  margin: 1.3rem;
+  margin: 15px;
   background: #FFFFFF;
 
   .card-header {
@@ -78,21 +78,22 @@ export default {
     width: 100%;
     background: url("../assets/images/vip.png") no-repeat;
     background-size: 100% 45px; 
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 
     .show-permit {
       display: block;
-      width: 6rem;
-      line-height: 2rem;
+      width: 72px;
+      line-height: 24px;
       text-align: center;
       align-content: center;
       background-image: linear-gradient(-180deg, #FFFFFF 0%, #FFF5E1 100%);
-      border-radius: 0.4rem;
+      border-radius: 5px;
       float: right;
       text-decoration: none;
       color: #FF4F00;
-      margin: 1rem 1.5rem 0 0;
+      margin: 12px 18px 0 0;
+      font-size: 12px;
       &.over {
         text-decoration: line-through;
         color: #C2C2C2;
@@ -103,13 +104,14 @@ export default {
 
   .card-content {
     border: 1px solid #DDDDDD;
-    padding: 1rem;
+    padding: 12px;
     background: #fff;
     background: url("../assets/images/Slice.png") no-repeat;
     background-size: 100% 10px; 
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
     position: relative;
+    font-size: 12px;
 
     // 已放行
     &.over-box {
@@ -127,13 +129,13 @@ export default {
       }
     }
     .appoint-info {
-      margin-top: 0.5rem;
+      margin-top: 6px;
       display: flex;
       border-bottom: 1px solid #DDDDDD;
       .appoint-icon {
         flex-shrink: 0;
-        width: 1.7rem;
-        height: 1.7rem;
+        width: 20px;
+        height: 20px;
         background: #ffffff;
         border-radius: 50%;
         margin-bottom: 2px;
@@ -149,7 +151,7 @@ export default {
         color: #333333;
         &.user {
           font-weight: bold;
-          font-size: 1.5rem;
+          font-size: 15px;
         }
         &.time {
           color: #FF0000;

@@ -1,11 +1,5 @@
 <template>
   <div class="appoinsuccess-box">
-    <!-- 头部 -->
-    <mt-header title="通行证" class="appoinsuccess-header">
-      <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
 
     <!-- 内容 -->
     <div class="appoinsuccess-content">
@@ -83,16 +77,6 @@ export default {
   right: 0;
   display: table;
 
-  .appoinsuccess-header{
-    background-image: linear-gradient(-180deg, #FFFFFF 0%, #FFFDF8 100%);
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.12); 
-    color: #333333; 
-    font-size: 1.7rem;
-    position: fixed;
-    top: 0;
-    width: 100%;
-  }
-
   .appoinsuccess-content {
     padding: 0 15px;
     display: table-cell;
@@ -101,13 +85,13 @@ export default {
     .appoinsuccess-close {
       display: block; 
       float: right; 
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 18px;
+      height: 18px;
     }
 
     .appoinsuccess-content-header {
       background: #F9D18C;
-      padding: 0.6rem 1rem 0.6rem 2rem;
+      padding: 7px 12px 7px 24px;
       display: flex;
       justify-content: space-between;
       clear: both;
@@ -117,7 +101,7 @@ export default {
       .appoinsuccess-details {
         color: #835B02;
         line-height: 36px;
-        font-size: 1.5rem;
+        font-size: 15px;
       }
 
       .appoinsuccess-odd {

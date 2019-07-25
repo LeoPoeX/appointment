@@ -53,7 +53,7 @@
           </div>
           <div class="details-desc">
             <span class="details-name">来访人数：</span>
-            <span>{{ 1 }}人</span>
+            <span>{{ info.followers.length }}人</span>
           </div>
         </div>
 

@@ -73,16 +73,6 @@ export default {
   right: 0;
   display: table;
 
-  .pass-header{
-    background-image: linear-gradient(-180deg, #FFFFFF 0%, #FFFDF8 100%);
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.12); 
-    color: #333333; 
-    font-size: 1.7rem;
-    position: fixed;
-    top: 0;
-    width: 100%;
-  }
-
   .pass-content {
     padding: 0 15px;
     display: table-cell;
@@ -91,14 +81,14 @@ export default {
     .pass-close {
       display: block; 
       float: right; 
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 18px;
+      height: 18px;
     }
 
     .pass-content-header {
       background: url("../assets/images/permit.png") no-repeat;
       background-size: 100% 100%;
-      padding: 0.6rem 1rem 0.6rem 2rem;
+      padding: 7px 12px 7px 24px;
       display: flex;
       justify-content: space-between;
       clear: both;
@@ -108,7 +98,7 @@ export default {
       .pass-details {
         color: #835B02;
         line-height: 36px;
-        font-size: 1.5rem;
+        font-size: 15px;
       }
 
       .pass-odd {

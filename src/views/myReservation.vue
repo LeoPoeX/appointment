@@ -46,49 +46,6 @@ export default {
   data() {
     return {
       selected: '1',
-      // waitAuditList: [{ // 待审核列表
-      //   id: 1,
-      //   state: '待审核',
-      //   name: '王长阳1',
-      //   company: '昆山XXXXX精密仪器股份有限公司',
-      //   others: ['码云', '马化腾', '李彦宏'],
-      //   visitStartTime: this.getTime(1563098400000),
-      //   visitEndTime: this.getTime(1563105600000)
-      // }, {
-      //   id: 2,
-      //   state: '待审核',
-      //   name: '王长阳2',
-      //   company: '昆山XXXXX精密仪器股份有限公司',
-      //   others: ['码云', '马化腾', '李彦宏'],
-      //   visitStartTime: this.getTime(1563098400000),
-      //   visitEndTime: this.getTime(1563105600000)
-      // }, {
-      //   id: 3,
-      //   state: '待审核',
-      //   name: '王长阳3',
-      //   company: '昆山XXXXX精密仪器股份有限公司',
-      //   others: ['码云', '马化腾', '李彦宏'],
-      //   visitStartTime: this.getTime(1563098400000),
-      //   visitEndTime: this.getTime(1563105600000)
-      // }],
-      // passList: [{  //待放行列表
-      //   id: 1,
-      //   state: '待放行',
-      //   name: '小明1',
-      //   company: 'XXXXX',
-      //   others: ['张三', '李四'],
-      //   visitStartTime: this.getTime(1563098400000),
-      //   visitEndTime: this.getTime(1563105600000)
-      // }],
-      // overList: [{  //已放行列表
-      //   id: 1,
-      //   state: '已放行',
-      //   name: '小红1',
-      //   company: 'XXXXX',
-      //   others: ['网名1'],
-      //   visitStartTime: this.getTime(1563098400000),
-      //   visitEndTime: this.getTime(1563105600000)
-      // }]
       list: [],
     }
   },
@@ -133,34 +90,8 @@ export default {
 
 <style lang="less">
 .box {
-  margin-bottom: 3.6rem;
+  margin-bottom: 50px;
   margin-top: 50px;
-  // 顶部
-  .title {
-  width: 100%;
-  height: 3.6rem;
-  text-align: center;
-  background-image: linear-gradient(-180deg, #FFFFFF 0%, #FFFDF8 100%);
-  box-shadow: 0  0.1rem 0.1rem 0 rgba(0,0,0,0.12);
-  position: fixed;
-  top: 0;
-  z-index: 10;
-
-    .arrow {
-      width: 2.2rem;
-      height: 2.2rem;
-      position: absolute;
-      left: 1.4rem;
-      margin-top: 0.6rem;
-    }
-
-    p {
-      margin: 0;
-      font-size: 1.7rem;
-      display: inline-block;
-      line-height: 3.6rem;
-    }
-  }
 
   // tab
   .tab {
@@ -173,7 +104,7 @@ export default {
       color: #232323;
     }
     .tab-til {
-      font-size: 2rem;
+      font-size: 12px;
     }
   }
 
@@ -182,8 +113,8 @@ export default {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 3.5rem;
-    font-size: 1.2rem;
+    height: 42px;
+    font-size: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -191,9 +122,9 @@ export default {
     background: #fff;
     border-top: 1px solid #DFDFDF;
     img {
-      width: 1.2rem;
-      height: 1.2rem;
-      margin-right: 1rem;
+      width: 14px;
+      height: 14px;
+      margin-right: 10px;
     }
   }
 }
