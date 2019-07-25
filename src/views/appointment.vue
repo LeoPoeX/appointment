@@ -187,6 +187,15 @@ export default {
       if (!this.draft.visitor_name) {
         Toast('请输入来访者姓名');
         return false;
+      } else if (!this.draft.visitor_phone) {
+        Toast('请输入来访者电话');
+        return false;
+      } else if (!this.draft.visitor_position) {
+        Toast('请输入来访者职位');
+        return false;
+      } else if (!this.draft.visitor_organization) {
+        Toast('请输入来访者公司');
+        return false;
       }
       return true;
     },

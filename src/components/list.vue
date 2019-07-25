@@ -111,7 +111,7 @@ export default {
       float: right;
       text-decoration: none;
       color: #FF4F00;
-      margin: 12px 18px 0 0;
+      margin: 8px 18px 0 0;
       font-size: 12px;
       &.over {
         text-decoration: line-through;
