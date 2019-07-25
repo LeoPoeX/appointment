@@ -28,13 +28,13 @@ const router = new Router({
     {
       path: "/appointSuccess",
       name: "appointSuccess",
-      component: () => import("./components/appoinSuccess.vue"),
+      component: () => import("./components/appointSuccess.vue"),
       meta: { title: '预约成功' }
     },
     {
       path: "/detail/:id",
       name: "detail",
-      component: () => import("./views/auditDetails.vue"),
+      component: () => import("./views/auditDetail.vue"),
       meta: { title: '审核详情' },
     }
   ]
