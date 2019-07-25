@@ -69,6 +69,8 @@ export default {
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
       }).then(({data}) => {
         this.detailInfo = data
+        this.detailInfo.start_time = new Date(+new Date(this.detailInfo.start_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
+        this.detailInfo.end_time = new Date(+new Date(this.detailInfo.end_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
       })
     },
     viaModal () {

@@ -3,34 +3,18 @@
     <!-- tabs -->
     <mt-navbar class="tab" v-model="selected">
       <mt-tab-item class="tab-til" id="0">全部</mt-tab-item>
-      <mt-tab-item class="tab-til" id="1">待审核</mt-tab-item>
-      <mt-tab-item class="tab-til" id="2">拒绝</mt-tab-item>
-      <mt-tab-item class="tab-til" id="3">通过</mt-tab-item>
-      <mt-tab-item class="tab-til" id="4">已完成</mt-tab-item>
+      <mt-tab-item class="tab-til" id="1">待处理</mt-tab-item>
     </mt-navbar>
 
     <mt-tab-container v-model="selected" :swipeable='true'>
-      <!-- 待审核内容 -->
+      <!-- 全部 -->
       <mt-tab-container-item id="0">
         <List tab="0" />
       </mt-tab-container-item>
 
+      <!-- 待处理 -->
       <mt-tab-container-item id="1">
         <List tab="1" />
-      </mt-tab-container-item>
-
-      <!-- 待放行内容 -->
-      <mt-tab-container-item id="2">
-        <List tab="2" />
-      </mt-tab-container-item>
-
-      <!-- 已放行内容 -->
-      <mt-tab-container-item id="3">
-        <List tab="3" />
-      </mt-tab-container-item>
-
-      <mt-tab-container-item id="4">
-        <List tab="4" />
       </mt-tab-container-item>
     </mt-tab-container>
 

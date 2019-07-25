@@ -168,7 +168,7 @@ export default {
         color: #D8A950;
       }
       .details-time {
-        width: 70px;
+        width: 80px;
         text-align: center;
         font-weight: bold;
         .details-timeDesc {
@@ -249,6 +249,7 @@ export default {
           top: 0;
           left: 4px;
           color: #fff;
+          font-size: 12px;
         }
       }
       // 信息内容

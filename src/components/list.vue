@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     getList () {
-      const params = Number(this.tab) !== 0 ? { state: this.tab } : {}
+      const params = Number(this.tab) !== 0 ? { state: '1,3' } : {}
       axios({
         method:'get',
         url: `/api/employee/appointments`,
@@ -66,14 +66,14 @@ export default {
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
       }).then(({data}) => {
         if ( data.length > 0) {
-         this.list = data
+          this.list = data
+          for (var i =0; i < this.list.length; i++ ) {
+            this.list[i].start_time = new Date(+new Date(this.list[i].start_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
+            this.list[i].end_time = new Date(+new Date(this.list[i].end_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
+          }
         }
         
       })
-    },
-    getTime (e) {
-      let time = utils.parseTime(e, 'yyyy-MM-dd hh:mm');
-      return time;
     },
     showPermit(e) {
       e.stopPropagation();
@@ -95,7 +95,7 @@ export default {
   .card-header {
     height: 45px;
     width: 100%;
-    background: url("../assets/images/vip.png") #DDDDDD no-repeat;
+    background: url("../assets/images/vip.png") no-repeat;
     background-size: 100% 45px; 
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
