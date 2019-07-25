@@ -65,7 +65,7 @@
 
         <div class="receiver">
           <input type="text" placeholder="接待人（必填）" v-model="draft.employee_name" />
-          <input type="text" placeholder="接待人电话（必填）" v-model="draft.employee_phone" />
+          <input type='number' pattern="[0-9]*" placeholder="接待人电话（必填）" v-model="draft.employee_phone" />
         </div>
 
         <div class="content">
@@ -75,7 +75,7 @@
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type="tel" placeholder="电话（必填）" v-model="draft.visitor_phone" />
+          <input type='number' pattern="[0-9]*" placeholder="电话（必填）" v-model="draft.visitor_phone" />
         </div>
 
         <div class="content">
@@ -120,7 +120,7 @@
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type="tel" placeholder="电话（必填）" />
+          <input type='number' pattern="[0-9]*" placeholder="电话（必填）" />
         </div>
 
         <div class="content">
@@ -207,6 +207,16 @@ export default {
         method:'post',
         url: '/api/employee/appointment',
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+        data: {
+          start_time: this.selectedValue,
+          end_time: this.selectedLeaveValue,
+          visitor_name: this.draft.visitor_name,
+          visitor_phone: this.draft.visitor_phone,
+          visitor_position: this.draft.visitor_position,
+          visitor_organization: this.draft.visitor_organization,
+          visitor_car_number: this.draft.visitor_car_number
+
+        }
       }).then(({data}) => {
         this.$router.push('/appointSuccess')
       })
@@ -224,6 +234,7 @@ export default {
     dateConfirm () { // 时间选择器确定按钮，并把时间转换成我们需要的时间格式
       this.selectedValue = formatDateMin(this.arriveVal)
     },
+
     // 离开时间
     selectLeaveData () {
       if (this.selectedLeaveValue) {
@@ -377,6 +388,7 @@ export default {
           border: 0;
           margin-left: 5px;
           border-bottom: 0.5px solid #DEDEDE;
+          border-radius: 0;
           &:-ms-input-placeholder {
             color: #999999;
           }
