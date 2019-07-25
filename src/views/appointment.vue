@@ -159,8 +159,8 @@ export default {
     return {
       arriveVal: '', // 默认是当前日期
       leaveVal: '',
-      selectedValue: '',
-      selectedLeaveValue: '',
+      selectedValue: '到达时间(必填)',
+      selectedLeaveValue: '离开时间(必填)',
       draft: {}
     }
   },
@@ -280,7 +280,6 @@ export default {
             .picker-toolbar{
               background-color: #eee;
               .mint-datetime-action{
-                font-size: 0.26rem;
                 color: #000!important;
               }
             }
@@ -311,14 +310,14 @@ export default {
           position: absolute;
           z-index: 3;
           top:24px;
-          left: 120px;
+          left: 41%;
         }
         .appoin-leaveicon {
           width: 13px;
           position: absolute;
           z-index: 3;
           top:24px;
-          right: 13px;
+          right: 3%;
         }
       }
 

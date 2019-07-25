@@ -86,6 +86,7 @@ export default {
 
 <style lang="less">
 .audit-box {
+  padding-top: 10px;
   padding-bottom: 50px;
   background: url('../assets/images/back.png') no-repeat;
   background-size: 100% 219px;

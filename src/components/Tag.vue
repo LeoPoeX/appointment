@@ -42,6 +42,8 @@ export default {
   text-align: center;
   margin-left: 20px;
   font-size: 12px;
+  position: absolute;
+  top: 0;
   // 待审核标签
   &.audit-tag {
     background: #FF0000;

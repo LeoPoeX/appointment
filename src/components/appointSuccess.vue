@@ -25,9 +25,9 @@
 
         <div class="appoinsuccess-footer">
           <div class="appoinsuccess-footbox">
-            <p class="appoinsuccess-footcont">来访人</p>
-            <p class="appoinsuccess-footcont">随行人</p>
-            <p class="appoinsuccess-footcont">手机号</p>
+            <p class="appoinsuccess-footcont appoinsuccess-footname">来访人</p>
+            <p class="appoinsuccess-footcont appoinsuccess-footname">随行人</p>
+            <p class="appoinsuccess-footcont appoinsuccess-footname">手机号</p>
           </div>
           <div class="appoinsuccess-footbox">
             <p class="appoinsuccess-footcont">矮大紧</p>
@@ -90,7 +90,8 @@ export default {
     }
 
     .appoinsuccess-content-header {
-      background: #F9D18C;
+      background: url("../assets/images/permit.png") no-repeat;
+      background-size: 100% 100%;
       padding: 7px 12px 7px 24px;
       display: flex;
       justify-content: space-between;
@@ -107,6 +108,7 @@ export default {
       .appoinsuccess-odd {
         text-align: right;
         color: #815900;
+        font-size: 12px;
       }
     }
 
@@ -117,7 +119,7 @@ export default {
 
       .appoinsuccess-title {
         text-align: center;
-        padding-top: 15px;
+        padding-top: 10px;
 
         .appoinsuccess-img {
           width: 42px;
@@ -130,7 +132,7 @@ export default {
       }
 
       .appoinsuccess-QR {
-        padding: 25px 25%;
+        padding: 0 25%;
         text-align: center;
 
         #canvas {
@@ -141,6 +143,7 @@ export default {
 
       .appoinsuccess-footer {
         padding: 12px 11px;
+        font-size: 12px;
 
         .appoinsuccess-footbox {
           background: #FFFAF5;
@@ -156,6 +159,10 @@ export default {
           .appoinsuccess-footcont {
             width: 30%;
             text-align: center;
+
+            &.appoinsuccess-footname {
+              color: #C6AA67;
+            }
           }
         }
       }

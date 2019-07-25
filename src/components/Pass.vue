@@ -10,9 +10,7 @@
           <p>190000145</p>
         </div>
       </div>
-      
-      <div class="pass-slice"></div>
-
+  
       <div class="pass-remain">  
         <!-- 二维码 -->
         <div class="pass-QR">
@@ -106,13 +104,6 @@ export default {
         color: #815900;
         font-size: 12px;
       }
-    }
-
-    .pass-slice {
-      background: url("../assets/images/Slice.png") no-repeat;
-      background-size: 100% 10px;
-      width: 100%;
-      height: 10px;
     }
 
     .pass-remain {

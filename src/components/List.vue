@@ -99,6 +99,7 @@ export default {
     background-size: 100% 45px; 
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
+    position: relative;
 
     .show-permit {
       display: block;
@@ -122,11 +123,11 @@ export default {
   }
 
   .card-content {
-    border: 1px solid #DDDDDD;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
     padding: 12px;
     background: #fff;
-    background: url("../assets/images/Slice.png") no-repeat;
-    background-size: 100% 10px; 
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     position: relative;
