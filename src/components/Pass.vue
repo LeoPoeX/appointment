@@ -21,9 +21,9 @@
 
         <div class="pass-footer">
           <div class="pass-footbox">
-            <p class="pass-footcont">来访人</p>
-            <p class="pass-footcont">随行人</p>
-            <p class="pass-footcont">手机号</p>
+            <p class="pass-footcont pass-footname">来访人</p>
+            <p class="pass-footcont pass-footname">随行人</p>
+            <p class="pass-footcont pass-footname">手机号</p>
           </div>
           <div class="pass-footbox">
             <p class="pass-footcont">矮大紧</p>
@@ -104,6 +104,7 @@ export default {
       .pass-odd {
         text-align: right;
         color: #815900;
+        font-size: 12px;
       }
     }
 
@@ -131,6 +132,7 @@ export default {
 
       .pass-footer {
         padding: 12px 11px;
+        font-size: 12px;
 
         .pass-footbox {
           background: #FFFAF5;
@@ -146,6 +148,9 @@ export default {
           .pass-footcont {
             width: 30%;
             text-align: center;
+            &.pass-footname {
+              color: #C6AA67;
+            }
           }
         }
       }

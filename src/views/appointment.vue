@@ -17,7 +17,7 @@
 
         <div class="GoTime">
           
-           <p class="time">{{ this.selectedValue }}</p>
+          <p class="time">{{ this.selectedValue }}</p>
           <img class="appoin-icon" src="../assets/images/calendar.png" @click="selectData" />
 
           <div class="pickerPop" @touchmove.prevent>
@@ -27,18 +27,36 @@
               ref="datePicker"
               class="myPicker"
               type="datetime"
+              v-model="arriveVal"
               year-format="{value}"
               month-format="{value}"
               date-format="{value}"
               hour-format="{value}"
               minute-format="{value}"
-              second-format="{value}"
               @confirm="dateConfirm()">
             </mt-datetime-picker>
           </div>
-          
-          <input class="time" type="text" placeholder="离开（必填）" />
-          <img class="appoin-leaveicon" src="../assets/images/calendar.png" />
+
+          <p class="time">{{ this.selectedLeaveValue }}</p>
+          <img class="appoin-leaveicon" src="../assets/images/calendar.png" @click="selectLeaveData" />
+
+          <div class="pickerPop" @touchmove.prevent>
+            <!-- 年月日时分选择 -->
+            <mt-datetime-picker
+              lockScroll="true"
+              ref="leaveDatePicker"
+              class="myPicker"
+              type="datetime"
+              v-model="leaveVal"
+              year-format="{value}"
+              month-format="{value}"
+              date-format="{value}"
+              hour-format="{value}"
+              minute-format="{value}"
+              @confirm="leaveDateConfirm()">
+            </mt-datetime-picker>
+          </div>
+
         </div>
 
         <div class="receiver">
@@ -137,10 +155,12 @@ import {formatDateMin} from '../formatdate';
 import { Toast } from 'mint-ui';
 export default {
   name: 'Appointment',
-  daata () {
+  data () {
     return {
-      dateVal: '', // 默认是当前日期
+      arriveVal: '', // 默认是当前日期
+      leaveVal: '',
       selectedValue: '',
+      selectedLeaveValue: '',
       draft: {}
     }
   },
@@ -175,18 +195,31 @@ export default {
         this.$router.push('/appointSuccess')
       })
     },
+    // 到达时间
     selectData () { // 打开时间选择器
       // 如果已经选过日期，则再次打开时间选择器时，日期回显（不需要回显的话可以去掉 这个判断）
       if (this.selectedValue) {
-        this.dateVal = this.selectedValue
+        this.arriveVal = this.selectedValue
       } else {
-        this.dateVal = new Date()
+        this.arriveVal = new Date()
       }
       this.$refs['datePicker'].open()
     },
     dateConfirm () { // 时间选择器确定按钮，并把时间转换成我们需要的时间格式
-      this.selectedValue = formatDateMin(this.dateVal)
-    }
+      this.selectedValue = formatDateMin(this.arriveVal)
+    },
+    // 离开时间
+    selectLeaveData () {
+      if (this.selectedLeaveValue) {
+        this.leaveVal = this.selectedLeaveValue
+      } else {
+        this.leaveVal = new Date()
+      }
+      this.$refs['leaveDatePicker'].open()
+    },
+    leaveDateConfirm () { // 时间选择器确定按钮，并把时间转换成我们需要的时间格式
+      this.selectedLeaveValue = formatDateMin(this.leaveVal)
+    },
 
   }
 }
@@ -199,6 +232,7 @@ export default {
   background: url('../assets/images/back.png') no-repeat;
   background-size: 100% 219px;
   background-position-y: -22px;
+  font-size: 12px;
 
   .details {
     margin: 24px 15px 15px 15px;
@@ -255,6 +289,7 @@ export default {
 
         .time {
           width:49%;
+          height: 36px;
           line-height: 36px;
           border: 0;
           background: #FFFAF5;
@@ -364,6 +399,7 @@ export default {
   .submit {
     text-align: center;
     margin: 18px 0;
+    font-size: 13px;
 
     button {
       width: 300px;
