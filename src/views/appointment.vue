@@ -18,7 +18,7 @@
         <div class="GoTime">
           <!-- 到达时间 -->
           <div class="appoint-timeBox" @click="selectData">
-            <p class="time">{{ this.selectedValue }}</p>
+            <p class="time" >{{ this.selectedValue }}</p>
             <img class="appoin-icon" src="../assets/images/calendar.png"  />
           </div>
 
@@ -306,6 +306,9 @@ export default {
           width:49%;
           color: #999999;
           margin-left: 2%;
+          &:first-child {
+            margin-left: 0;
+          }
 
           .time {
             height: 36px;
@@ -313,12 +316,8 @@ export default {
             border: 0;
             background: #FFFAF5;
             margin-top: 12px;
-            
             border-bottom: 0.5px solid #DEDEDE;
 
-            &:first-child {
-              margin-left: 0;
-            }
           }
           .appoin-icon {
             width: 13px;
