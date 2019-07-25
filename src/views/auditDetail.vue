@@ -76,6 +76,7 @@ export default {
     viaModal () {
       this.viaShow = true;
       document.body.style.overflow="hidden";
+      info.state = 3;
     },
     errorModal () {
       this.isShow = true;

@@ -16,9 +16,11 @@
         </div>
 
         <div class="GoTime">
-          
-          <p class="time">{{ this.selectedValue }}</p>
-          <img class="appoin-icon" src="../assets/images/calendar.png" @click="selectData" />
+          <!-- 到达时间 -->
+          <div class="appoint-timeBox" @click="selectData">
+            <p class="time">{{ this.selectedValue }}</p>
+            <img class="appoin-icon" src="../assets/images/calendar.png"  />
+          </div>
 
           <div class="pickerPop" @touchmove.prevent>
             <!-- 年月日时分选择 -->
@@ -36,10 +38,12 @@
               @confirm="dateConfirm()">
             </mt-datetime-picker>
           </div>
-
-          <p class="time">{{ this.selectedLeaveValue }}</p>
-          <img class="appoin-leaveicon" src="../assets/images/calendar.png" @click="selectLeaveData" />
-
+            <!-- 离开时间 -->
+          <div class="appoint-timeBox" @click="selectLeaveData">
+            <p class="time">{{ this.selectedLeaveValue }}</p>
+            <img class="appoin-leaveicon" src="../assets/images/calendar.png" />
+          </div>
+          
           <div class="pickerPop" @touchmove.prevent>
             <!-- 年月日时分选择 -->
             <mt-datetime-picker
@@ -60,38 +64,38 @@
         </div>
 
         <div class="receiver">
-          <input type="text" placeholder="接待人（必填）" />
-          <input type="text" placeholder="接待人电话（必填）" />
+          <input type="text" placeholder="接待人（必填）" v-model="draft.employee_name" />
+          <input type="text" placeholder="接待人电话（必填）" v-model="draft.employee_phone" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/name.png" />
-          <input type="text" placeholder="来访姓名（必填）" />
+          <input type="text" placeholder="来访姓名（必填）" v-model="draft.visitor_name" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type="text" placeholder="电话（必填）" />
+          <input type="tel" placeholder="电话（必填）" v-model="draft.visitor_phone" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/post.png" />
-          <input type="text" placeholder="职位（必填）" />
+          <input type="text" placeholder="职位（必填）" v-model="draft.visitor_position" />
         </div>
 
         <div class="content">
           <img  class="img-backgro" src="../assets/images/firm.png" />
-          <input type="text" placeholder="公司（必填）" />
+          <input type="text" placeholder="公司（必填）" v-model="draft.visitor_organization" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/car.png" />
-          <input type="text" placeholder="车牌（选填）" />
+          <input type="text" placeholder="车牌（选填）" v-model="draft.visitor_car_number" />
         </div>
 
         <div class="reasons">
           <p>选择来访事由：</p>
-          <select >
+          <select v-model="draft.reason">
             <option value ="供应商来访">供应商来访</option>
             <option value ="商务交流">商务交流</option>
             <option value="客户来访">客户来访</option>
@@ -116,7 +120,7 @@
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type="text" placeholder="电话（必填）" />
+          <input type="tel" placeholder="电话（必填）" />
         </div>
 
         <div class="content">
@@ -159,10 +163,13 @@ export default {
     return {
       arriveVal: '', // 默认是当前日期
       leaveVal: '',
-      selectedValue: '到达时间(必填)',
-      selectedLeaveValue: '离开时间(必填)',
+      selectedValue: '到达时间（必填）',
+      selectedLeaveValue: '离开时间（必填）',
       draft: {}
     }
+  },
+  created () {
+    this.createDraft()
   },
   methods: {
     // 创建草稿
@@ -255,7 +262,7 @@ export default {
         background: #FFFAF5;
         display: flex;
         line-height: 36px;
-        font-size: 14px;
+        font-size: 12px;
 
         p {
           margin: 0;
@@ -286,32 +293,33 @@ export default {
           }
         }
 
-        .time {
+        .appoint-timeBox {
           width:49%;
-          height: 36px;
-          line-height: 36px;
-          border: 0;
-          background: #FFFAF5;
-          margin-top: 12px;
+          color: #999999;
           margin-left: 2%;
-          border-bottom: 0.5px solid #DEDEDE;
 
-          input {
+          .time {
+            height: 36px;
+            line-height: 36px;
             border: 0;
             background: #FFFAF5;
-          }
+            margin-top: 12px;
+            
+            border-bottom: 0.5px solid #DEDEDE;
 
-          &:first-child {
-            margin-left: 0;
+            &:first-child {
+              margin-left: 0;
+            }
+          }
+          .appoin-icon {
+            width: 13px;
+            position: absolute;
+            z-index: 3;
+            top:24px;
+            left: 41%;
           }
         }
-        .appoin-icon {
-          width: 13px;
-          position: absolute;
-          z-index: 3;
-          top:24px;
-          left: 41%;
-        }
+        
         .appoin-leaveicon {
           width: 13px;
           position: absolute;
@@ -323,6 +331,7 @@ export default {
 
       .receiver {
         display: flex;
+        color: #999999;
 
         input {
           width: 49%;
@@ -332,6 +341,9 @@ export default {
           margin-top: 12px;
           margin-left: 2%;
           border-bottom: 0.5px solid #DEDEDE;
+          &:-ms-input-placeholder {
+            color: #999999;
+          }
 
           &:first-child {
             margin-left: 0;
@@ -342,6 +354,7 @@ export default {
       .content {
         display: flex;
         margin-top: 12px;
+        color: #999999;
 
         .img-backgro {
           width: 20px;
@@ -356,6 +369,9 @@ export default {
           border: 0;
           margin-left: 5px;
           border-bottom: 0.5px solid #DEDEDE;
+          &:-ms-input-placeholder {
+            color: #999999;
+          }
         }
       }
 
@@ -375,6 +391,8 @@ export default {
           outline: none;
           width: 108px;
           border-bottom: 0.5px solid #DEDEDE;
+          background: #fff;
+          border-radius: 0;
         }
       }
     
@@ -399,6 +417,7 @@ export default {
     text-align: center;
     margin: 18px 0;
     font-size: 13px;
+    color: #835B02;
 
     button {
       width: 300px;

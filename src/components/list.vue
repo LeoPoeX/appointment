@@ -38,7 +38,6 @@
 <script>
 import axios from 'axios';
 import Tag from '../components/tag';
-import utils from '../utils';
 export default {
   name: 'Card',
   props: {
