@@ -1,12 +1,11 @@
-import Vue from 'vue'
+import Vue from 'vue';
 import router from "./router";
-import App from './App.vue'
-import MintUI from 'mint-ui'
-import 'mint-ui/lib/style.css'
-import { DatetimePicker } from 'vant';
-import 'vant/lib/index.css';
+import App from './App.vue';
+import MintUI from 'mint-ui';
+import 'mint-ui/lib/style.css';
+import infiniteScroll from 'vue-infinite-scroll';
 
-Vue.use(DatetimePicker);
+Vue.use(infiniteScroll)
 Vue.use(MintUI)
 
 Vue.config.productionTip = false

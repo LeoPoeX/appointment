@@ -13,8 +13,8 @@
     "cube-ui": "^1.12.27",
     "mint-ui": "^2.2.13",
     "qrcode": "^1.4.1",
-    "vant": "^2.0.9",
     "vue": "^2.6.10",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^3.0.7"
   },
   "devDependencies": {

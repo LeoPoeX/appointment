@@ -5,7 +5,7 @@
       <div class="yuyueTitle">预约详情</div>
       <div class="visitor">
         <div class="danhao">
-          <div>
+          <div class="odd">
             <p>单号：</p>
             <p class="num">{{ draft.ticket_id }}</p>
           </div>
@@ -102,6 +102,7 @@
             <option value="技术交流">技术交流</option>
             <option value="其他">其他</option>
           </select>
+          <!-- <input type="text" /> -->
         </div>
 
       </div>
@@ -284,13 +285,15 @@ export default {
         line-height: 36px;
         font-size: 12px;
 
-        p {
-          margin: 0;
-          display: inline-block;
+        .odd {
+          width: 50%;
+          display: flex;
         }
 
         .people {
-          margin-left: 48px;
+          margin-left: 2%;
+          width: 50%;
+          display: flex;
         }
 
         .num {
@@ -317,6 +320,7 @@ export default {
           width:49%;
           color: #999999;
           margin-left: 2%;
+          margin-top: 12px;
           &:first-child {
             margin-left: 0;
           }
@@ -326,7 +330,6 @@ export default {
             line-height: 36px;
             border: 0;
             background: #FFFAF5;
-            margin-top: 12px;
             border-bottom: 0.5px solid #DEDEDE;
 
           }
@@ -357,9 +360,12 @@ export default {
           line-height: 36px;
           border: 0;
           background: #FFFAF5;
+          border-radius: 0;
           margin-top: 12px;
           margin-left: 2%;
           border-bottom: 0.5px solid #DEDEDE;
+          color: #999999;
+          font-size: 12px;
           &:-ms-input-placeholder {
             color: #999999;
           }
@@ -389,6 +395,8 @@ export default {
           margin-left: 5px;
           border-bottom: 0.5px solid #DEDEDE;
           border-radius: 0;
+          color: #999999;
+          font-size: 12px;
           &:-ms-input-placeholder {
             color: #999999;
           }
@@ -403,8 +411,18 @@ export default {
         p {
           margin: 0;
           color: #999999;
-          font-size: 14px;
+          font-size: 12px;
         }
+
+        // input {
+        //   border: none;
+        //   outline: none;
+        //   width: 108px;
+        //   border-bottom: 0.5px solid #DEDEDE;
+        //   background: #fff;
+        //   border-radius: 0;
+        //   font-size: 11px;
+        // }
 
         select {
           border: none;
@@ -413,6 +431,9 @@ export default {
           border-bottom: 0.5px solid #DEDEDE;
           background: #fff;
           border-radius: 0;
+          appearance:none;
+          background: url("../assets/images/arrow_down.png") no-repeat scroll right center transparent;
+          background-size: 20px 10px;
         }
       }
     

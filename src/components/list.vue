@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <div class="card-box" v-for="item in list" :key="item.id">
+  <div v-infinite-scroll="loadMore"
+    infinite-scroll-disabled="loading"
+    infinite-scroll-distance="10">
+
+    <div class="card-box" v-for="item in list" :key="item.id" >
+
       <div class="card-header">
         <Tag :state="item.state"/>
         <span
@@ -27,10 +31,11 @@
         </div>
         <div class="appoint-info">
           <img class="appoint-icon" src="../assets/images/date.png" />
-          <span class="appoint-name">来访日期：</span>
+          <span class="appoint-name appoint-date">来访日期：</span>
           <p class="appoint-desc time">{{ item.start_time }}～{{ item.end_time }}</p>
         </div>
       </div>
+      
     </div>
   </div>
 </template>
@@ -38,6 +43,8 @@
 <script>
 import axios from 'axios';
 import Tag from '../components/tag';
+import util from '../utils.js';
+import { setTimeout } from 'timers';
 export default {
   name: 'Card',
   props: {
@@ -46,7 +53,8 @@ export default {
   },
   data() {
     return {
-      list: []
+      list: [],
+      loading: false
     }
   },
   components: {
@@ -70,10 +78,25 @@ export default {
             this.list[i].start_time = new Date(+new Date(this.list[i].start_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
             this.list[i].end_time = new Date(+new Date(this.list[i].end_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
           }
+          
         }
         
       })
     },
+    getTime (Gotime) {
+      let time = utils.parseTime(Gotime, 'yyyy-MM-dd hh:mm');
+      return time;
+    },
+    // loadMore () {
+    //   this.loading = true;
+    //   setTimeout(() => {
+    //     let last = this.list[this.list.length - 1];
+    //     for (let i = 1; i <= 10; i++) {
+    //       this.list.push(last + i);
+    //     }
+    //     this.loading = false;
+    //   }, 2500);
+    // },
     showPermit(e) {
       e.stopPropagation();
       this.$router.push({ path: '/pass' });
@@ -163,17 +186,23 @@ export default {
         flex-shrink: 0;
         margin-left: 5px;
         color: #C6AA67;
+        font-size: 14px;
+        &.appoint-date {
+          font-size: 11px;
+        }
       }
       .appoint-desc {
         flex-grow: 1;
         text-align: right;
         color: #333333;
+        font-size: 13px;
         &.user {
           font-weight: bold;
-          font-size: 15px;
+          font-size: 16px;
         }
         &.time {
           color: #FF0000;
+          font-size: 11px;
         }
       }
     }
