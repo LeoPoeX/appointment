@@ -71,7 +71,7 @@ export default {
       padding: 13px 0;
 
       .mint-tab-item-label {
-        font-size: 16px;
+        font-size: 14px;
       }
     }
   }
@@ -82,7 +82,7 @@ export default {
     bottom: 0;
     width: 100%;
     height: 42px;
-    font-size: 14px;
+    font-size: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,9 +90,9 @@ export default {
     background: #fff;
     border-top: 1px solid #DFDFDF;
     img {
-      width: 16px;
-      height: 16px;
-      margin-right: 10px;
+      width: 11px;
+      height: 11px;
+      margin-right: 5px;
     }
   }
 }

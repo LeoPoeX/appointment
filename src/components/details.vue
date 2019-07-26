@@ -175,6 +175,7 @@ export default {
           color: #C6AA67;
           padding-bottom: 8px;
           border-bottom: 1px solid #EBEBEB;
+          font-size: 11px;
         }
         .details-date {
           margin-top: 7px;
@@ -192,7 +193,7 @@ export default {
         line-height: 30px;
         background: #FFFAF5;
         color: #FF8800;
-        font-size: 14px;
+        font-size: 12px;
         text-align: center;
       }
       // 每行信息
@@ -200,7 +201,7 @@ export default {
         display: flex;
         margin-top: 15px;
         line-height: 20px;
-        font-size: 14px;
+        font-size: 13px;
 
         .details-desc{
           width: 50%;
@@ -249,7 +250,7 @@ export default {
           top: 0;
           left: 4px;
           color: #fff;
-          font-size: 12px;
+          font-size: 11px;
         }
       }
       // 信息内容
