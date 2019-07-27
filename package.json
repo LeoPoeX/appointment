@@ -1,7 +1,8 @@
 {
-  "name": "internal-appointment",
-  "version": "0.1.0",
-  "private": true,
+  "name": "vant-demo",
+  "version": "1.0.0",
+  "description": "Collection of vant demos.",
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -9,25 +10,19 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
-    "core-js": "^2.6.5",
-    "cube-ui": "^1.12.27",
     "mint-ui": "^2.2.13",
     "qrcode": "^1.4.1",
+    "vant": "^2.0.0",
     "vue": "^2.6.10",
-    "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^3.0.7"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.0",
     "@vue/cli-plugin-eslint": "^3.9.0",
-    "@vue/cli-service": "^3.9.0",
-    "babel-eslint": "^10.0.1",
-    "babel-plugin-component": "^1.1.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "less": "^3.9.0",
+    "@vue/cli-service": "^3.8.3",
+    "babel-plugin-import": "^1.12.0",
+    "less": "^3.8.1",
     "less-loader": "^5.0.0",
-    "vue-js-modal": "^1.3.31",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
@@ -50,7 +45,7 @@
     }
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions"
+    "Android >= 4.0",
+    "iOS >= 7"
   ]
 }

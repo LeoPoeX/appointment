@@ -157,7 +157,7 @@
 <script>
 import axios from 'axios';
 import {formatDateMin} from '../formatdate';
-import { Toast } from 'mint-ui';
+import { Toast } from 'vant';
 export default {
   name: 'Appointment',
   data () {
@@ -218,7 +218,7 @@ export default {
           visitor_car_number: this.draft.visitor_car_number
 
         }
-      }).then(({data}) => {
+      }).then(() => {
         this.$router.push('/appointSuccess')
       })
     },
@@ -433,7 +433,7 @@ export default {
           border-radius: 0;
           appearance:none;
           background: url("../assets/images/arrow_down.png") no-repeat scroll right center transparent;
-          background-size: 20px 10px;
+          background-size: 10px 5px;
         }
       }
     

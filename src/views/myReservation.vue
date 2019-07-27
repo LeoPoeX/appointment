@@ -1,23 +1,10 @@
 <template>
   <div class="box">
-    <!-- tabs -->
-    <mt-navbar class="tab" v-model="selected">
-      <mt-tab-item class="tab-til" id="0">全部</mt-tab-item>
-      <mt-tab-item class="tab-til" id="1">待处理</mt-tab-item>
-    </mt-navbar>
-
-    <mt-tab-container v-model="selected" :swipeable='true'>
-      <!-- 全部 -->
-      <mt-tab-container-item id="0">
-        <List tab="0" />
-      </mt-tab-container-item>
-
-      <!-- 待处理 -->
-      <mt-tab-container-item id="1">
-        <List tab="1" />
-      </mt-tab-container-item>
-    </mt-tab-container>
-
+    <van-tabs v-model="active" sticky swipeable animated>
+      <van-tab v-for="tab in tabs" :key="tab.key" :title="tab.title">
+        <List :tab="tab.key" />
+      </van-tab>
+    </van-tabs>
 
     <!-- 底部栏 -->
     <router-link
@@ -37,7 +24,14 @@ export default {
   name: 'MyReservation',
   data() {
     return {
-      selected: '0',
+      tabs: [{
+        key: '1',
+        title: '待处理'
+      }, {
+        key: '0',
+        title: '全部'
+      }],
+      active: '0',
       list: [],
       showCode: false
     }
@@ -53,7 +47,6 @@ export default {
 <style lang="less">
 .box {
   margin-bottom: 50px;
-  margin-top: 50px;
   width: 100%;
   position: relative;
 
@@ -71,7 +64,7 @@ export default {
       padding: 13px 0;
 
       .mint-tab-item-label {
-        font-size: 14px;
+        font-size: 16px;
       }
     }
   }
@@ -82,7 +75,7 @@ export default {
     bottom: 0;
     width: 100%;
     height: 42px;
-    font-size: 12px;
+    font-size: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,9 +83,9 @@ export default {
     background: #fff;
     border-top: 1px solid #DFDFDF;
     img {
-      width: 11px;
-      height: 11px;
-      margin-right: 5px;
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
     }
   }
 }

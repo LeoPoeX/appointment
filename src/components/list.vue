@@ -1,10 +1,13 @@
 <template>
-  <div v-infinite-scroll="loadMore"
-    infinite-scroll-disabled="loading"
-    infinite-scroll-distance="10">
-
+  <van-list
+    v-model="loading"
+    :finished="finished"
+    :error.sync="error"
+    error-text="请求失败，点击重新加载"
+    finished-text="没有更多了"
+    @load="getList"
+  >
     <div class="card-box" v-for="item in list" :key="item.id" >
-
       <div class="card-header">
         <Tag :state="item.state"/>
         <span
@@ -12,7 +15,7 @@
           @click="showPermit"
         >查看通行证</span>
       </div>
-      
+
       <div :class="`card-content ${item.state === 4 ? 'over-box' : ''}`" @click="showDetails(item.id)">
         <div class="appoint-info">
           <img class="appoint-icon" src="../assets/images/name.png" />
@@ -35,16 +38,14 @@
           <p class="appoint-desc time">{{ item.start_time }}～{{ item.end_time }}</p>
         </div>
       </div>
-      
     </div>
-  </div>
+  </van-list>
 </template>
 
 <script>
 import axios from 'axios';
 import Tag from '../components/tag';
-import util from '../utils.js';
-import { setTimeout } from 'timers';
+import utils from '../utils.js';
 export default {
   name: 'Card',
   props: {
@@ -54,18 +55,20 @@ export default {
   data() {
     return {
       list: [],
-      loading: false
+      loading: false,
+      error: false,
+      finished: false
     }
   },
   components: {
     Tag
   },
   created() {
-    this.getList();
+    // this.getList();
   },
   methods: {
     getList () {
-      const params = Number(this.tab) !== 0 ? { state: '1,3' } : {}
+      const params = Number(this.tab) !== 0 ? { state: '1,3', offset: 0, limit: 10 } : { offset: 0, limit: 10 }
       axios({
         method:'get',
         url: `/api/employee/appointments`,
@@ -74,29 +77,22 @@ export default {
       }).then(({data}) => {
         if ( data.length > 0) {
           this.list = data
-          for (var i =0; i < this.list.length; i++ ) {
-            this.list[i].start_time = new Date(+new Date(this.list[i].start_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
-            this.list[i].end_time = new Date(+new Date(this.list[i].end_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
-          }
-          
+          // for (var i =0; i < this.list.length; i++ ) {
+          //   this.list[i].start_time = new Date(+new Date(this.list[i].start_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
+          //   this.list[i].end_time = new Date(+new Date(this.list[i].end_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
+          // }
         }
-        
+        // 加载状态结束
+        this.loading = false;
+        this.finished = true;
+      }).catch(() => {
+        this.error = true;
       })
     },
     getTime (Gotime) {
       let time = utils.parseTime(Gotime, 'yyyy-MM-dd hh:mm');
       return time;
     },
-    // loadMore () {
-    //   this.loading = true;
-    //   setTimeout(() => {
-    //     let last = this.list[this.list.length - 1];
-    //     for (let i = 1; i <= 10; i++) {
-    //       this.list.push(last + i);
-    //     }
-    //     this.loading = false;
-    //   }, 2500);
-    // },
     showPermit(e) {
       e.stopPropagation();
       this.$router.push({ path: '/pass' });

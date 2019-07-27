@@ -96,7 +96,7 @@ export default {
       .pass-details {
         color: #835B02;
         line-height: 36px;
-        font-size: 16px;
+        font-size: 15px;
       }
 
       .pass-odd {
@@ -123,6 +123,7 @@ export default {
 
       .pass-footer {
         padding: 12px 11px;
+        font-size: 12px;
 
         .pass-footbox {
           background: #FFFAF5;
@@ -130,7 +131,6 @@ export default {
           display: flex;
           justify-content: space-between;
           border-bottom: 1px solid #DDDDDD;
-          font-size: 11px;
 
           &:last-child {
             border-bottom: 0;
