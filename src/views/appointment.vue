@@ -94,8 +94,8 @@
           <van-field class="appoin-reasonInfo" type="text" v-model="draft.reason" @click="openReason" readonly="readonly" />
 
           <van-popup v-model="showReason" position="bottom" :overlay="true">
-            <van-picker show-toolbar :columns="columns" @cancel="closeReason" @confirm="confirmReason" />
-          </van-popup>
+            <van-picker show-toolbar :columns="columns" @cancel="closeReason" @confirm="confirmReason" />
+          </van-popup>
         </div>
 
       </div>

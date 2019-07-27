@@ -35,9 +35,14 @@
 
 <script>
 import QRCode from 'qrcodejs2'
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   name: 'Pass',
+  data() {
+    return {
+      detailInfo: {},
+    }
+  },
   mounted () {
     this.renderQrcode();
   },

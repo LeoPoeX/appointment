@@ -77,13 +77,33 @@ export default {
       })
     },
     viaModal () {
-      this.viaShow = true;
-      document.body.style.overflow="hidden";
+      const { params } = this.$route;
+      if (!params.id) return;
+      axios({
+        method:'post',
+        url: `/api/employee/appointment/${params.id}/check`,
+        data: {
+          approved: true
+        },
+        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+      }).then(({data}) => {
+        this.viaShow = true;
+      })
       
     },
     errorModal () {
-      this.isShow = true;
-      document.body.style.overflow="hidden";
+      const { params } = this.$route;
+      if (!params.id) return;
+      axios({
+        method:'post',
+        url: `/api/employee/appointment/${params.id}/check`,
+        data: {
+          approved: false
+        },
+        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+      }).then(({data}) => {
+        this.isShow = true;
+      })
     },
     
   },
