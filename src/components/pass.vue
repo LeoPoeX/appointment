@@ -1,8 +1,7 @@
 <template>
-  <div class="pass-box">
     <!-- 内容 -->
-    <div class="pass-content">
-      <router-link to="/"><img class="pass-close" src="../assets/images/close.png" /></router-link>
+    <div class="pass-content" >
+      <img class="pass-close" src="../assets/images/close.png" @click="closePermitModal" />
       <div class="pass-content-header">
         <p class="pass-details">预约单详情</p>
         <div class="pass-odd">
@@ -13,8 +12,7 @@
   
       <div class="pass-remain">  
         <!-- 二维码 -->
-        <div class="pass-QR">
-          <canvas id="canvas"></canvas>
+        <div id="qrcode">
         </div>
 
         <div class="pass-footer">
@@ -24,8 +22,8 @@
             <p class="pass-footcont pass-footname">手机号</p>
           </div>
           <div class="pass-footbox">
-            <p class="pass-footcont">矮大紧</p>
-            <p class="pass-footcont">4人</p>
+            <p class="pass-footcont">{{info.visitor_name}}</p>
+            <p class="pass-footcont">{{info.followers.length}}人</p>
             <p class="pass-footcont">15721064851</p>
           </div>
         </div>
@@ -34,122 +32,118 @@
       
 
     </div>
-
-  </div>  
 </template>
 
 <script>
-import QRCode from 'qrcode'
+import QRCode from 'qrcodejs2'
 export default {
   name: 'Pass',
-  components: {
-    QRCode: QRCode
-  },
-  methods: {
-    useqrcode(){
-      var canvas = document.getElementById('canvas')
-      QRCode.toCanvas(canvas, 'https://visitor-frontend.fookwood.com', function (error) {
-        if (error) {
-          console.error(error)
-        }
-      })
+  props: {
+    closePermitModal: {
+      type: Function,
+      default: () => {}
+    },
+    info: {
+      type: Object,
+      default: {}
     }
   },
   mounted () {
-    this.useqrcode()
-  }
+    this.qrcode();
+    console.dir(this.info);
+  },
+  methods: {
+    qrcode() {
+      let qrcode = new QRCode('qrcode', {
+        width: 160,  
+        height: 160,
+        text: 'https://visitor-frontend.fookwood.com', // 二维码地址
+        colorDark : "#1678E5",
+        colorLight : "#fff",
+      })
+    },
+  },
 }
 </script>
 
 <style lang="less">
-.pass-box {
-  background: #616161;
+
+.pass-content {
   width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  display: table;
+  vertical-align: middle;
 
-  .pass-content {
-    padding: 0 15px;
-    display: table-cell;
-    vertical-align: middle;
-
-    .pass-close {
-      display: block; 
-      float: right; 
-      width: 18px;
-      height: 18px;
-    }
-
-    .pass-content-header {
-      background: url("../assets/images/permit.png") no-repeat;
-      background-size: 100% 100%;
-      padding: 7px 12px 7px 24px;
-      display: flex;
-      justify-content: space-between;
-      clear: both;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-
-      .pass-details {
-        color: #835B02;
-        line-height: 36px;
-        font-size: 15px;
-      }
-
-      .pass-odd {
-        text-align: right;
-        color: #815900;
-        font-size: 12px;
-      }
-    }
-
-    .pass-remain {
-      background: #FFFFFF;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
-
-      .pass-QR {
-        padding: 45px 25%;
-        text-align: center;
-
-        #canvas {
-          width: 160px;
-          height: 160px;
-        }
-      }
-
-      .pass-footer {
-        padding: 12px 11px;
-        font-size: 12px;
-
-        .pass-footbox {
-          background: #FFFAF5;
-          padding: 10px;
-          display: flex;
-          justify-content: space-between;
-          border-bottom: 1px solid #DDDDDD;
-
-          &:last-child {
-            border-bottom: 0;
-          }
-
-          .pass-footcont {
-            width: 30%;
-            text-align: center;
-            &.pass-footname {
-              color: #C6AA67;
-            }
-          }
-        }
-      }
-
-    }
-    
+  .pass-close {
+    display: block; 
+    float: right; 
+    width: 18px;
+    height: 18px;
   }
 
+  .pass-content-header {
+    background: url("../assets/images/permit.png") no-repeat;
+    background-size: 100% 100%;
+    padding: 7px 12px 7px 24px;
+    display: flex;
+    justify-content: space-between;
+    clear: both;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+
+    .pass-details {
+      color: #835B02;
+      line-height: 36px;
+      font-size: 15px;
+    }
+
+    .pass-odd {
+      text-align: right;
+      color: #815900;
+      font-size: 12px;
+    }
+  }
+
+  .pass-remain {
+    background: #FFFFFF;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+      #qrcode {
+        padding: 40px 25%;
+        text-align: center;
+        img {
+          display: inline-block !important;
+          background: #fff;
+        }
+      }
+
+    .pass-footer {
+      padding: 12px 11px;
+      font-size: 12px;
+
+      .pass-footbox {
+        background: #FFFAF5;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #DDDDDD;
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        .pass-footcont {
+          width: 30%;
+          text-align: center;
+          &.pass-footname {
+            color: #C6AA67;
+          }
+        }
+      }
+    }
+
+  }
+  
 }
+
 </style>
 

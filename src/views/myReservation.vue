@@ -2,7 +2,7 @@
   <div class="box">
     <van-tabs v-model="active" sticky swipeable animated>
       <van-tab v-for="tab in tabs" :key="tab.key" :title="tab.title">
-        <List :tab="tab.key" />
+        <List :tab="tab.key" :showPermitModal = "showPermitModal" />
       </van-tab>
     </van-tabs>
 
@@ -14,16 +14,21 @@
     >
       <img src="../assets/images/appointment.png" />我要预约
     </router-link>
+
+    <van-popup class="myPopup" v-model="show">
+      <Pass :closePermitModal = "closePermitModal" :info = "itemDetail" />
+    </van-popup>
   </div>
 </template>
 
 <script>
 import List from '../components/list';
-
+import Pass from '../components/pass'
 export default {
   name: 'MyReservation',
   data() {
     return {
+      itemDetail: {},
       tabs: [{
         key: '1',
         title: '待处理'
@@ -33,13 +38,24 @@ export default {
       }],
       active: '0',
       list: [],
-      showCode: false
+      showCode: false,
+      show: false,
     }
   },
   components: {
-    List
+    List,
+    Pass
   },
- 
+  methods: {
+    showPermitModal(item) {
+      this.show = true;
+      this.itemDetail = item;
+    },
+    closePermitModal () {
+      this.show = false;
+      this.itemDetail = {};
+    }
+  }
 }
 </script>
 
@@ -50,24 +66,7 @@ export default {
   width: 100%;
   position: relative;
 
-  // tab
-  .tab {
-    padding: 0 18px;
-    width: 90%;
-    position: fixed;
-    top: 0;
-    z-index: 10;
-    a {
-      color: #232323;
-    }
-    .tab-til {
-      padding: 13px 0;
 
-      .mint-tab-item-label {
-        font-size: 16px;
-      }
-    }
-  }
 
   // 底部栏
   .bottom-column {
@@ -87,6 +86,11 @@ export default {
       height: 16px;
       margin-right: 10px;
     }
+  }
+
+  .myPopup {
+    background: 0;
+    width: 90%;
   }
 }
 

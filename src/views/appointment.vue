@@ -17,34 +17,47 @@
 
         <div class="GoTime">
           <!-- 到达时间 -->
-          <div class="appoint-timeBox" @click="openPopTime">
+          <div class="appoint-timeBox" @click="openStartTimePop">
             <van-field
               class="time"
-              v-model="showStartTime"
+              v-model="startTimeText"
               placeholder="到达（必填）" 
               readonly="readonly"
             />
             <img class="appoin-icon" src="../assets/images/calendar.png"  />
-
-            <van-popup v-model="endTimePop" position="bottom" >
-              <van-datetime-picker
-                v-model="draft.start_time"
-                type="datetime"
-                @cancel="closePopTime"
-                @confirm="confirmTime"
-              />
-            </van-popup>
-
-            <!-- <p class="time" >{{ this.selectedValue }}</p> -->
           </div>
 
-            <!-- 离开时间 -->
-          <!-- <div class="appoint-timeBox" @click="selectLeaveData">
-            <p class="time">{{ this.selectedLeaveValue }}</p>
-            <img class="appoin-leaveicon" src="../assets/images/calendar.png" />
-          </div> -->
+          <van-popup v-model="showStartTime" position="bottom" >
+            <van-datetime-picker
+              v-model="draft.start_time"
+              type="datetime"
+              @cancel="closeStartTimePop"
+              @confirm="confirmTime"
+            />
+          </van-popup>
+
+          <!-- 离开时间 -->
+          <div class="appoint-timeBox" @click="openEndTimePop">
+            <van-field
+              class="time"
+              v-model="endTimeText"
+              placeholder="离开（必填）" 
+              readonly="readonly"
+            />
+            <img class="appoin-leaveicon" src="../assets/images/calendar.png"  />
+          </div>
+
+          <van-popup v-model="showEndTime" position="bottom" >
+            <van-datetime-picker
+              v-model="draft.end_time"
+              type="datetime"
+              @cancel="closeEndTimePop"
+              @confirm="confirmEndTime"
+            />
+          </van-popup>
 
         </div>
+
 
         <div class="receiver">
           <input type="text" placeholder="接待人（必填）" v-model="draft.employee_name" />
@@ -95,36 +108,36 @@
     <div class="details">
       <div class="yuyueTitle">填写随员信息</div>
 
-      <div class="visitor">
+      <div class="visitor" v-for="(user, index) in draft.followers" :key="index">
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/name.png" />
-          <input type="text" placeholder="姓名（必填）" />
+          <input type="text" placeholder="姓名（必填）" v-model="uer.name" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type='number' pattern="[0-9]*" placeholder="电话（必填）" />
+          <input type='number' pattern="[0-9]*" placeholder="电话（必填）" v-model="user.phone" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/post.png" />
-          <input type="text" placeholder="职位（必填）" />
+          <input type="text" placeholder="职位（必填）" v-model="user.position" />
         </div>
 
         <div class="content">
           <img  class="img-backgro" src="../assets/images/firm.png" />
-          <input type="text" placeholder="公司（必填）" />
+          <input type="text" placeholder="公司（必填）" v-model="user.organization" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/car.png" />
-          <input type="text" placeholder="车牌（选填）" />
+          <input type="text" placeholder="车牌（选填）" v-model="user.car_number" />
         </div>
 
       </div>
 
-      <div class="PeopleInfo">
+      <div class="PeopleInfo" @click="addTheObject">
         <p>添加随员信息</p>
       </div>
       
@@ -139,15 +152,16 @@
 
 <script>
 import axios from 'axios';
-import {formatDateMin} from '../formatdate';
 import utils from '../utils';
 import { Toast } from 'vant';
 export default {
   name: 'Appointment',
   data () {
     return {
-      endTimePop: false,
-      showStartTime: '',
+      showStartTime: false,
+      showEndTime: false,
+      startTimeText: '',
+      endTimeText: '',
       draft: {},
     }
   },
@@ -155,17 +169,31 @@ export default {
     this.createDraft()
   },
   methods: {
-    confirmTime(value) {
-      this.start_time = value;
-      this.showStartTime = utils.parseTime(value, 'yyyy-MM-dd hh:mm');
-      this.closePopTime();
-    },
-    openPopTime() {
-      this.endTimePop = true;
-    },
-    closePopTime() {
-      this.endTimePop = false;
-    },
+    // 到达时间
+      confirmTime(value) {
+        this.start_time = value;
+        this.startTimeText = utils.parseTime(value, 'yyyy-MM-dd hh:mm');
+        this.closeStartTimePop();
+      },
+      openStartTimePop() {
+        this.showStartTime = true;
+      },
+      closeStartTimePop() {
+        this.showStartTime = false;
+      },
+
+    // 离开时间
+      confirmEndTime(value) {
+        this.end_time = value;
+        this.endTimeText = utils.parseTime(value, 'yyyy-MM-dd hh:mm');
+        this.closeEndTimePop();
+      },
+      openEndTimePop() {
+        this.showEndTime = true;
+      },
+      closeEndTimePop() {
+        this.showEndTime = false;
+      },
     // 创建草稿
     createDraft() {
       axios({
@@ -175,7 +203,8 @@ export default {
       }).then(({ data }) => {
         this.draft = {
           ...data,
-          start_time: data.start_time ? new Date(data.start_time) : new Date()
+          start_time: data.start_time ? new Date(data.start_time) : new Date(),
+          end_time: data.end_time ? new Date(data.end_time) : new Date(),
         };
         
       })
@@ -194,9 +223,26 @@ export default {
       } else if (!this.draft.visitor_organization) {
         Toast('请输入来访者公司');
         return false;
+      } else if (!this.user.name) {
+        Toast('请输入随从名字');
+        return false;
+      } else if (!this.user.phone) {
+        Toast('请输入随从电话');
+        return false;
+      } else if (!this.user.position) {
+        Toast('请输入随从职位');
+        return false;
+      } else if (!this.user.organization) {
+        Toast('请输入随从公司');
+        return false;
       }
       return true;
     },
+
+    addTheObject () {
+      
+    },
+
     // 提交
     submit() {
       // 校验不通过，不能提交
@@ -218,32 +264,6 @@ export default {
       }).then(() => {
         this.$router.push('/appointSuccess')
       })
-    },
-    // 到达时间
-    selectData () { // 打开时间选择器
-      // 如果已经选过日期，则再次打开时间选择器时，日期回显（不需要回显的话可以去掉 这个判断）
-      if (this.selectedValue) {
-        this.arriveVal = this.selectedValue
-      } else {
-        this.arriveVal = new Date()
-      }
-      this.$refs['datePicker'].open()
-    },
-    dateConfirm () { // 时间选择器确定按钮，并把时间转换成我们需要的时间格式
-      this.selectedValue = formatDateMin(this.arriveVal)
-    },
-
-    // 离开时间
-    selectLeaveData () {
-      if (this.selectedLeaveValue) {
-        this.leaveVal = this.selectedLeaveValue
-      } else {
-        this.leaveVal = new Date()
-      }
-      this.$refs['leaveDatePicker'].open()
-    },
-    leaveDateConfirm () { // 时间选择器确定按钮，并把时间转换成我们需要的时间格式
-      this.selectedLeaveValue = formatDateMin(this.leaveVal)
     },
 
   }
@@ -319,29 +339,29 @@ export default {
             border-bottom: 0.5px solid #DEDEDE;
             font-size: 12px;
             padding: 0;
+            padding-left: 4px;
 
           }
           .appoin-icon {
-            width: 13px;
+            width: 10px;
             position: absolute;
             z-index: 3;
-            top:24px;
-            left: 41%;
+            top:25px;
+            left: 42%;
           }
         }
         
         .appoin-leaveicon {
-          width: 13px;
+          width: 10px;
           position: absolute;
           z-index: 3;
-          top:24px;
+          top:25px;
           right: 3%;
         }
       }
 
       .receiver {
         display: flex;
-        color: #999999;
 
         input {
           width: 49%;
@@ -352,8 +372,8 @@ export default {
           margin-top: 12px;
           margin-left: 2%;
           border-bottom: 0.5px solid #DEDEDE;
-          color: #999999;
           font-size: 12px;
+          padding-left: 4px;
           &:-ms-input-placeholder {
             color: #999999;
           }
@@ -367,7 +387,6 @@ export default {
       .content {
         display: flex;
         margin-top: 12px;
-        color: #999999;
 
         .img-backgro {
           width: 20px;
@@ -383,7 +402,6 @@ export default {
           margin-left: 5px;
           border-bottom: 0.5px solid #DEDEDE;
           border-radius: 0;
-          color: #999999;
           font-size: 12px;
           &:-ms-input-placeholder {
             color: #999999;
@@ -402,16 +420,6 @@ export default {
           font-size: 12px;
         }
 
-        // input {
-        //   border: none;
-        //   outline: none;
-        //   width: 108px;
-        //   border-bottom: 0.5px solid #DEDEDE;
-        //   background: #fff;
-        //   border-radius: 0;
-        //   font-size: 11px;
-        // }
-
         select {
           border: none;
           outline: none;
@@ -422,6 +430,7 @@ export default {
           appearance:none;
           background: url("../assets/images/arrow_down.png") no-repeat scroll right center transparent;
           background-size: 10px 5px;
+          padding-left: 5px;
         }
       }
     

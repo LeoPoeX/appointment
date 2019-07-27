@@ -54,11 +54,7 @@ export default {
   methods: {
     useqrcode(){
       var canvas = document.getElementById('canvas')
-      QRCode.toCanvas(canvas, 'https://visitor-frontend.fookwood.com', function (error) {
-        if (error) {
-          console.error(error)
-        }
-      })
+      QRCode.toCanvas(canvas, 'https://visitor-frontend.fookwood.com' )
     }
   },
   mounted () {

@@ -1,21 +1,16 @@
 import Vue from 'vue';
 import router from "./router";
 import App from './App';
-import MintUI from 'mint-ui';
-import 'mint-ui/lib/style.css';
-import { List, Sticky, Tab, Tabs  } from 'vant';
-import { Popup } from 'vant';
-import { DatetimePicker } from 'vant';
-import { Field } from 'vant';
+import { Overlay, Field, Popup, DatetimePicker, List, Tab, Tabs  } from 'vant';
 
-Vue.use(Field);
-Vue.use(Popup);
-Vue.use(DatetimePicker);
-
-Vue.use(List);
-Vue.use(Sticky);
-Vue.use(Tab).use(Tabs);
-Vue.use(MintUI)
+Vue
+  .use(List)
+  .use(Tab)
+  .use(Tabs)
+  .use(Field)
+  .use(Popup)
+  .use(DatetimePicker)
+  .use(Overlay)
 
 Vue.config.productionTip = false
 
