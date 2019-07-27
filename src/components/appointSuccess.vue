@@ -19,8 +19,7 @@
           <p class="appoinsuccess-text">预约成功！</p>
         </div>
         <!-- 二维码 -->
-        <div class="appoinsuccess-QR">
-          <canvas id="canvas"></canvas>
+        <div id="qrcode">
         </div>
 
         <div class="appoinsuccess-footer">
@@ -45,21 +44,27 @@
 </template>
 
 <script>
-import QRCode from 'qrcode'
+import QRCode from 'qrcodejs2'
 export default {
   name: 'appoinsuccess',
   components: {
     QRCode: QRCode
   },
-  methods: {
-    useqrcode(){
-      var canvas = document.getElementById('canvas')
-      QRCode.toCanvas(canvas, 'https://visitor-frontend.fookwood.com' )
-    }
-  },
   mounted () {
-    this.useqrcode()
-  }
+    this.qrcode();
+    console.dir(this.info);
+  },
+  methods: {
+    qrcode() {
+      let qrcode = new QRCode('qrcode', {
+        width: 160,  
+        height: 160,
+        text: 'https://visitor-frontend.fookwood.com', // 二维码地址
+        colorDark : "#1678E5",
+        colorLight : "#fff",
+      })
+    },
+  },
 }
 </script>
 
@@ -127,13 +132,12 @@ export default {
         }
       }
 
-      .appoinsuccess-QR {
-        padding: 0 25%;
+      #qrcode {
+        padding: 40px 25%;
         text-align: center;
-
-        #canvas {
-          width: 160px;
-          height: 160px;
+        img {
+          display: inline-block !important;
+          background: #fff;
         }
       }
 
