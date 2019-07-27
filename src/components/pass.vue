@@ -45,15 +45,17 @@ export default {
     },
     info: {
       type: Object,
-      default: {}
+      default: function() {
+        return {};
+      }
     }
   },
   mounted () {
-    this.qrcode();
+    this.renderQrcode();
   },
   methods: {
-    qrcode() {
-      let qrcode = new QRCode('qrcode', {
+    renderQrcode() {
+      return QRCode('qrcode', {
         width: 160,  
         height: 160,
         text: 'https://visitor-frontend.fookwood.com', // 二维码地址

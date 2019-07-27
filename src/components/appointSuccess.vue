@@ -51,12 +51,11 @@ export default {
     QRCode: QRCode
   },
   mounted () {
-    this.qrcode();
-    console.dir(this.info);
+    this.renderQrcode();
   },
   methods: {
-    qrcode() {
-      let qrcode = new QRCode('qrcode', {
+    renderQrcode() {
+      return new QRCode('qrcode', {
         width: 160,  
         height: 160,
         text: 'https://visitor-frontend.fookwood.com', // 二维码地址
