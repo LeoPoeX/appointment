@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import router from "./router";
 import App from './App';
-import { Overlay, Field, Popup, DatetimePicker, List, Tab, Tabs  } from 'vant';
+import { Overlay, Picker, Field, Popup, DatetimePicker, List, Tab, Tabs  } from 'vant';
 
 Vue
   .use(List)
@@ -11,6 +11,7 @@ Vue
   .use(Popup)
   .use(DatetimePicker)
   .use(Overlay)
+  .use(Picker)
 
 Vue.config.productionTip = false
 

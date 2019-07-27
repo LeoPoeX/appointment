@@ -18,8 +18,8 @@ export default {
           name: '待审核'
         },
         2: {
-          tag: 'audit',
-          name: '拒绝'
+          tag: 'refuse',
+          name: '已拒绝'
         },
         3: {
           tag: 'pass',
@@ -51,8 +51,13 @@ export default {
   top: 0;
   // 待审核标签
   &.audit-tag {
+    background: #FF9000;
+  }
+  // 已拒绝标签
+  &.refuse-tag {
     background: #FF0000;
   }
+
   // 待放行标签
   &.pass-tag {
     background: #00A83B;

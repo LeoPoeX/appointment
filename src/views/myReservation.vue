@@ -2,7 +2,7 @@
   <div class="box">
     <van-tabs v-model="active" sticky swipeable animated>
       <van-tab v-for="tab in tabs" :key="tab.key" :title="tab.title">
-        <List :tab="tab.key" :showPermitModal = "showPermitModal" />
+        <List :tab="tab.key" />
       </van-tab>
     </van-tabs>
 
@@ -15,15 +15,11 @@
       <img src="../assets/images/appointment.png" />我要预约
     </router-link>
 
-    <van-popup class="myPopup" v-model="show">
-      <Pass :closePermitModal = "closePermitModal" :info = "itemDetail" />
-    </van-popup>
   </div>
 </template>
 
 <script>
 import List from '../components/list';
-import Pass from '../components/pass'
 export default {
   name: 'MyReservation',
   data() {
@@ -38,23 +34,12 @@ export default {
       }],
       active: '0',
       list: [],
-      showCode: false,
-      show: false,
     }
   },
   components: {
-    List,
-    Pass
+    List
   },
   methods: {
-    showPermitModal(item) {
-      this.show = true;
-      this.itemDetail = item;
-    },
-    closePermitModal () {
-      this.show = false;
-      this.itemDetail = {};
-    }
   }
 }
 </script>
@@ -86,11 +71,6 @@ export default {
       height: 16px;
       margin-right: 10px;
     }
-  }
-
-  .myPopup {
-    background: 0;
-    width: 90%;
   }
 }
 

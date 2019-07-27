@@ -21,6 +21,12 @@ const routes = [
     meta: { title: '我要预约' }
   },
   {
+    path: "/pass",
+    name: "pass",
+    component: () => import("./components/pass.vue"),
+    meta: { title: '通行证' }
+  },
+  {
     path: "/appointSuccess",
     name: "appointSuccess",
     component: () => import("./components/appointSuccess.vue"),

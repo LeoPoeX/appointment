@@ -5,12 +5,12 @@
       <div class="yuyueTitle">预约详情</div>
       <div class="visitor">
         <div class="danhao">
-          <div class="odd">
-            <p>单号：</p>
+          <div class="appoin-oddNum">
+            <p class="">单号：</p>
             <p class="num">{{ draft.ticket_id }}</p>
           </div>
-          <div class="people">
-            <p>人数：</p>
+          <div class="appoin-oddNum">
+            <p class="">人数：</p>
             <p class="num">4 人</p>
           </div>
         </div>
@@ -91,14 +91,11 @@
 
         <div class="reasons">
           <p>选择来访事由：</p>
-          <select v-model="draft.reason">
-            <option value ="供应商来访">供应商来访</option>
-            <option value ="商务交流">商务交流</option>
-            <option value="客户来访">客户来访</option>
-            <option value="技术交流">技术交流</option>
-            <option value="其他">其他</option>
-          </select>
-          <!-- <input type="text" /> -->
+          <van-field class="appoin-reasonInfo" type="text" v-model="draft.reason" @click="openReason" readonly="readonly" />
+
+          <van-popup v-model="showReason" position="bottom" :overlay="true">
+            <van-picker show-toolbar :columns="columns" @cancel="closeReason" @confirm="confirmReason" />
+          </van-popup>
         </div>
 
       </div>
@@ -163,6 +160,8 @@ export default {
       startTimeText: '',
       endTimeText: '',
       draft: {},
+      showReason: false,
+      columns: ['供应商来访', '商务交流', '客户来访', '技术交流', '其他']
     }
   },
   created () {
@@ -194,6 +193,20 @@ export default {
       closeEndTimePop() {
         this.showEndTime = false;
       },
+    //来访事由
+    openReason () {
+      this.showReason = true
+    },
+      // 确定
+    confirmReason (value) {
+      this.draft.reason = value
+      this.closeReason()
+    },
+      // 取消
+    closeReason () {
+      this.showReason = false
+    },
+
     // 创建草稿
     createDraft() {
       axios({
@@ -238,9 +251,9 @@ export default {
       }
       return true;
     },
-
+    // 添加随员信息
     addTheObject () {
-      
+
     },
 
     // 提交
@@ -302,15 +315,18 @@ export default {
         line-height: 36px;
         font-size: 12px;
 
-        .odd {
+        .appoin-oddNum {
           width: 50%;
           display: flex;
-        }
+          &:last-child {
+            margin-left: 2%;
+          }
 
-        .people {
-          margin-left: 2%;
-          width: 50%;
-          display: flex;
+          p {
+            &:first-child {
+              padding-left: 4px;
+            }
+          }
         }
 
         .num {
@@ -327,6 +343,7 @@ export default {
           color: #999999;
           margin-left: 2%;
           margin-top: 12px;
+          position: relative;
           &:first-child {
             margin-left: 0;
           }
@@ -346,8 +363,8 @@ export default {
             width: 10px;
             position: absolute;
             z-index: 3;
-            top:25px;
-            left: 42%;
+            top: 13px;
+            right: 6px;
           }
         }
         
@@ -355,8 +372,8 @@ export default {
           width: 10px;
           position: absolute;
           z-index: 3;
-          top:25px;
-          right: 3%;
+          top: 13px;
+          right: 6px;
         }
       }
 
@@ -415,12 +432,17 @@ export default {
         margin-bottom: 6px;
 
         p {
-          margin: 0;
+          margin-top: 2px;
           color: #999999;
           font-size: 12px;
         }
 
-        select {
+        .appoin-reasonInfo {
+          width: 108px;
+          padding: 0;
+        }
+
+        input {
           border: none;
           outline: none;
           width: 108px;
@@ -430,7 +452,7 @@ export default {
           appearance:none;
           background: url("../assets/images/arrow_down.png") no-repeat scroll right center transparent;
           background-size: 10px 5px;
-          padding-left: 5px;
+          padding-left: 4px;
         }
       }
     

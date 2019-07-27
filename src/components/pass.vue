@@ -1,7 +1,8 @@
 <template>
+  <div class="pass-box">
     <!-- 内容 -->
     <div class="pass-content" >
-      <img class="pass-close" src="../assets/images/close.png" @click="closePermitModal" />
+      <router-link to="/"><img class="pass-close" src="../assets/images/close.png" /></router-link>
       <div class="pass-content-header">
         <p class="pass-details">预约单详情</p>
         <div class="pass-odd">
@@ -22,38 +23,37 @@
             <p class="pass-footcont pass-footname">手机号</p>
           </div>
           <div class="pass-footbox">
-            <p class="pass-footcont">{{info.visitor_name}}</p>
-            <p class="pass-footcont">{{Array.isArray(info.followers) ? info.followers.length : 1}}人</p>
+            <p class="pass-footcont">ahbf</p>
+            <p class="pass-footcont">1人</p>
             <p class="pass-footcont">15721064851</p>
           </div>
         </div>
-
       </div>
-      
-
     </div>
+  </div>
 </template>
 
 <script>
 import QRCode from 'qrcodejs2'
+import axios from 'axios'
 export default {
   name: 'Pass',
-  props: {
-    closePermitModal: {
-      type: Function,
-      default: () => {}
-    },
-    info: {
-      type: Object,
-      default: function() {
-        return {};
-      }
-    }
-  },
   mounted () {
     this.renderQrcode();
   },
   methods: {
+    // getList () {
+    //   const { params } = this.$route;
+    //   if (!params.id) return;
+
+    //   axios({
+    //     method:'get',
+    //     url: `/api/employee/appointment/${params.id}`,
+    //     headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+    //   }).then(({data}) => {
+    //     this.detailInfo = data
+    //   })
+    // },
     renderQrcode() {
       let qrcode = new QRCode('qrcode', {
         width: 160,  
@@ -69,48 +69,57 @@ export default {
 </script>
 
 <style lang="less">
-
-.pass-content {
+.pass-box {
+  background: #616161;
   width: 100%;
-  vertical-align: middle;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: table;
 
-  .pass-close {
-    display: block; 
-    float: right; 
-    width: 18px;
-    height: 18px;
-  }
+  .pass-content {
+    padding: 0 15px;
+    display: table-cell;
+    vertical-align: middle;
 
-  .pass-content-header {
-    background: url("../assets/images/permit.png") no-repeat;
-    background-size: 100% 100%;
-    padding: 7px 12px 7px 24px;
-    display: flex;
-    justify-content: space-between;
-    clear: both;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-
-    .pass-details {
-      color: #835B02;
-      line-height: 36px;
-      font-size: 15px;
+    .pass-close {
+      display: block; 
+      float: right; 
+      width: 18px;
+      height: 18px;
     }
 
-    .pass-odd {
-      text-align: right;
-      color: #815900;
-      font-size: 12px;
-    }
-  }
+    .pass-content-header {
+      background: url("../assets/images/permit.png") no-repeat;
+      background-size: 100% 100%;
+      padding: 7px 12px 7px 24px;
+      display: flex;
+      justify-content: space-between;
+      clear: both;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
 
-  .pass-remain {
-    background: #FFFFFF;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+      .pass-details {
+        color: #835B02;
+        line-height: 36px;
+        font-size: 15px;
+      }
+
+      .pass-odd {
+        text-align: right;
+        color: #815900;
+        font-size: 12px;
+      }
+    }
+
+    .pass-remain {
+      background: #FFFFFF;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
 
       #qrcode {
-        padding: 40px 25%;
+        padding: 40px 0;
         text-align: center;
         img {
           display: inline-block !important;
@@ -118,34 +127,32 @@ export default {
         }
       }
 
-    .pass-footer {
-      padding: 12px 11px;
-      font-size: 12px;
+      .pass-footer {
+        padding: 12px 11px;
+        font-size: 12px;
 
-      .pass-footbox {
-        background: #FFFAF5;
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px solid #DDDDDD;
+        .pass-footbox {
+          background: #FFFAF5;
+          padding: 10px;
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 1px solid #DDDDDD;
 
-        &:last-child {
-          border-bottom: 0;
-        }
+          &:last-child {
+            border-bottom: 0;
+          }
 
-        .pass-footcont {
-          width: 30%;
-          text-align: center;
-          &.pass-footname {
-            color: #C6AA67;
+          .pass-footcont {
+            width: 30%;
+            text-align: center;
+            &.pass-footname {
+              color: #C6AA67;
+            }
           }
         }
       }
     }
-
   }
-  
 }
-
 </style>
 

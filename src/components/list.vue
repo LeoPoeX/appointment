@@ -1,53 +1,49 @@
 <template>
-  <div>
+  <van-list
+    v-model="loading"
+    :finished="finished"
+    :error.sync="error"
+    error-text="请求失败，点击重新加载"
+    finished-text="没有更多了"
+    @load="getList"
+  >
+    <div class="card-box" v-for="item in list" :key="item.id" >
+      <div class="card-header">
+        <Tag :state="item.state"/>
+        <span
+          :class="`show-permit ${item.state}`"
+          @click="showPermit"
+        >查看通行证</span>
+      </div>
 
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      :error.sync="error"
-      error-text="请求失败，点击重新加载"
-      finished-text="没有更多了"
-      @load="getList"
-    >
-      <div class="card-box" v-for="item in list" :key="item.id" >
-        <div class="card-header">
-          <Tag :state="item.state"/>
-          <span
-            :class="`show-permit ${item.state}`"
-            @click="showPermitModal(item)"
-          >查看通行证</span>
+      <div :class="`card-content ${item.state === 4 ? 'over-box' : ''}`" @click="showDetails(item.id)">
+        <div class="appoint-info">
+          <img class="appoint-icon" src="../assets/images/name.png" />
+          <span class="appoint-name">姓名：</span>
+          <p class="appoint-desc user">{{ item.visitor_name }}</p>
         </div>
-
-        <div :class="`card-content ${item.state === 4 ? 'over-box' : ''}`" @click="showDetails(item.id)">
-          <div class="appoint-info">
-            <img class="appoint-icon" src="../assets/images/name.png" />
-            <span class="appoint-name">姓名：</span>
-            <p class="appoint-desc user">{{ item.visitor_name }}</p>
-          </div>
-          <div class="appoint-info">
-            <img class="appoint-icon" src="../assets/images/firm.png" />
-            <span class="appoint-name">单位：</span>
-            <p class="appoint-desc">{{ item.visitor_organization }}</p>
-          </div>
-          <div class="appoint-info">
-            <img class="appoint-icon" src="../assets/images/followers.png" />
-            <span class="appoint-name">随行：</span>
-            <p class="appoint-desc">{{ Array.isArray(item.followers) ? item.followers.join('/') : '' }} </p>
-          </div>
-          <div class="appoint-info">
-            <img class="appoint-icon" src="../assets/images/date.png" />
-            <span class="appoint-name appoint-date">来访日期：</span>
-            <p class="appoint-desc time">
-              {{ item.start_time ? getTime(item.start_time) : ''}}
-              ～
-              {{ item.end_time ? getTime(item.end_time) : '' }}
-            </p>
-          </div>
+        <div class="appoint-info">
+          <img class="appoint-icon" src="../assets/images/firm.png" />
+          <span class="appoint-name">单位：</span>
+          <p class="appoint-desc">{{ item.visitor_organization }}</p>
+        </div>
+        <div class="appoint-info">
+          <img class="appoint-icon" src="../assets/images/followers.png" />
+          <span class="appoint-name">随行：</span>
+          <p class="appoint-desc">{{ Array.isArray(item.followers) ? item.followers.join('/') : '' }} </p>
+        </div>
+        <div class="appoint-info">
+          <img class="appoint-icon" src="../assets/images/date.png" />
+          <span class="appoint-name appoint-date">来访日期：</span>
+          <p class="appoint-desc time">
+            {{ item.start_time ? getTime(item.start_time) : ''}}
+            ～
+            {{ item.end_time ? getTime(item.end_time) : '' }}
+          </p>
         </div>
       </div>
-    </van-list>
-    
-  </div>
+    </div>
+  </van-list>
 </template>
 
 <script>
@@ -57,8 +53,7 @@ import utils from '../utils.js';
 export default {
   name: 'Card',
   props: {
-    tab: String,
-    showPermitModal: Function
+    tab: String
   },
   data() {
     return {
@@ -93,6 +88,11 @@ export default {
     getTime (Gotime) {
       let time = utils.parseTime(Gotime, 'yyyy-MM-dd hh:mm');
       return time;
+    },
+    // 查看通行证
+    showPermit(e) {
+      e.stopPropagation();
+      this.$router.push({ path: '/pass' });
     },
     // 查看详情
     showDetails(id) {
