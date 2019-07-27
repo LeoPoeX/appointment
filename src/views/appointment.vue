@@ -1,6 +1,7 @@
 <template>
   <div class="index-box">
     <!-- 预约详情 -->
+    
     <div class="details">
       <div class="yuyueTitle">预约详情</div>
       <div class="visitor">
@@ -143,6 +144,10 @@
     <div class="submit">
       <button @click="submit">立即提交</button>
     </div>
+
+    <van-popup v-model="loading" class="appoin-popup">
+      <van-loading />
+    </van-popup>
   </div>
 </template>
 
@@ -161,6 +166,7 @@ export default {
       endTimeText: '',
       draft: {},
       showReason: false,
+      loading: true,
       columns: ['供应商来访', '商务交流', '客户来访', '技术交流', '其他']
     }
   },
@@ -219,7 +225,7 @@ export default {
           start_time: data.start_time ? new Date(data.start_time) : new Date(),
           end_time: data.end_time ? new Date(data.end_time) : new Date(),
         };
-        
+        this.loading = false
       })
     },
     // 提交前校验
@@ -486,6 +492,10 @@ export default {
       border-radius: 36px;
       background-image: linear-gradient(1deg, #FACE83 0%, #F6AE3A 100%);
     }
+  }
+
+  .appoin-popup {
+    background: 0;
   }
 
 }
