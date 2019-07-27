@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import router from "./router";
 import App from './App';
-import { Loading, Picker, Field, Popup, DatetimePicker, List, Tab, Tabs  } from 'vant';
+import { NumberKeyboard, Loading, Picker, Field, Popup, DatetimePicker, List, Tab, Tabs, PullRefresh } from 'vant';
 
 Vue
   .use(List)
+  .use(PullRefresh)
   .use(Tab)
   .use(Tabs)
   .use(Field)
@@ -12,6 +13,7 @@ Vue
   .use(DatetimePicker)
   .use(Picker)
   .use(Loading)
+  .use(NumberKeyboard)
 
 Vue.config.productionTip = false
 

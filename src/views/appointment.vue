@@ -61,8 +61,15 @@
 
 
         <div class="receiver">
-          <input type="text" placeholder="接待人（必填）" v-model="draft.employee_name" />
-          <input type='number' pattern="[0-9]*" placeholder="接待人电话（必填）" v-model="draft.employee_phone" />
+          <input class="appoin-rece" type="text" placeholder="接待人（必填）" v-model="draft.employee_name" />
+          <!-- <input class="appoin-rece" type='number' @touchstart.stop="show = true" placeholder="接待人电话（必填）" v-model="draft.employee_phone" /> -->
+          <van-field
+            readonly="readonly"
+            clickable
+            class="appoin-rece"
+            v-model="draft.employee_phone"
+            placeholder="接待人电话（必填）"
+          />
         </div>
 
         <div class="content">
@@ -72,7 +79,21 @@
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type='number' pattern="[0-9]*" placeholder="电话（必填）" v-model="draft.visitor_phone" />
+          <van-field
+            readonly
+            clickable
+            class="appoin-inp"
+             v-model="visitor_phone"
+            placeholder="电话（必填）"
+            @touchstart.native.stop="showVisPhone = true"
+          />
+
+          <van-number-keyboard
+            v-model="visitor_phone"
+            :show="showVisPhone"
+            :maxlength="11"
+            @blur="showVisPhone = false"
+          />
         </div>
 
         <div class="content">
@@ -92,7 +113,13 @@
 
         <div class="reasons">
           <p>选择来访事由：</p>
-          <van-field class="appoin-reasonInfo" type="text" v-model="draft.reason" @click="openReason" readonly="readonly" />
+          <van-field 
+            class="appoin-reasonInfo" 
+            type="text" 
+            v-model="draft.reason"
+            @click="openReason" 
+            readonly="readonly" 
+          />
 
           <van-popup v-model="showReason" position="bottom" :overlay="true">
             <van-picker show-toolbar :columns="columns" @cancel="closeReason" @confirm="confirmReason" />
@@ -110,12 +137,26 @@
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/name.png" />
-          <input type="text" placeholder="姓名（必填）" v-model="uer.name" />
+          <input type="text" placeholder="姓名（必填）" v-model="user.name" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <input type='number' pattern="[0-9]*" placeholder="电话（必填）" v-model="user.phone" />
+          <van-field
+            readonly
+            clickable
+            class="appoin-inp"
+            :value="phone"
+            placeholder="电话（必填）"
+            @touchstart.native.stop="showUserPhone = true"
+          />
+
+          <van-number-keyboard
+            v-model="phone"
+            :show="showUserPhone"
+            :maxlength="11"
+            @blur="showUserPhone = false"
+          />
         </div>
 
         <div class="content">
@@ -145,9 +186,6 @@
       <button @click="submit">立即提交</button>
     </div>
 
-    <van-popup v-model="loading" class="appoin-popup">
-      <van-loading />
-    </van-popup>
   </div>
 </template>
 
@@ -160,13 +198,16 @@ export default {
   name: 'Appointment',
   data () {
     return {
-      showStartTime: false,
-      showEndTime: false,
-      startTimeText: '',
-      endTimeText: '',
+      showStartTime: false,   //显示到达时间弹窗
+      showEndTime: false,     //显示离开时间弹窗
+      startTimeText: '',  //到达时间
+      endTimeText: '',    //离开时间
       draft: {},
-      showReason: false,
-      loading: true,
+      showReason: false,  //显示来访事由弹窗
+      showVisPhone: false,       //显示数字键盘
+      showUserPhone: false,
+      visitor_phone: '',
+      phone: '',
       columns: ['供应商来访', '商务交流', '客户来访', '技术交流', '其他']
     }
   },
@@ -215,6 +256,14 @@ export default {
 
     // 创建草稿
     createDraft() {
+      // 加载数据
+      const toast = Toast.loading({
+        duration: 0,       // 持续展示 toast
+        forbidClick: true, // 禁用背景点击
+        loadingType: 'spinner',
+        message: '加载中...'
+      });
+
       axios({
         method:'get',
         url: '/api/employee/draft',
@@ -225,15 +274,23 @@ export default {
           start_time: data.start_time ? new Date(data.start_time) : new Date(),
           end_time: data.end_time ? new Date(data.end_time) : new Date(),
         };
-        this.loading = false
+        toast.clear();
+      }).catch(() => {
+        toast.clear();
       })
     },
     // 提交前校验
     validateBeforeSubmit() {
-      if (!this.draft.visitor_name) {
+      if (!this.startTimeText) {
+        Toast('请输入到达时间');
+        return false;
+      } else if (!this.endTimeText) {
+        Toast('请输入离开时间');
+        return false;
+      } else if (!this.draft.visitor_name) {
         Toast('请输入来访者姓名');
         return false;
-      } else if (!this.draft.visitor_phone) {
+      } else if (!this.visitor_phone) {
         Toast('请输入来访者电话');
         return false;
       } else if (!this.draft.visitor_position) {
@@ -242,24 +299,33 @@ export default {
       } else if (!this.draft.visitor_organization) {
         Toast('请输入来访者公司');
         return false;
-      } else if (!this.user.name) {
-        Toast('请输入随从名字');
-        return false;
-      } else if (!this.user.phone) {
-        Toast('请输入随从电话');
-        return false;
-      } else if (!this.user.position) {
-        Toast('请输入随从职位');
-        return false;
-      } else if (!this.user.organization) {
-        Toast('请输入随从公司');
+      } else if (!this.draft.reason) {
+        Toast('请输入来访事由');
         return false;
       }
+
+      for (let i = 0; i <this.draft.followers.length; i++) {
+        let user = this.draft.followers[i];
+        if (!user.name) {
+          Toast('请输入随从姓名');
+          return false;
+        } else if (!user.phone) {
+          Toast('请输入随从电话');
+          return false;
+        } else if (!user.position) {
+          Toast('请输入随从职位');
+          return false;
+        } else if (!user.organization) {
+          Toast('请输入随从公司');
+          return false;
+        }
+      }
       return true;
+
     },
     // 添加随员信息
     addTheObject () {
-
+      this.draft.followers.push({});
     },
 
     // 提交
@@ -271,10 +337,10 @@ export default {
         url: '/api/employee/appointment',
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
         data: {
-          start_time: this.selectedValue,
-          end_time: this.selectedLeaveValue,
+          start_time: this.startTimeText.getTime(),
+          end_time: this.endTimeText.getTime(),
           visitor_name: this.draft.visitor_name,
-          visitor_phone: this.draft.visitor_phone,
+          visitor_phone: this.visitor_phone,
           visitor_position: this.draft.visitor_position,
           visitor_organization: this.draft.visitor_organization,
           visitor_car_number: this.draft.visitor_car_number
@@ -386,7 +452,7 @@ export default {
       .receiver {
         display: flex;
 
-        input {
+        .appoin-rece {
           width: 49%;
           line-height: 36px;
           border: 0;
@@ -397,9 +463,7 @@ export default {
           border-bottom: 0.5px solid #DEDEDE;
           font-size: 12px;
           padding-left: 4px;
-          &:-ms-input-placeholder {
-            color: #999999;
-          }
+          padding: 0;
 
           &:first-child {
             margin-left: 0;
@@ -417,6 +481,11 @@ export default {
           background: #ffffff;
           border-radius: 50%;
           margin-bottom: 5px;
+        }
+
+        .appoin-inp {
+          border: 0;
+          padding: 0;
         }
 
         input {
@@ -492,10 +561,6 @@ export default {
       border-radius: 36px;
       background-image: linear-gradient(1deg, #FACE83 0%, #F6AE3A 100%);
     }
-  }
-
-  .appoin-popup {
-    background: 0;
   }
 
 }

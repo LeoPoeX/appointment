@@ -6,10 +6,10 @@ Vue.use(Router);
 const routes = [
   {
     path: '*',
-    redirect: '/home'
+    redirect: '/list'
   },
   {
-    path: "/home",
+    path: "/list",
     name: "home",
     component: () => import("./views/myReservation.vue"),
     meta: { title: '我的预约' }
@@ -21,8 +21,8 @@ const routes = [
     meta: { title: '我要预约' }
   },
   {
-    path: "/pass",
-    name: "pass",
+    path: "/permit",
+    name: "permit",
     component: () => import("./components/pass.vue"),
     meta: { title: '通行证' }
   },

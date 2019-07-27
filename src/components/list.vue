@@ -1,49 +1,51 @@
 <template>
-  <van-list
-    v-model="loading"
-    :finished="finished"
-    :error.sync="error"
-    error-text="请求失败，点击重新加载"
-    finished-text="没有更多了"
-    @load="getList"
-  >
-    <div class="card-box" v-for="item in list" :key="item.id" >
-      <div class="card-header">
-        <Tag :state="item.state"/>
-        <span
-          :class="`show-permit ${item.state}`"
-          @click="showPermit"
-        >查看通行证</span>
-      </div>
+  <van-pull-refresh v-model="isPulling" @refresh="onPullRefresh">
+    <van-list
+      v-model="isLoading"
+      :finished="isFinished"
+      :error.sync="error"
+      error-text="请求失败，点击重新加载"
+      finished-text="没有更多了"
+      @load="getList"
+    >
+      <div class="card-box" v-for="item in list" :key="item.id" >
+        <div class="card-header">
+          <Tag :state="item.state"/>
+          <span
+            :class="`show-permit ${item.state}`"
+            @click="showPermit"
+          >查看通行证</span>
+        </div>
 
-      <div :class="`card-content ${item.state === 4 ? 'over-box' : ''}`" @click="showDetails(item.id)">
-        <div class="appoint-info">
-          <img class="appoint-icon" src="../assets/images/name.png" />
-          <span class="appoint-name">姓名：</span>
-          <p class="appoint-desc user">{{ item.visitor_name }}</p>
-        </div>
-        <div class="appoint-info">
-          <img class="appoint-icon" src="../assets/images/firm.png" />
-          <span class="appoint-name">单位：</span>
-          <p class="appoint-desc">{{ item.visitor_organization }}</p>
-        </div>
-        <div class="appoint-info">
-          <img class="appoint-icon" src="../assets/images/followers.png" />
-          <span class="appoint-name">随行：</span>
-          <p class="appoint-desc">{{ Array.isArray(item.followers) ? item.followers.join('/') : '' }} </p>
-        </div>
-        <div class="appoint-info">
-          <img class="appoint-icon" src="../assets/images/date.png" />
-          <span class="appoint-name appoint-date">来访日期：</span>
-          <p class="appoint-desc time">
-            {{ item.start_time ? getTime(item.start_time) : ''}}
-            ～
-            {{ item.end_time ? getTime(item.end_time) : '' }}
-          </p>
+        <div :class="`card-content ${item.state === 4 ? 'over-box' : ''}`" @click="showDetails(item.id)">
+          <div class="appoint-info">
+            <img class="appoint-icon" src="../assets/images/name.png" />
+            <span class="appoint-name">姓名：</span>
+            <p class="appoint-desc user">{{ item.visitor_name }}</p>
+          </div>
+          <div class="appoint-info">
+            <img class="appoint-icon" src="../assets/images/firm.png" />
+            <span class="appoint-name">单位：</span>
+            <p class="appoint-desc">{{ item.visitor_organization }}</p>
+          </div>
+          <div class="appoint-info">
+            <img class="appoint-icon" src="../assets/images/followers.png" />
+            <span class="appoint-name">随行：</span>
+            <p class="appoint-desc">{{ Array.isArray(item.followers) ? item.followers.join('/') : '' }} </p>
+          </div>
+          <div class="appoint-info">
+            <img class="appoint-icon" src="../assets/images/date.png" />
+            <span class="appoint-name appoint-date">来访日期：</span>
+            <p class="appoint-desc time">
+              {{ item.start_time ? getTime(item.start_time) : ''}}
+              ～
+              {{ item.end_time ? getTime(item.end_time) : '' }}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </van-list>
+    </van-list>
+  </van-pull-refresh>
 </template>
 
 <script>
@@ -58,29 +60,43 @@ export default {
   data() {
     return {
       list: [],
-      loading: false,
-      error: false,
-      finished: false
+      offset: 0,
+      limit: 3,
+      isLoading: false, // 上拉刷新
+      isPulling: false, // 下拉刷新
+      isFinished: false, // 加载完毕
+      error: false // 是否加载失败，加载失败后点击错误提示可以重新。触发load事件，必须使用sync修饰符
     }
   },
   components: {
     Tag
   },
   methods: {
+    onPullRefresh () {
+      this.offset = 0;
+      this.isFinished = true; // 不写这句会导致你上拉到底过后在下拉刷新将不能触发下拉加载事件
+      this.getList(); // 加载数据
+    },
     getList () {
-      const params = Number(this.tab) !== 0 ? { state: '1,3', offset: 0, limit: 10 } : { offset: 0, limit: 10 }
+      let params = {
+        offset: this.offset,
+        limit: this.limit
+      }
+      if (Number(this.tab) !== 0) {
+        params.state = '1,3';
+      }
       axios({
         method:'get',
         url: `/api/employee/appointments`,
         params: params,
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
-      }).then(({data}) => {
-        if ( data.total > 0) {
-          this.list = data.list
-        }
+      }).then(({ data }) => {
+        this.list = this.offset > 0 ? [...this.list, ...data.list] : data.list;
+        this.offset = this.list.length;
         // 加载状态结束
-        this.loading = false;
-        this.finished = true;
+        this.isPulling = false;
+        this.isLoading = false;
+        this.isFinished = this.list.length === data.total;
       }).catch(() => {
         this.error = true;
       })
@@ -92,7 +108,7 @@ export default {
     // 查看通行证
     showPermit(e) {
       e.stopPropagation();
-      this.$router.push({ path: '/pass' });
+      this.$router.push({ path: '/permit' });
     },
     // 查看详情
     showDetails(id) {

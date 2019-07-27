@@ -86,7 +86,7 @@ export default {
           approved: true
         },
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
-      }).then(({data}) => {
+      }).then(() => {
         this.viaShow = true;
       })
       
@@ -101,7 +101,7 @@ export default {
           approved: false
         },
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
-      }).then(({data}) => {
+      }).then(() => {
         this.isShow = true;
       })
     },
