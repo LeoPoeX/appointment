@@ -23,7 +23,7 @@
           </div>
           <div class="pass-footbox">
             <p class="pass-footcont">{{info.visitor_name}}</p>
-            <p class="pass-footcont">{{info.followers.length}}人</p>
+            <p class="pass-footcont">{{Array.isArray(info.followers) ? info.followers.length : 1}}人</p>
             <p class="pass-footcont">15721064851</p>
           </div>
         </div>
