@@ -55,13 +55,14 @@ export default {
   },
   methods: {
     renderQrcode() {
-      return QRCode('qrcode', {
+      let qrcode = new QRCode('qrcode', {
         width: 160,  
         height: 160,
         text: 'https://visitor-frontend.fookwood.com', // 二维码地址
         colorDark : "#1678E5",
         colorLight : "#fff",
       })
+      return qrcode;
     },
   },
 }
