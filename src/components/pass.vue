@@ -50,7 +50,6 @@ export default {
   },
   mounted () {
     this.qrcode();
-    console.dir(this.info);
   },
   methods: {
     qrcode() {
