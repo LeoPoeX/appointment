@@ -337,14 +337,15 @@ export default {
         url: '/api/employee/appointment',
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
         data: {
-          start_time: this.startTimeText.getTime(),
-          end_time: this.endTimeText.getTime(),
+          start_time:  this.start_time.getTime(),
+          end_time: this.end_time.getTime(),
           visitor_name: this.draft.visitor_name,
           visitor_phone: this.visitor_phone,
           visitor_position: this.draft.visitor_position,
           visitor_organization: this.draft.visitor_organization,
-          visitor_car_number: this.draft.visitor_car_number
-
+          visitor_car_number: this.draft.visitor_car_number,
+          reason: this.draft.reason,
+          followers: []
         }
       }).then(() => {
         this.$router.push('/appointSuccess')
@@ -462,8 +463,8 @@ export default {
           margin-left: 2%;
           border-bottom: 0.5px solid #DEDEDE;
           font-size: 12px;
-          padding-left: 4px;
           padding: 0;
+          padding-left: 4px; 
 
           &:first-child {
             margin-left: 0;
@@ -531,6 +532,10 @@ export default {
         }
       }
     
+    }
+    .visitor + .visitor {
+      padding-top: 0;
+      border-top: 1px solid #ECECEC;
     }
 
     .PeopleInfo {
