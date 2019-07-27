@@ -4,7 +4,12 @@
 
 <script>
 export default {
-  props: ['state'],
+  props: {
+    state: {
+      type: Number,
+      default: 1,
+    }
+  },
   data() {
     return {
       auditStatus: {

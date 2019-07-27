@@ -181,9 +181,11 @@ export default {
         .details-date {
           margin-top: 7px;
           font-size: 11px;
+          color: #333333;
         }
         .details-hour {
           font-size: 17px;
+          color: #151515;
         }
       }
     }

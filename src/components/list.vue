@@ -35,7 +35,11 @@
         <div class="appoint-info">
           <img class="appoint-icon" src="../assets/images/date.png" />
           <span class="appoint-name appoint-date">来访日期：</span>
-          <p class="appoint-desc time">{{ item.start_time }}～{{ item.end_time }}</p>
+          <p class="appoint-desc time">
+            {{ item.start_time ? getTime(item.start_time) : ''}}
+            ～
+            {{ item.end_time ? getTime(item.end_time) : '' }}
+          </p>
         </div>
       </div>
     </div>
@@ -63,9 +67,6 @@ export default {
   components: {
     Tag
   },
-  created() {
-    // this.getList();
-  },
   methods: {
     getList () {
       const params = Number(this.tab) !== 0 ? { state: '1,3', offset: 0, limit: 10 } : { offset: 0, limit: 10 }
@@ -77,10 +78,6 @@ export default {
       }).then(({data}) => {
         if ( data.total > 0) {
           this.list = data.list
-          for (var i =0; i < this.list.length; i++ ) {
-            this.list[i].start_time = this.getTime(this.list[i].start_time)
-            this.list[i].end_time = this.getTime(this.list[i].end_time)
-          }
         }
         // 加载状态结束
         this.loading = false;

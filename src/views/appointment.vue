@@ -17,49 +17,32 @@
 
         <div class="GoTime">
           <!-- 到达时间 -->
-          <div class="appoint-timeBox" @click="selectData">
-            <p class="time" >{{ this.selectedValue }}</p>
+          <div class="appoint-timeBox" @click="openPopTime">
+            <van-field
+              class="time"
+              v-model="showStartTime"
+              placeholder="到达（必填）" 
+              readonly="readonly"
+            />
             <img class="appoin-icon" src="../assets/images/calendar.png"  />
+
+            <van-popup v-model="endTimePop" position="bottom" >
+              <van-datetime-picker
+                v-model="draft.start_time"
+                type="datetime"
+                @cancel="closePopTime"
+                @confirm="confirmTime"
+              />
+            </van-popup>
+
+            <!-- <p class="time" >{{ this.selectedValue }}</p> -->
           </div>
 
-          <div class="pickerPop" @touchmove.prevent>
-            <!-- 年月日时分选择 -->
-            <mt-datetime-picker
-              lockScroll="true"
-              ref="datePicker"
-              class="myPicker"
-              type="datetime"
-              v-model="arriveVal"
-              year-format="{value}"
-              month-format="{value}"
-              date-format="{value}"
-              hour-format="{value}"
-              minute-format="{value}"
-              @confirm="dateConfirm()">
-            </mt-datetime-picker>
-          </div>
             <!-- 离开时间 -->
-          <div class="appoint-timeBox" @click="selectLeaveData">
+          <!-- <div class="appoint-timeBox" @click="selectLeaveData">
             <p class="time">{{ this.selectedLeaveValue }}</p>
             <img class="appoin-leaveicon" src="../assets/images/calendar.png" />
-          </div>
-          
-          <div class="pickerPop" @touchmove.prevent>
-            <!-- 年月日时分选择 -->
-            <mt-datetime-picker
-              lockScroll="true"
-              ref="leaveDatePicker"
-              class="myPicker"
-              type="datetime"
-              v-model="leaveVal"
-              year-format="{value}"
-              month-format="{value}"
-              date-format="{value}"
-              hour-format="{value}"
-              minute-format="{value}"
-              @confirm="leaveDateConfirm()">
-            </mt-datetime-picker>
-          </div>
+          </div> -->
 
         </div>
 
@@ -157,22 +140,32 @@
 <script>
 import axios from 'axios';
 import {formatDateMin} from '../formatdate';
+import utils from '../utils';
 import { Toast } from 'vant';
 export default {
   name: 'Appointment',
   data () {
     return {
-      arriveVal: '', // 默认是当前日期
-      leaveVal: '',
-      selectedValue: '到达时间（必填）',
-      selectedLeaveValue: '离开时间（必填）',
-      draft: {}
+      endTimePop: false,
+      showStartTime: '',
+      draft: {},
     }
   },
   created () {
     this.createDraft()
   },
   methods: {
+    confirmTime(value) {
+      this.start_time = value;
+      this.showStartTime = utils.parseTime(value, 'yyyy-MM-dd hh:mm');
+      this.closePopTime();
+    },
+    openPopTime() {
+      this.endTimePop = true;
+    },
+    closePopTime() {
+      this.endTimePop = false;
+    },
     // 创建草稿
     createDraft() {
       axios({
@@ -180,7 +173,11 @@ export default {
         url: '/api/employee/draft',
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
       }).then(({ data }) => {
-        this.draft = data;
+        this.draft = {
+          ...data,
+          start_time: data.start_time ? new Date(data.start_time) : new Date()
+        };
+        
       })
     },
     // 提交前校验
@@ -305,17 +302,6 @@ export default {
         display: flex;
         position: relative;
 
-        .pickerPop{
-          .picker{
-            .picker-toolbar{
-              background-color: #eee;
-              .mint-datetime-action{
-                color: #000!important;
-              }
-            }
-          }
-        }
-
         .appoint-timeBox {
           width:49%;
           color: #999999;
@@ -331,6 +317,8 @@ export default {
             border: 0;
             background: #FFFAF5;
             border-bottom: 0.5px solid #DEDEDE;
+            font-size: 12px;
+            padding: 0;
 
           }
           .appoin-icon {

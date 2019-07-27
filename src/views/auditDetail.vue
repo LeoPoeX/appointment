@@ -4,7 +4,7 @@
     <Details :info="detailInfo" />
 
     <!-- 尾部 -->
-    <footer class="audit-audit" v-if="">
+    <footer class="audit-audit" v-if="detailInfo.state === 1">
       <div class="audit-auditbox">
         <!-- 通过 -->
         <div class="audit-YoN" @click="viaModal">
