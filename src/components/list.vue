@@ -75,12 +75,12 @@ export default {
         params: params,
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
       }).then(({data}) => {
-        if ( data.length > 0) {
-          this.list = data
-          // for (var i =0; i < this.list.length; i++ ) {
-          //   this.list[i].start_time = new Date(+new Date(this.list[i].start_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
-          //   this.list[i].end_time = new Date(+new Date(this.list[i].end_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
-          // }
+        if ( data.total > 0) {
+          this.list = data.list
+          for (var i =0; i < this.list.length; i++ ) {
+            this.list[i].start_time = this.getTime(this.list[i].start_time)
+            this.list[i].end_time = this.getTime(this.list[i].end_time)
+          }
         }
         // 加载状态结束
         this.loading = false;

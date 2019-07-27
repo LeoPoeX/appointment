@@ -4,7 +4,7 @@
     <Details :info="detailInfo" />
 
     <!-- 尾部 -->
-    <footer class="audit-audit">
+    <footer class="audit-audit" v-if="">
       <div class="audit-auditbox">
         <!-- 通过 -->
         <div class="audit-YoN" @click="viaModal">
@@ -33,6 +33,7 @@
 import Details from '../components/details';
 import Modal from '../components/modal';
 import axios from 'axios';
+import utils from '../utils';
 export default {
   data () {
     return {
@@ -69,8 +70,10 @@ export default {
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
       }).then(({data}) => {
         this.detailInfo = data
-        this.detailInfo.start_time = new Date(+new Date(this.detailInfo.start_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
-        this.detailInfo.end_time = new Date(+new Date(this.detailInfo.end_time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'')
+        this.detailInfo.start_day = utils.parseTime(this.detailInfo.start_time, 'yyyy-MM-dd');
+        this.detailInfo.end_day = utils.parseTime(this.detailInfo.end_time, 'yyyy-MM-dd');
+        this.detailInfo.start_time = utils.parseTime(this.detailInfo.start_time, 'hh:mm');
+        this.detailInfo.end_time = utils.parseTime(this.detailInfo.end_time, 'hh:mm');
       })
     },
     viaModal () {

@@ -6,18 +6,20 @@
         <Tag :state="info.state" class="details-tag" />
         <div class="details-time">
           <p class="details-timeDesc">到达时间</p>
-          <p class="details-date">{{ info.start_time }}</p>
+          <p class="details-date">{{ info.start_day }}</p>
+          <p class="details-hour">{{ info.end_time }}</p>
         </div>
         <div class="details-symbol">~</div>
         <div class="details-time">
           <p class="details-timeDesc">离开时间</p>
-          <p class="details-date">{{ info.end_time }}</p>
+          <p class="details-date">{{ info.end_day }}</p>
+          <p class="details-hour">{{ info.end_time }}</p>
         </div>
       </div>
 
       <!-- 预约详情 -->
       <div class="details-info">
-        <p class="details-oddnum">预约单号：YY19000145</p>
+        <p class="details-oddnum">预约单号：{{ info.ticket_id }}</p>
         
         <div class="details-row">
           <div class="details-desc">
@@ -178,10 +180,10 @@ export default {
         }
         .details-date {
           margin-top: 7px;
-          font-size: 13px;
+          font-size: 11px;
         }
         .details-hour {
-          font-size: 15px;
+          font-size: 17px;
         }
       }
     }
@@ -192,7 +194,7 @@ export default {
         line-height: 30px;
         background: #FFFAF5;
         color: #FF8800;
-        font-size: 14px;
+        font-size: 12px;
         text-align: center;
       }
       // 每行信息
@@ -200,7 +202,7 @@ export default {
         display: flex;
         margin-top: 15px;
         line-height: 20px;
-        font-size: 14px;
+        font-size: 13px;
 
         .details-desc{
           width: 50%;
@@ -246,10 +248,10 @@ export default {
           transform: rotate(270deg);
           display: inline-block;
           position: absolute;
-          top: 0;
+          top: 1px;
           left: 4px;
           color: #fff;
-          font-size: 12px;
+          font-size: 11px;
         }
       }
       // 信息内容
