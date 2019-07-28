@@ -49,52 +49,48 @@
             />
           </div>
           <div class="appoint-box">
-            <van-field
-              class="appoint-content"
-              v-model="draft.employee_phone"
-              placeholder="接待人电话（必填）"
+            <input 
+              v-model="draft.employee_phone" 
+              class="appoint-content" 
+              type="number"
+              oninput="if(value.length>11) value=value.slice(0,11),value=value.replace(/[^\d]/g,'')"
+              maxlength="11"
+              placeholder="接待人电话（必填）" 
             />
           </div>
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/name.png" />
-          <input type="text" placeholder="来访姓名（必填）" v-model="draft.visitor_name" />
+          <input type="text" placeholder="来访姓名（必填）" v-model="draft.visitor_name" @blur.prevent="saveDraft" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/tel.png" />
-          <van-field
-            readonly
-            clickable
-            class="appoin-inp"
-            :value="draft.visitor_phone"
-            placeholder="电话（必填）"
-            @touchstart.native.stop="showVisPhone = true"
-          />
-            <!-- 数字键盘弹窗 -->
-          <van-number-keyboard
+          <input
             v-model="draft.visitor_phone"
-            :show="showVisPhone"
-            :maxlength="11"
-            close-button-text="完成"
-            @blur="showVisPhone = false"
+            type="number"
+            oninput="if(value.length>11) value=value.slice(0,11),value=value.replace(/[^\d]/g,'')"
+            maxlength="11"
+            placeholder="电话（必填）"
+            @blur.prevent="saveDraft"
           />
+
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/post.png" />
-          <input type="text" placeholder="职位（必填）" v-model="draft.visitor_position" />
+          <input type="text" placeholder="职位（必填）" v-model="draft.visitor_position" @blur.prevent="saveDraft" />
         </div>
 
         <div class="content">
           <img  class="img-backgro" src="../assets/images/firm.png" />
-          <input type="text" placeholder="公司（必填）" v-model="draft.visitor_organization" />
+          <input type="text" placeholder="公司（必填）" v-model="draft.visitor_organization" @blur.prevent="saveDraft" />
         </div>
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/car.png" />
-          <input type="text" placeholder="车牌（选填）" v-model="draft.visitor_car_number" />
+          <input type="text" placeholder="车牌（选填）" v-model="draft.visitor_car_number" @blur.prevent="saveDraft" />
         </div>
 
         <div class="reasons">
@@ -106,10 +102,6 @@
             @click="openReason" 
             readonly="readonly" 
           />
-            <!-- 来访事由弹窗 -->
-          <van-popup v-model="showReason" position="bottom" :overlay="true">
-            <van-picker show-toolbar :columns="columns" @cancel="closeReason" @confirm="confirmReason" />
-          </van-popup>
         </div>
 
       </div>
@@ -119,18 +111,22 @@
     <div class="details">
       <div class="yuyueTitle" v-if="draft.followers.length">填写随员信息</div>
 
-      <Followers :followers="draft.followers" />
+      <Followers :followers="draft.followers" :saveDraft="saveDraft" />
 
-      <div class="PeopleInfo" :class="draft.followers.length ? '' : 'no-user'" @click="addTheObject">
+      <div class="PeopleInfo" :class="draft.followers.length ? '' : 'no-user'" @click="addNewVistor">
         <p>添加随员信息</p>
       </div>
       
     </div>
 
     <div class="submit">
-      <button @click.stop="submit(draft)">立即提交</button>
+      <button @click.stop="submit">立即提交</button>
     </div>
-
+    
+    <!-- 来访事由弹窗 -->
+    <van-popup v-model="showReason" position="bottom" :overlay="true">
+      <van-picker show-toolbar :columns="columns" @cancel="closeReason" @confirm="confirmReason" />
+    </van-popup>
 
     <!-- 时间弹窗 -->
     <van-popup v-model="timePopup.visible" position="bottom">
@@ -164,9 +160,6 @@ export default {
         followers: []
       },
       showReason: false,  //显示来访事由弹窗
-      showVisPhone: false,       //显示数字键盘
-      showUserPhone: false,
-      visitor_phone: '',
       columns: ['供应商来访', '商务交流', '客户来访', '技术交流', '其他']
     }
   },
@@ -207,7 +200,7 @@ export default {
     },
     confrimDatePop(value) {
       const key = this.timePopup.key
-      this.draft[key] = value;
+      this.draft[key] = value.getTime();
       this.closeDatePop();
       this.saveDraft();
     },
@@ -215,7 +208,8 @@ export default {
     //来访事由
     confirmReason (value) {
       this.draft.reason = value
-      this.closeReason()
+      this.closeReason();
+      this.saveDraft();
     },
     openReason () {
       this.showReason = true
@@ -224,18 +218,18 @@ export default {
       this.showReason = false
     },
     // 暂存预约单
-    saveDraft() {
+    saveDraft: utils.debounce(function() {
       axios({
         method:'post',
         url: '/api/employee/draft',
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
         data: {
           ...this.draft,
-          start_time: this.draft.start_time ? this.draft.start_time.getTime() : null,
-          end_time: this.draft.end_time ? this.draft.end_time.getTime() : null
+          start_time: this.draft.start_time || null,
+          end_time: this.draft.end_time || null
         }
       })
-    },
+    }),
     // 获取草稿
     getDraft() {
       // 加载数据
@@ -261,17 +255,30 @@ export default {
     },
     // 提交前校验
     validateBeforeSubmit() {
+      var reg = /^1[3456789]\d{9}$/;
       if (!this.draft.start_time) {
         Toast('请输入到达时间');
         return false;
       } else if (!this.draft.end_time) {
         Toast('请输入离开时间');
         return false;
+      } else if (!this.draft.employee_name) {
+        Toast('请输入接待人姓名');
+        return false;
+      } else if (!this.draft.employee_phone) {
+        Toast('请输入接待人电话');
+        return false;
+      } else if (!reg.test(this.draft.employee_phone)) {
+        Toast('接待人手机号格式不正确');
+        return false;
       } else if (!this.draft.visitor_name) {
         Toast('请输入来访者姓名');
         return false;
       } else if (!this.draft.visitor_phone) {
         Toast('请输入来访者电话');
+        return false;
+      } else if (!reg.test(this.draft.visitor_phone)) {
+        Toast('手机号格式不正确');
         return false;
       } else if (!this.draft.visitor_position) {
         Toast('请输入来访者职位');
@@ -287,16 +294,19 @@ export default {
       for (let i = 0; i <this.draft.followers.length; i++) {
         let user = this.draft.followers[i];
         if (!user.name) {
-          Toast('请输入随从姓名');
+          Toast('请输入随员姓名');
           return false;
         } else if (!user.phone) {
-          Toast('请输入随从电话');
+          Toast(`请输入随员${user.name}的电话`);
+          return false;
+        } else if (!reg.test(user.phone)) {
+          Toast(`随员${user.name}的手机号格式不正确`);
           return false;
         } else if (!user.position) {
-          Toast('请输入随从职位');
+          Toast(`请输入随员${user.name}的职位`);
           return false;
         } else if (!user.organization) {
-          Toast('请输入随从公司');
+          Toast(`请输入随员${user.name}的公司`);
           return false;
         }
       }
@@ -304,12 +314,13 @@ export default {
 
     },
     // 添加随员信息
-    addTheObject () {
+    addNewVistor () {
       this.draft.followers.push({});
+      this.saveDraft();
     },
 
     // 提交
-    submit(info) {
+    submit() {
       // 校验不通过，不能提交
       if (!this.validateBeforeSubmit()) return;
       axios({
@@ -318,22 +329,27 @@ export default {
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
         data: {
           ...this.draft,
-          start_time: this.draft.start_time ? this.draft.start_time.getTime() : null,
-          end_time: this.draft.end_time ? this.draft.end_time.getTime() : null
+          start_time: this.draft.start_time || null,
+          end_time: this.draft.end_time || null
         }
-      }).then(() => {
-        this.$router.push({
-        path: '/appointSuccess',
-        query:{
-          id: info.id,
-          ticket_id: info.ticket_id,
-          visitor_name: info.visitor_name,
-          followers: info.followers.length,
-          visitor_phone: info.visitor_phone
+      }).then(({ data:info }) => {
+        if (info && info.id) {
+          this.$router.push({
+            path: '/appointSuccess',
+            query:{
+              id: info.id,
+              ticket_id: info.ticket_id,
+              visitor_name: info.visitor_name,
+              followers: info.followers.length,
+              visitor_phone: info.visitor_phone
+            }
+          })
+        }
+      }).catch((error) => {
+        if (error && error.message) {
+          Toast(error.message)
         }
       });
-
-      })
     },
 
   }
@@ -435,11 +451,6 @@ export default {
           height: 20px;
           background: #ffffff;
           border-radius: 50%;
-        }
-
-        .appoin-inp {
-          border: 0;
-          padding: 0;
         }
 
         input {

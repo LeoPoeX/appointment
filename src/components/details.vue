@@ -44,7 +44,7 @@
         </div>
 
         <div class="details-row">
-            <span class="details-site">地址：</span>
+            <span class="details-name">地址：</span>
             <span>{{ info.visitor_organization }} </span>
         </div>
 
@@ -208,12 +208,9 @@ export default {
 
         .details-desc{
           width: 50%;
-          .details-name {
-            color: #AEAEAE;
-          }
         }
-        // 地址
-        .details-site {
+        
+        .details-name {
           color: #AEAEAE;
         }
       }

@@ -1,45 +1,37 @@
 <template>
   <div>
-    <div class="visitor followers-info" v-for="(user, index) in followers" :key="index">
+    <div class="followers-info" v-for="(user, index) in followers" :key="index">
 
       <div class="content">
         <img class="img-backgro" src="../assets/images/name.png" />
-        <input type="text" placeholder="姓名（必填）" v-model="user.name" />
+        <input type="text" placeholder="姓名（必填）" v-model="user.name" @blur.prevent="saveDraft" />
       </div>
 
       <div class="content">
         <img class="img-backgro" src="../assets/images/tel.png" />
-        <van-field
-          readonly
-          clickable
-          class="appoin-inp"
-          :value="user.phone"
-          placeholder="电话（必填）"
-          @touchstart.native.stop="showUserPhone = true"
-        />
-          <!-- 数字键盘 -->
-        <van-number-keyboard
+        <input
           v-model="user.phone"
-          :show="showUserPhone"
-          :maxlength="11"
-          close-button-text="完成"
-          @blur="showUserPhone = false"
-        />
+          type="number"
+          oninput="if(value.length>11) value=value.slice(0,11),value=value.replace(/[^\d]/g,'')"
+          maxlength="11"
+          placeholder="电话（必填）"
+          @blur.prevent="saveDraft"
+          />
       </div>
 
       <div class="content">
         <img class="img-backgro" src="../assets/images/post.png" />
-        <input type="text" placeholder="职位（必填）" v-model="user.position" />
+        <input type="text" placeholder="职位（必填）" v-model="user.position" @blur.prevent="saveDraft" />
       </div>
 
       <div class="content">
         <img  class="img-backgro" src="../assets/images/firm.png" />
-        <input type="text" placeholder="公司（必填）" v-model="user.organization" />
+        <input type="text" placeholder="公司（必填）" v-model="user.organization" @blur.prevent="saveDraft" />
       </div>
 
       <div class="content">
         <img class="img-backgro" src="../assets/images/car.png" />
-        <input type="text" placeholder="车牌（选填）" v-model="user.car_number" />
+        <input type="text" placeholder="车牌（选填）" v-model="user.car_number" @blur.prevent="saveDraft" />
       </div>
 
     </div>
@@ -54,7 +46,14 @@ export default {
     }
   },
   props: {
-    followers: Array
+    followers: {
+      type: Array,
+      required: true
+    },
+    saveDraft: {
+      type: Function,
+      required: true
+    }
   }
 }
 </script>
@@ -74,11 +73,6 @@ export default {
       height: 20px;
       background: #ffffff;
       border-radius: 50%;
-    }
-
-    .appoin-inp {
-      border: 0;
-      padding: 0;
     }
 
     input {
