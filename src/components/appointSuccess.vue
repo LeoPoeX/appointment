@@ -8,7 +8,7 @@
         <p class="appoinsuccess-details">预约单详情</p>
         <div class="appoinsuccess-odd">
           <p>单号</p>
-          <p>190000145</p>
+          <p>{{info.query.ticket_id }}</p>
         </div>
       </div>
 
@@ -29,9 +29,9 @@
             <p class="appoinsuccess-footcont appoinsuccess-footname">手机号</p>
           </div>
           <div class="appoinsuccess-footbox">
-            <p class="appoinsuccess-footcont">{{ this.$route.query.visitor_name }}</p>
-            <p class="appoinsuccess-footcont">{{ this.$route.query.followers.length + 1 }}人</p>
-            <p class="appoinsuccess-footcont">{{ this.$route.query.visitor_phone }}</p>
+            <p class="appoinsuccess-footcont">{{ info.query.visitor_name }}</p>
+            <p class="appoinsuccess-footcont">{{ info.query.followers.length + 1 }}人</p>
+            <p class="appoinsuccess-footcont">{{ info.query.visitor_phone }}</p>
           </div>
         </div>
 
@@ -50,16 +50,27 @@ export default {
   components: {
     QRCode: QRCode
   },
+  data() {
+    return {
+      info: {}
+    }
+  },
+  created () {
+    this.getQueryString();
+  },
   mounted () {
     this.renderQrcode();
     console.dir(this.$route)
   },
   methods: {
+    getQueryString() {
+      this.info = this.$route;
+    },
     renderQrcode() {
       let qrcode = new QRCode('qrcode', {
         width: 160,  
         height: 160,
-        text: 'https://visitor-frontend.fookwood.com', // 二维码地址
+        text: this.info.query.qr_string, // 二维码地址
         colorDark : "#1678E5",
         colorLight : "#fff",
       })

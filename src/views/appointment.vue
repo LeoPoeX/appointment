@@ -1,5 +1,5 @@
 <template>
-  <div class="index-box">
+  <div class="appoin-wrapper">
     <!-- 预约详情 -->
     
     <div class="details">
@@ -21,7 +21,7 @@
           <div class="appoint-Box" @click="openStartTimePop">
             <van-field
               class="appoint-content"
-              v-model="startTimeText"
+              :value="startTimeText"
               placeholder="到达（必填）" 
               readonly="readonly"
             />
@@ -41,7 +41,7 @@
           <div class="appoint-Box" @click="openEndTimePop">
             <van-field
               class="appoint-content"
-              v-model="endTimeText"
+              :value="endTimeText"
               placeholder="离开（必填）" 
               readonly="readonly"
             />
@@ -62,8 +62,6 @@
         <div class="appoint-contBox">
           <div class="appoint-Box">
             <van-field
-              readonly="readonly"
-              clickable
               class="appoint-content"
               placeholder="接待人（必填）" 
               v-model="draft.employee_name"
@@ -71,8 +69,6 @@
           </div>
           <div class="appoint-Box">
             <van-field
-              readonly="readonly"
-              clickable
               class="appoint-content"
               v-model="draft.employee_phone"
               placeholder="接待人电话（必填）"
@@ -91,7 +87,7 @@
             readonly
             clickable
             class="appoin-inp"
-             v-model="visitor_phone"
+            :value="visitor_phone"
             placeholder="电话（必填）"
             @touchstart.native.stop="showVisPhone = true"
           />
@@ -142,7 +138,7 @@
     <div class="details">
       <div class="yuyueTitle" v-if="draft.followers.length">填写随员信息</div>
 
-      <div class="visitor" v-for="(user, index) in draft.followers" :key="index">
+      <div class="visitor followers-info" v-for="(user, index) in draft.followers" :key="index">
 
         <div class="content">
           <img class="img-backgro" src="../assets/images/name.png" />
@@ -223,50 +219,77 @@ export default {
     }
   },
   created () {
-    this.createDraft()
+    this.getDraft()
+    
+  },
+  beforeDestroy() {    //页面关闭时清除定时器  
+    clearInterval(this.saveDrafts);
+  },
+  computed: {
+    
   },
   methods: {
+    getCurrentDate: function() {
+      return new Date()
+    },
     // 到达时间
-      confirmTime(value) {
-        this.start_time = value;
-        this.startTimeText = utils.parseTime(value, 'yyyy-MM-dd hh:mm');
-        this.closeStartTimePop();
-      },
-      openStartTimePop() {
-        this.showStartTime = true;
-      },
-      closeStartTimePop() {
-        this.showStartTime = false;
-      },
+    confirmTime(value) {
+      this.start_time = value;
+      this.startTimeText = utils.parseTime(value, 'yyyy-MM-dd hh:mm');
+      this.closeStartTimePop();
+    },
+    openStartTimePop() {
+      this.showStartTime = true;
+    },
+    closeStartTimePop() {
+      this.showStartTime = false;
+    },
 
     // 离开时间
-      confirmEndTime(value) {
-        this.end_time = value;
-        this.endTimeText = utils.parseTime(value, 'yyyy-MM-dd hh:mm');
-        this.closeEndTimePop();
-      },
-      openEndTimePop() {
-        this.showEndTime = true;
-      },
-      closeEndTimePop() {
-        this.showEndTime = false;
-      },
-    //来访事由
-    openReason () {
-      this.showReason = true
+    confirmEndTime(value) {
+      this.end_time = value;
+      this.endTimeText = utils.parseTime(value, 'yyyy-MM-dd hh:mm');
+      this.closeEndTimePop();
     },
-      // 确定
+    openEndTimePop() {
+      this.showEndTime = true;
+    },
+    closeEndTimePop() {
+      this.showEndTime = false;
+    },
+
+    //来访事由
     confirmReason (value) {
       this.draft.reason = value
       this.closeReason()
     },
-      // 取消
+    openReason () {
+      this.showReason = true
+    },
     closeReason () {
       this.showReason = false
     },
-
-    // 创建草稿
-    createDraft() {
+    // 暂存预约单
+    saveDrafts() {
+      axios({
+        method:'post',
+        url: '/api/employee/draft',
+        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+        data: {
+          start_time: this.start_time ? this.start_time.getTime() : null,
+          end_time: this.end_time ? this.end_time.getTime() : null,
+          visitor_name: this.draft.visitor_name,
+          visitor_phone: this.visitor_phone,
+          visitor_position: this.draft.visitor_position,
+          visitor_organization: this.draft.visitor_organization,
+          visitor_car_number: this.draft.visitor_car_number,
+          reason: this.draft.reason,
+          followers: this.draft.followers
+        }
+      })
+    },
+    // 获取草稿
+    getDraft() {
       // 加载数据
       const toast = Toast.loading({
         duration: 0,       // 持续展示 toast
@@ -285,9 +308,12 @@ export default {
           start_time: data.start_time ? new Date(data.start_time) : new Date(),
           end_time: data.end_time ? new Date(data.end_time) : new Date(),
         };
+        setInterval(this.saveDrafts, 20000);
         toast.clear();
       }).catch(() => {
         toast.clear();
+        this.$router.back(-1);
+        Toast('创建预约信息失败');
       })
     },
     // 提交前校验
@@ -363,6 +389,7 @@ export default {
         path: '/appointSuccess',
         query: info
       });
+
       })
     },
 
@@ -372,7 +399,7 @@ export default {
 
 
 <style lang="less">
-.index-box {
+.appoin-wrapper {
   padding-top: 10px;
   background: url('../assets/images/back.png') no-repeat;
   background-size: 100% 219px;
@@ -395,6 +422,10 @@ export default {
 
     .visitor {
       padding: 12px 15px;
+
+      &.followers-info {
+        padding-top: 0;
+      }
 
       .danhao {
         background: #FFFAF5;
