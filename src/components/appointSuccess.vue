@@ -60,7 +60,6 @@ export default {
   },
   mounted () {
     this.renderQrcode();
-    console.dir(this.$route)
   },
   methods: {
     getQueryString() {

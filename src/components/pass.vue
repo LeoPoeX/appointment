@@ -45,7 +45,6 @@ export default {
   },
   created () {
     this.getQueryString();
-    console.dir(this.detailInfo)
   },
   mounted () {
     this.renderQrcode();

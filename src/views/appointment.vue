@@ -7,11 +7,11 @@
       <div class="visitor">
         <div class="danhao">
           <div class="appoin-oddNum">
-            <p class="">单号：</p>
+            <p>单号：</p>
             <p class="num">{{ draft.ticket_id }}</p>
           </div>
           <div class="appoin-oddNum">
-            <p class="">人数：</p>
+            <p>人数：</p>
             <p class="num">{{ draft.followers.length + 1 }} 人</p>
           </div>
         </div>
@@ -138,49 +138,7 @@
     <div class="details">
       <div class="yuyueTitle" v-if="draft.followers.length">填写随员信息</div>
 
-      <div class="visitor followers-info" v-for="(user, index) in draft.followers" :key="index">
-
-        <div class="content">
-          <img class="img-backgro" src="../assets/images/name.png" />
-          <input type="text" placeholder="姓名（必填）" v-model="user.name" />
-        </div>
-
-        <div class="content">
-          <img class="img-backgro" src="../assets/images/tel.png" />
-          <van-field
-            readonly
-            clickable
-            class="appoin-inp"
-            :value="user.phone"
-            placeholder="电话（必填）"
-            @touchstart.native.stop="showUserPhone = true"
-          />
-            <!-- 数字键盘 -->
-          <van-number-keyboard
-            v-model="user.phone"
-            :show="showUserPhone"
-            :maxlength="11"
-            close-button-text="完成"
-            @blur="showUserPhone = false"
-          />
-        </div>
-
-        <div class="content">
-          <img class="img-backgro" src="../assets/images/post.png" />
-          <input type="text" placeholder="职位（必填）" v-model="user.position" />
-        </div>
-
-        <div class="content">
-          <img  class="img-backgro" src="../assets/images/firm.png" />
-          <input type="text" placeholder="公司（必填）" v-model="user.organization" />
-        </div>
-
-        <div class="content">
-          <img class="img-backgro" src="../assets/images/car.png" />
-          <input type="text" placeholder="车牌（选填）" v-model="user.car_number" />
-        </div>
-
-      </div>
+      <Followers :followers="draft.followers" />  
 
       <div class="PeopleInfo" :class="draft.followers.length ? '' : 'no-user'" @click="addTheObject">
         <p>添加随员信息</p>
@@ -200,6 +158,7 @@
 import axios from 'axios';
 import utils from '../utils';
 import { Toast } from 'vant';
+import Followers from '../components/followers';
 export default {
   name: 'Appointment',
   data () {
@@ -213,20 +172,18 @@ export default {
       },
       showReason: false,  //显示来访事由弹窗
       showVisPhone: false,       //显示数字键盘
-      showUserPhone: false,
       visitor_phone: '',
       columns: ['供应商来访', '商务交流', '客户来访', '技术交流', '其他']
     }
   },
+  components: {
+    Followers
+  },
   created () {
     this.getDraft()
-    
   },
   beforeDestroy() {    //页面关闭时清除定时器  
     clearInterval(this.saveDrafts);
-  },
-  computed: {
-    
   },
   methods: {
     getCurrentDate: function() {
@@ -423,10 +380,6 @@ export default {
     .visitor {
       padding: 12px 15px;
 
-      &.followers-info {
-        padding-top: 0;
-      }
-
       .danhao {
         background: #FFFAF5;
         display: flex;
@@ -548,10 +501,6 @@ export default {
         }
       }
     
-    }
-    .visitor + .visitor {
-      padding-top: 0;
-      border-top: 1px solid #ECECEC;
     }
 
     .PeopleInfo {
