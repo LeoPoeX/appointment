@@ -11,7 +11,7 @@
         <img class="img-backgro" src="../assets/images/tel.png" />
         <input
           v-model="user.phone"
-          type="number"
+          type="tel"
           oninput="if(value.length>11) value=value.slice(0,11),value=value.replace(/[^\d]/g,'')"
           maxlength="11"
           placeholder="电话（必填）"
