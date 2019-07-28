@@ -68,13 +68,13 @@
             readonly
             clickable
             class="appoin-inp"
-            :value="visitor_phone"
+            :value="draft.visitor_phone"
             placeholder="电话（必填）"
             @touchstart.native.stop="showVisPhone = true"
           />
             <!-- 数字键盘弹窗 -->
           <van-number-keyboard
-            v-model="visitor_phone"
+            v-model="draft.visitor_phone"
             :show="showVisPhone"
             :maxlength="11"
             close-button-text="完成"
@@ -231,8 +231,8 @@ export default {
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
         data: {
           ...this.draft,
-          start_time: this.draft.start_time ? this.draft.start_time.getTime() : '',
-          end_time: this.draft.end_time ? this.draft.end_time.getTime() : ''
+          start_time: this.draft.start_time ? this.draft.start_time.getTime() : null,
+          end_time: this.draft.end_time ? this.draft.end_time.getTime() : null
         }
       })
     },
@@ -270,7 +270,7 @@ export default {
       } else if (!this.draft.visitor_name) {
         Toast('请输入来访者姓名');
         return false;
-      } else if (!this.visitor_phone) {
+      } else if (!this.draft.visitor_phone) {
         Toast('请输入来访者电话');
         return false;
       } else if (!this.draft.visitor_position) {
@@ -318,8 +318,8 @@ export default {
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
         data: {
           ...this.draft,
-          start_time: this.draft.start_time,
-          end_time: this.draft.end_time
+          start_time: this.draft.start_time ? this.draft.start_time.getTime() : null,
+          end_time: this.draft.end_time ? this.draft.end_time.getTime() : null
         }
       }).then(() => {
         this.$router.push({
