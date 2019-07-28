@@ -29,9 +29,9 @@
             <p class="appoinsuccess-footcont appoinsuccess-footname">手机号</p>
           </div>
           <div class="appoinsuccess-footbox">
-            <p class="appoinsuccess-footcont">矮大紧</p>
-            <p class="appoinsuccess-footcont">4人</p>
-            <p class="appoinsuccess-footcont">15721064851</p>
+            <p class="appoinsuccess-footcont">{{ this.$route.query.visitor_name }}</p>
+            <p class="appoinsuccess-footcont">{{ this.$route.query.followers.length + 1 }}人</p>
+            <p class="appoinsuccess-footcont">{{ this.$route.query.visitor_phone }}</p>
           </div>
         </div>
 
@@ -52,6 +52,7 @@ export default {
   },
   mounted () {
     this.renderQrcode();
+    console.dir(this.$route)
   },
   methods: {
     renderQrcode() {
@@ -128,7 +129,7 @@ export default {
 
         .appoinsuccess-text {
           color: #00A83B;
-          font-size: 28px;
+          font-size: 18px;
         }
       }
 

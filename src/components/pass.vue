@@ -23,9 +23,9 @@
             <p class="pass-footcont pass-footname">手机号</p>
           </div>
           <div class="pass-footbox">
-            <p class="pass-footcont">ahbf</p>
-            <p class="pass-footcont">1人</p>
-            <p class="pass-footcont">15721064851</p>
+            <p class="pass-footcont">{{ this.$route.query.visitor_name }}</p>
+            <p class="pass-footcont">{{this.$route.query.followers.length + 1}}人</p>
+            <p class="pass-footcont">{{ this.$route.query.visitor_phone }}</p>
           </div>
         </div>
       </div>

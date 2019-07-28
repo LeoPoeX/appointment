@@ -193,7 +193,7 @@
     </div>
 
     <div class="submit">
-      <button @click="submit">立即提交</button>
+      <button @click.stop="submit(draft)">立即提交</button>
     </div>
 
   </div>
@@ -340,7 +340,7 @@ export default {
     },
 
     // 提交
-    submit() {
+    submit(info) {
       // 校验不通过，不能提交
       if (!this.validateBeforeSubmit()) return;
       axios({
@@ -359,7 +359,10 @@ export default {
           followers: this.draft.followers
         }
       }).then(() => {
-        this.$router.push('/appointSuccess')
+        this.$router.push({
+        path: '/appointSuccess',
+        query: info
+      });
       })
     },
 
