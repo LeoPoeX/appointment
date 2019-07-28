@@ -13,7 +13,7 @@
           <Tag :state="item.state"/>
           <span
             :class="`show-permit ${item.state}`"
-            @click="showPermit"
+            @click.stop="showPermit(item)"
           >查看通行证</span>
         </div>
 
@@ -99,6 +99,8 @@ export default {
         this.isFinished = this.list.length === data.total;
       }).catch(() => {
         this.error = true;
+        this.isPulling = false;
+        this.isLoading = false;
       })
     },
     getTime (Gotime) {
@@ -106,9 +108,11 @@ export default {
       return time;
     },
     // 查看通行证
-    showPermit(e) {
-      e.stopPropagation();
-      this.$router.push({ path: '/permit' });
+    showPermit(info) {
+      this.$router.push({
+        path: '/permit',
+        query: info
+      });
     },
     // 查看详情
     showDetails(id) {

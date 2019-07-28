@@ -47,18 +47,6 @@ export default {
     this.renderQrcode();
   },
   methods: {
-    // getList () {
-    //   const { params } = this.$route;
-    //   if (!params.id) return;
-
-    //   axios({
-    //     method:'get',
-    //     url: `/api/employee/appointment/${params.id}`,
-    //     headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
-    //   }).then(({data}) => {
-    //     this.detailInfo = data
-    //   })
-    // },
     renderQrcode() {
       let qrcode = new QRCode('qrcode', {
         width: 160,  

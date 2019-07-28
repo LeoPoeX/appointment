@@ -55,7 +55,7 @@
           </div>
           <div class="details-desc">
             <span class="details-name">来访人数：</span>
-            <span>{{ Array.isArray(info.followers) ? info.followers.length : 1 }}人</span>
+            <span>{{ Array.isArray(info.followers) ? info.followers.length + 1 : 1 }}人</span>
           </div>
         </div>
 

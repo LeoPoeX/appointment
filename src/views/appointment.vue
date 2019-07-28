@@ -12,22 +12,22 @@
           </div>
           <div class="appoin-oddNum">
             <p class="">人数：</p>
-            <p class="num">4 人</p>
+            <p class="num">{{ draft.followers.length + 1 }} 人</p>
           </div>
         </div>
 
-        <div class="GoTime">
           <!-- 到达时间 -->
-          <div class="appoint-timeBox" @click="openStartTimePop">
+        <div class="appoint-contBox">
+          <div class="appoint-Box" @click="openStartTimePop">
             <van-field
-              class="time"
+              class="appoint-content"
               v-model="startTimeText"
               placeholder="到达（必填）" 
               readonly="readonly"
             />
             <img class="appoin-icon" src="../assets/images/calendar.png"  />
           </div>
-
+            <!-- 到达时间弹窗 -->
           <van-popup v-model="showStartTime" position="bottom" >
             <van-datetime-picker
               v-model="draft.start_time"
@@ -38,38 +38,46 @@
           </van-popup>
 
           <!-- 离开时间 -->
-          <div class="appoint-timeBox" @click="openEndTimePop">
+          <div class="appoint-Box" @click="openEndTimePop">
             <van-field
-              class="time"
+              class="appoint-content"
               v-model="endTimeText"
               placeholder="离开（必填）" 
               readonly="readonly"
             />
-            <img class="appoin-leaveicon" src="../assets/images/calendar.png"  />
+            <img class="appoin-icon" src="../assets/images/calendar.png"  />
           </div>
-
-          <van-popup v-model="showEndTime" position="bottom" >
-            <van-datetime-picker
-              v-model="draft.end_time"
-              type="datetime"
-              @cancel="closeEndTimePop"
-              @confirm="confirmEndTime"
-            />
-          </van-popup>
-
         </div>
-
-
-        <div class="receiver">
-          <input class="appoin-rece" type="text" placeholder="接待人（必填）" v-model="draft.employee_name" />
-          <!-- <input class="appoin-rece" type='number' @touchstart.stop="show = true" placeholder="接待人电话（必填）" v-model="draft.employee_phone" /> -->
-          <van-field
-            readonly="readonly"
-            clickable
-            class="appoin-rece"
-            v-model="draft.employee_phone"
-            placeholder="接待人电话（必填）"
+          <!-- 离开时间弹窗 -->
+        <van-popup v-model="showEndTime" position="bottom" >
+          <van-datetime-picker
+            v-model="draft.end_time"
+            type="datetime"
+            @cancel="closeEndTimePop"
+            @confirm="confirmEndTime"
           />
+        </van-popup>
+ 
+          <!-- 接待人和接待人电话 -->
+        <div class="appoint-contBox">
+          <div class="appoint-Box">
+            <van-field
+              readonly="readonly"
+              clickable
+              class="appoint-content"
+              placeholder="接待人（必填）" 
+              v-model="draft.employee_name"
+            />
+          </div>
+          <div class="appoint-Box">
+            <van-field
+              readonly="readonly"
+              clickable
+              class="appoint-content"
+              v-model="draft.employee_phone"
+              placeholder="接待人电话（必填）"
+            />
+          </div>
         </div>
 
         <div class="content">
@@ -87,11 +95,12 @@
             placeholder="电话（必填）"
             @touchstart.native.stop="showVisPhone = true"
           />
-
+            <!-- 数字键盘弹窗 -->
           <van-number-keyboard
             v-model="visitor_phone"
             :show="showVisPhone"
             :maxlength="11"
+            close-button-text="完成"
             @blur="showVisPhone = false"
           />
         </div>
@@ -120,7 +129,7 @@
             @click="openReason" 
             readonly="readonly" 
           />
-
+            <!-- 来访事由弹窗 -->
           <van-popup v-model="showReason" position="bottom" :overlay="true">
             <van-picker show-toolbar :columns="columns" @cancel="closeReason" @confirm="confirmReason" />
           </van-popup>
@@ -131,7 +140,7 @@
 
     <!-- 随行人员信息 -->
     <div class="details">
-      <div class="yuyueTitle">填写随员信息</div>
+      <div class="yuyueTitle" v-if="draft.followers.length">填写随员信息</div>
 
       <div class="visitor" v-for="(user, index) in draft.followers" :key="index">
 
@@ -146,15 +155,16 @@
             readonly
             clickable
             class="appoin-inp"
-            :value="phone"
+            :value="user.phone"
             placeholder="电话（必填）"
             @touchstart.native.stop="showUserPhone = true"
           />
-
+            <!-- 数字键盘 -->
           <van-number-keyboard
-            v-model="phone"
+            v-model="user.phone"
             :show="showUserPhone"
             :maxlength="11"
+            close-button-text="完成"
             @blur="showUserPhone = false"
           />
         </div>
@@ -176,7 +186,7 @@
 
       </div>
 
-      <div class="PeopleInfo" @click="addTheObject">
+      <div class="PeopleInfo" :class="draft.followers.length ? '' : 'no-user'" @click="addTheObject">
         <p>添加随员信息</p>
       </div>
       
@@ -202,12 +212,13 @@ export default {
       showEndTime: false,     //显示离开时间弹窗
       startTimeText: '',  //到达时间
       endTimeText: '',    //离开时间
-      draft: {},
+      draft: {
+        followers: []
+      },
       showReason: false,  //显示来访事由弹窗
       showVisPhone: false,       //显示数字键盘
       showUserPhone: false,
       visitor_phone: '',
-      phone: '',
       columns: ['供应商来访', '商务交流', '客户来访', '技术交流', '其他']
     }
   },
@@ -345,7 +356,7 @@ export default {
           visitor_organization: this.draft.visitor_organization,
           visitor_car_number: this.draft.visitor_car_number,
           reason: this.draft.reason,
-          followers: []
+          followers: this.draft.followers
         }
       }).then(() => {
         this.$router.push('/appointSuccess')
@@ -407,13 +418,12 @@ export default {
         }
       }
 
-      .GoTime {
+      .appoint-contBox {
         display: flex;
         position: relative;
 
-        .appoint-timeBox {
+        .appoint-Box {
           width:49%;
-          color: #999999;
           margin-left: 2%;
           margin-top: 12px;
           position: relative;
@@ -421,53 +431,23 @@ export default {
             margin-left: 0;
           }
 
-          .time {
+          .appoint-content {
             height: 36px;
             line-height: 36px;
             border: 0;
+            border-radius: 0;
             background: #FFFAF5;
             border-bottom: 0.5px solid #DEDEDE;
             font-size: 12px;
             padding: 0;
             padding-left: 4px;
-
           }
           .appoin-icon {
             width: 10px;
             position: absolute;
-            z-index: 3;
+            z-index: 10;
             top: 13px;
             right: 6px;
-          }
-        }
-        
-        .appoin-leaveicon {
-          width: 10px;
-          position: absolute;
-          z-index: 3;
-          top: 13px;
-          right: 6px;
-        }
-      }
-
-      .receiver {
-        display: flex;
-
-        .appoin-rece {
-          width: 49%;
-          line-height: 36px;
-          border: 0;
-          background: #FFFAF5;
-          border-radius: 0;
-          margin-top: 12px;
-          margin-left: 2%;
-          border-bottom: 0.5px solid #DEDEDE;
-          font-size: 12px;
-          padding: 0;
-          padding-left: 4px; 
-
-          &:first-child {
-            margin-left: 0;
           }
         }
       }
@@ -475,13 +455,13 @@ export default {
       .content {
         display: flex;
         margin-top: 12px;
+        align-items: center;
 
         .img-backgro {
           width: 20px;
           height: 20px;
           background: #ffffff;
           border-radius: 50%;
-          margin-bottom: 5px;
         }
 
         .appoin-inp {
@@ -496,6 +476,8 @@ export default {
           border-bottom: 0.5px solid #DEDEDE;
           border-radius: 0;
           font-size: 12px;
+          line-height: 20px;
+          padding: 3px 0;
           &:-ms-input-placeholder {
             color: #999999;
           }
@@ -544,7 +526,9 @@ export default {
       background: #FFFAF5;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
-
+      &.no-user {
+        border-radius: 10px;
+      }
       p {
         margin: 0;
         color: #999999;

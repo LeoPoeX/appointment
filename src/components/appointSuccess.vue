@@ -133,7 +133,7 @@ export default {
       }
 
       #qrcode {
-        padding: 40px 0;
+        padding-top: 5px;
         text-align: center;
         img {
           display: inline-block !important;
