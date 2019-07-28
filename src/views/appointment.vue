@@ -1,7 +1,6 @@
 <template>
   <div class="appoin-wrapper">
     <!-- 预约详情 -->
-    
     <div class="details">
       <div class="yuyueTitle">预约详情</div>
       <div class="visitor">
@@ -17,8 +16,8 @@
         </div>
 
           <!-- 到达时间 -->
-        <div class="appoint-contBox">
-          <div class="appoint-Box" @click="openStartTimePop">
+        <div class="appoint-contbox">
+          <div class="appoint-box" @click="openDatePop('start_time')">
             <van-field
               class="appoint-content"
               :value="startTimeText"
@@ -27,18 +26,9 @@
             />
             <img class="appoin-icon" src="../assets/images/calendar.png"  />
           </div>
-            <!-- 到达时间弹窗 -->
-          <van-popup v-model="showStartTime" position="bottom" >
-            <van-datetime-picker
-              v-model="draft.start_time"
-              type="datetime"
-              @cancel="closeStartTimePop"
-              @confirm="confirmTime"
-            />
-          </van-popup>
 
           <!-- 离开时间 -->
-          <div class="appoint-Box" @click="openEndTimePop">
+          <div class="appoint-box" @click="openDatePop('end_time')">
             <van-field
               class="appoint-content"
               :value="endTimeText"
@@ -48,26 +38,17 @@
             <img class="appoin-icon" src="../assets/images/calendar.png"  />
           </div>
         </div>
-          <!-- 离开时间弹窗 -->
-        <van-popup v-model="showEndTime" position="bottom" >
-          <van-datetime-picker
-            v-model="draft.end_time"
-            type="datetime"
-            @cancel="closeEndTimePop"
-            @confirm="confirmEndTime"
-          />
-        </van-popup>
  
           <!-- 接待人和接待人电话 -->
-        <div class="appoint-contBox">
-          <div class="appoint-Box">
+        <div class="appoint-contbox">
+          <div class="appoint-box">
             <van-field
               class="appoint-content"
               placeholder="接待人（必填）" 
               v-model="draft.employee_name"
             />
           </div>
-          <div class="appoint-Box">
+          <div class="appoint-box">
             <van-field
               class="appoint-content"
               v-model="draft.employee_phone"
@@ -138,7 +119,7 @@
     <div class="details">
       <div class="yuyueTitle" v-if="draft.followers.length">填写随员信息</div>
 
-      <Followers :followers="draft.followers" />  
+      <Followers :followers="draft.followers" />
 
       <div class="PeopleInfo" :class="draft.followers.length ? '' : 'no-user'" @click="addTheObject">
         <p>添加随员信息</p>
@@ -150,28 +131,41 @@
       <button @click.stop="submit(draft)">立即提交</button>
     </div>
 
+
+    <!-- 时间弹窗 -->
+    <van-popup v-model="timePopup.visible" position="bottom">
+      <van-datetime-picker
+        v-model="timePopup.date"
+        type="datetime"
+        :min-date="timePopup.minDate"
+        @cancel="closeDatePop"
+        @confirm="confrimDatePop"
+      />
+    </van-popup>
   </div>
 </template>
 
 
 <script>
 import axios from 'axios';
-import utils from '../utils';
 import { Toast } from 'vant';
+import utils from '../utils';
 import Followers from '../components/followers';
 export default {
   name: 'Appointment',
   data () {
     return {
-      showStartTime: false,   //显示到达时间弹窗
-      showEndTime: false,     //显示离开时间弹窗
-      startTimeText: '',  //到达时间
-      endTimeText: '',    //离开时间
+      timePopup: {
+        visible: false,
+        minDate: new Date(),
+        date: new Date()
+      },
       draft: {
         followers: []
       },
       showReason: false,  //显示来访事由弹窗
       showVisPhone: false,       //显示数字键盘
+      showUserPhone: false,
       visitor_phone: '',
       columns: ['供应商来访', '商务交流', '客户来访', '技术交流', '其他']
     }
@@ -182,37 +176,40 @@ export default {
   created () {
     this.getDraft()
   },
-  beforeDestroy() {    //页面关闭时清除定时器  
-    clearInterval(this.saveDrafts);
+  computed: {
+    startTimeText: function() {
+      return this.draft.start_time ? utils.parseTime(this.draft.start_time, 'yyyy-MM-dd hh:mm') : ''
+    },
+    endTimeText: function() {
+      return this.draft.end_time ? utils.parseTime(this.draft.end_time, 'yyyy-MM-dd hh:mm') : ''
+    }
   },
   methods: {
     getCurrentDate: function() {
       return new Date()
     },
-    // 到达时间
-    confirmTime(value) {
-      this.start_time = value;
-      this.startTimeText = utils.parseTime(value, 'yyyy-MM-dd hh:mm');
-      this.closeStartTimePop();
+    openDatePop(key = 'start_time') {
+      const currentDate = new Date();
+      this.timePopup = {
+        ...this.timePopup,
+        visible: true,
+        key,
+        date: this.draft[key] || currentDate,
+        minDate: currentDate
+      }
     },
-    openStartTimePop() {
-      this.showStartTime = true;
+    closeDatePop() {
+      this.timePopup = {
+        visible: false,
+        minDate: new Date(),
+        date: new Date()
+      }
     },
-    closeStartTimePop() {
-      this.showStartTime = false;
-    },
-
-    // 离开时间
-    confirmEndTime(value) {
-      this.end_time = value;
-      this.endTimeText = utils.parseTime(value, 'yyyy-MM-dd hh:mm');
-      this.closeEndTimePop();
-    },
-    openEndTimePop() {
-      this.showEndTime = true;
-    },
-    closeEndTimePop() {
-      this.showEndTime = false;
+    confrimDatePop(value) {
+      const key = this.timePopup.key
+      this.draft[key] = value;
+      this.closeDatePop();
+      this.saveDraft();
     },
 
     //来访事由
@@ -227,21 +224,15 @@ export default {
       this.showReason = false
     },
     // 暂存预约单
-    saveDrafts() {
+    saveDraft() {
       axios({
         method:'post',
         url: '/api/employee/draft',
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
         data: {
-          start_time: this.start_time ? this.start_time.getTime() : null,
-          end_time: this.end_time ? this.end_time.getTime() : null,
-          visitor_name: this.draft.visitor_name,
-          visitor_phone: this.visitor_phone,
-          visitor_position: this.draft.visitor_position,
-          visitor_organization: this.draft.visitor_organization,
-          visitor_car_number: this.draft.visitor_car_number,
-          reason: this.draft.reason,
-          followers: this.draft.followers
+          ...this.draft,
+          start_time: this.draft.start_time ? this.draft.start_time.getTime() : '',
+          end_time: this.draft.end_time ? this.draft.end_time.getTime() : ''
         }
       })
     },
@@ -260,12 +251,7 @@ export default {
         url: '/api/employee/draft',
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
       }).then(({ data }) => {
-        this.draft = {
-          ...data,
-          start_time: data.start_time ? new Date(data.start_time) : new Date(),
-          end_time: data.end_time ? new Date(data.end_time) : new Date(),
-        };
-        setInterval(this.saveDrafts, 20000);
+        this.draft = data;
         toast.clear();
       }).catch(() => {
         toast.clear();
@@ -275,10 +261,10 @@ export default {
     },
     // 提交前校验
     validateBeforeSubmit() {
-      if (!this.startTimeText) {
+      if (!this.draft.start_time) {
         Toast('请输入到达时间');
         return false;
-      } else if (!this.endTimeText) {
+      } else if (!this.draft.end_time) {
         Toast('请输入离开时间');
         return false;
       } else if (!this.draft.visitor_name) {
@@ -331,20 +317,20 @@ export default {
         url: '/api/employee/appointment',
         headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
         data: {
-          start_time:  this.start_time.getTime(),
-          end_time: this.end_time.getTime(),
-          visitor_name: this.draft.visitor_name,
-          visitor_phone: this.visitor_phone,
-          visitor_position: this.draft.visitor_position,
-          visitor_organization: this.draft.visitor_organization,
-          visitor_car_number: this.draft.visitor_car_number,
-          reason: this.draft.reason,
-          followers: this.draft.followers
+          ...this.draft,
+          start_time: this.draft.start_time,
+          end_time: this.draft.end_time
         }
       }).then(() => {
         this.$router.push({
         path: '/appointSuccess',
-        query: info
+        query:{
+          id: info.id,
+          ticket_id: info.ticket_id,
+          visitor_name: info.visitor_name,
+          followers: info.followers.length,
+          visitor_phone: info.visitor_phone
+        }
       });
 
       })
@@ -405,11 +391,11 @@ export default {
         }
       }
 
-      .appoint-contBox {
+      .appoint-contbox {
         display: flex;
         position: relative;
 
-        .appoint-Box {
+        .appoint-box {
           width:49%;
           margin-left: 2%;
           margin-top: 12px;
@@ -534,7 +520,6 @@ export default {
       background-image: linear-gradient(1deg, #FACE83 0%, #F6AE3A 100%);
     }
   }
-
 }
 
 </style>

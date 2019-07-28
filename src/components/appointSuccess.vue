@@ -8,7 +8,7 @@
         <p class="appoinsuccess-details">预约单详情</p>
         <div class="appoinsuccess-odd">
           <p>单号</p>
-          <p>{{info.query.ticket_id }}</p>
+          <p>{{info.ticket_id }}</p>
         </div>
       </div>
 
@@ -29,9 +29,9 @@
             <p class="appoinsuccess-footcont appoinsuccess-footname">手机号</p>
           </div>
           <div class="appoinsuccess-footbox">
-            <p class="appoinsuccess-footcont">{{ info.query.visitor_name }}</p>
-            <p class="appoinsuccess-footcont">{{ info.query.followers.length + 1 }}人</p>
-            <p class="appoinsuccess-footcont">{{ info.query.visitor_phone }}</p>
+            <p class="appoinsuccess-footcont">{{ info.visitor_name }}</p>
+            <p class="appoinsuccess-footcont">{{ info.followers + 1 }}人</p>
+            <p class="appoinsuccess-footcont">{{ info.visitor_phone }}</p>
           </div>
         </div>
 
@@ -63,13 +63,13 @@ export default {
   },
   methods: {
     getQueryString() {
-      this.info = this.$route;
+      this.info = this.$route.query;
     },
     renderQrcode() {
       let qrcode = new QRCode('qrcode', {
         width: 160,  
         height: 160,
-        text: this.info.query.qr_string, // 二维码地址
+        text: `http://visitor.fookwood.com/appointment/${this.info.id}`, // 二维码地址
         colorDark : "#1678E5",
         colorLight : "#fff",
       })

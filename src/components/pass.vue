@@ -7,7 +7,7 @@
         <p class="pass-details">预约单详情</p>
         <div class="pass-odd">
           <p>单号</p>
-          <p>{{ detailInfo.query.ticket_id }}</p>
+          <p>{{ detailInfo.ticket_id }}</p>
         </div>
       </div>
   
@@ -23,9 +23,9 @@
             <p class="pass-footcont pass-footname">手机号</p>
           </div>
           <div class="pass-footbox">
-            <p class="pass-footcont">{{ detailInfo.query.visitor_name }}</p>
-            <p class="pass-footcont">{{detailInfo.query.followers.length + 1}}人</p>
-            <p class="pass-footcont">{{ detailInfo.query.visitor_phone }}</p>
+            <p class="pass-footcont">{{ detailInfo.visitor_name }}</p>
+            <p class="pass-footcont">{{detailInfo.followers + 1}}人</p>
+            <p class="pass-footcont">{{ detailInfo.visitor_phone }}</p>
           </div>
         </div>
       </div>
@@ -51,13 +51,13 @@ export default {
   },
   methods: {
     getQueryString() {
-      this.detailInfo = this.$route;
+      this.detailInfo = this.$route.query || {};
     },
     renderQrcode() {
       let qrcode = new QRCode('qrcode', {
         width: 160,  
         height: 160,
-        text: this.detailInfo.query.qr_string, // 二维码地址
+        text: `http://visitor.fookwood.com/appointment/${this.detailInfo.id}`, // 二维码地址
         colorDark : "#1678E5",
         colorLight : "#fff",
       })

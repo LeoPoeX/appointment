@@ -111,7 +111,13 @@ export default {
     showPermit(info) {
       this.$router.push({
         path: '/permit',
-        query: info
+        query: {
+          id: info.id,
+          ticket_id: info.ticket_id,
+          visitor_name: info.visitor_name,
+          followers: info.followers.length,
+          visitor_phone: info.visitor_phone
+        }
       });
     },
     // 查看详情
