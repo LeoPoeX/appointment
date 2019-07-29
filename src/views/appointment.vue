@@ -222,7 +222,7 @@ export default {
       axios({
         method:'post',
         url: '/api/employee/draft',
-        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+        headers: {'X-Token': window.localStorage.getItem('user-token')},
         data: {
           ...this.draft,
           start_time: this.draft.start_time || null,
@@ -243,7 +243,7 @@ export default {
       axios({
         method:'get',
         url: '/api/employee/draft',
-        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+        headers: {'X-Token': window.localStorage.getItem('user-token')},
       }).then(({ data }) => {
         this.draft = data;
         toast.clear();
@@ -326,7 +326,7 @@ export default {
       axios({
         method:'post',
         url: '/api/employee/appointment',
-        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+        headers: {'X-Token': window.localStorage.getItem('user-token')},
         data: {
           ...this.draft,
           start_time: this.draft.start_time || null,
@@ -337,7 +337,7 @@ export default {
           this.$router.push({
             path: '/appointSuccess',
             query:{
-              id: info.id,
+              qr_string: info.qr_string,
               ticket_id: info.ticket_id,
               visitor_name: info.visitor_name,
               followers: info.followers.length,
@@ -430,6 +430,7 @@ export default {
             font-size: 12px;
             padding: 0;
             padding-left: 4px;
+            width: 100%;
           }
           .appoin-icon {
             width: 10px;

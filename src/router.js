@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import { Toast } from 'vant';
+import axios from 'axios';
+import utils from './utils';
 
 Vue.use(Router);
 
@@ -52,11 +55,54 @@ routes.forEach(route => {
 });
 
 router.beforeEach((to, from, next) => {
-  const title = to.meta && to.meta.title;
-  if (title) {
-    document.title = title;
+  // 第一次进入项目
+  let token = window.localStorage.getItem('user-token');
+
+  function toNextPage() {
+    const title = to.meta && to.meta.title;
+    if (title) {
+      document.title = title;
+    }
+    next();
   }
-  next();
+
+  if (token) {
+    toNextPage();
+  } else if (utils.getQueryString('code')) {
+    let code = utils.getQueryString('code');
+    const toast = Toast.loading({
+      duration: 0,       // 持续展示 toast
+      forbidClick: true, // 禁用背景点击
+      loadingType: 'spinner',
+      message: '正在授权...'
+    });
+    axios({
+      method:'post',
+      url: '/api/employee/auth',
+      data: {
+        code
+      }
+    }).then(({ data }) => {
+      toast.clear();
+      window.localStorage.setItem('user-token', data.token);
+      const title = to.meta && to.meta.title;
+      if (title) {
+        document.title = title;
+      }
+      next('/list');
+    }).catch(() => {
+      toast.clear();
+      Toast.error('授权失败');
+    })
+  } else {
+    window.location.href =
+      "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+      'ww3d81bd40f0803db5' +
+      "&redirect_uri=" +
+      encodeURIComponent('http://visitor-frontend.fookwood.com') +
+      "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+    return false;
+  }
 });
 
 export default router;

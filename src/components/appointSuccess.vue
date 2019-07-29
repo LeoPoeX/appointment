@@ -69,7 +69,7 @@ export default {
       let qrcode = new QRCode('qrcode', {
         width: 160,  
         height: 160,
-        text: `http://visitor.fookwood.com/appointment/${this.info.id}`, // 二维码地址
+        text: this.info.qr_string, // 二维码地址
         colorDark : "#1678E5",
         colorLight : "#fff",
       })
@@ -177,11 +177,8 @@ export default {
           }
         }
       }
-
     }
-    
   }
-
 }
 </style>
 

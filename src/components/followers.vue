@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="followers-info" v-for="(user, index) in followers" :key="index">
+    <div class="follower-info" v-for="(user, index) in followers" :key="index">
 
       <div class="content">
         <img class="img-backgro" src="../assets/images/name.png" />
@@ -59,9 +59,13 @@ export default {
 </script>
 
 <style lang="less">
- .followers-info {
+ .follower-info {
   padding:0 15px 12px 15px;
   border-top: 1px solid #ECECEC;
+
+  &:first-of-type {
+    border-top: 0;
+  }
 
   .content {
     display: flex;

@@ -67,7 +67,7 @@ export default {
       axios({
         method:'get',
         url: `/api/employee/appointment/${params.id}`,
-        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+        headers: {'X-Token': window.localStorage.getItem('user-token')},
       }).then(({data}) => {
         this.detailInfo = data
         this.detailInfo.start_day = utils.parseTime(this.detailInfo.start_time, 'yyyy-MM-dd');
@@ -85,7 +85,7 @@ export default {
         data: {
           approved: true
         },
-        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+        headers: {'X-Token': window.localStorage.getItem('user-token')},
       }).then(() => {
         this.viaShow = true;
       })
@@ -100,7 +100,7 @@ export default {
         data: {
           approved: false
         },
-        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+        headers: {'X-Token': window.localStorage.getItem('user-token')},
       }).then(() => {
         this.isShow = true;
       })

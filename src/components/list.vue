@@ -89,7 +89,7 @@ export default {
         method:'get',
         url: `/api/employee/appointments`,
         params: params,
-        headers: {'X-Token': 'e9c989a9-d920-4133-9157-50059a74a503'},
+        headers: {'X-Token': window.localStorage.getItem('user-token')},
       }).then(({ data }) => {
         this.list = this.offset > 0 ? [...this.list, ...data.list] : data.list;
         this.offset = this.list.length;
@@ -112,7 +112,7 @@ export default {
       this.$router.push({
         path: '/permit',
         query: {
-          id: info.id,
+          qr_string: info.qr_string,
           ticket_id: info.ticket_id,
           visitor_name: info.visitor_name,
           followers: info.followers.length,

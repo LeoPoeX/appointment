@@ -35,7 +35,6 @@
 
 <script>
 import QRCode from 'qrcodejs2'
-// import axios from 'axios'
 export default {
   name: 'Pass',
   data() {
@@ -57,7 +56,7 @@ export default {
       let qrcode = new QRCode('qrcode', {
         width: 160,  
         height: 160,
-        text: `http://visitor.fookwood.com/appointment/${this.detailInfo.id}`, // 二维码地址
+        text: this.detailInfo.qr_string, // 二维码地址
         colorDark : "#1678E5",
         colorLight : "#fff",
       })
