@@ -1,17 +1,10 @@
 <template>
   <div>
-    <div class="modal-backdrop" v-for="(item, id) in list" :key="id">
-      <div :class="`modal-iconback ${status}-modal`">
-        <div v-if="status==='error'">
-          <img class="modal-icon" src="../assets/images/close_mini.png" />
-        </div>
-        <div v-else>
-          <img class="modal-icon" src="../assets/images/done_mini.png" />
-        </div>
-      </div>
-      <div class="modal-error">
-        <div>{{ item.oddnum }}</div>
-        <div>{{ item.YorN }}</div>
+    <div class="modal-backdrop">
+      <div :class="`modal-iconback ${status}-icon`"></div>
+      <div class="modal-info">
+        <div>预约单号：{{ orderNo }}</div>
+        <div>{{ status === 'pass' ? '审核通过' : '审核不通过' }}</div>
       </div>
     </div>
   </div>
@@ -20,8 +13,10 @@
 <script>
 export default {
   props: {
-    list: Array,
-    status: { //'error' 'via'
+    orderNo: {
+       type: String
+    },
+    status: { //'reject' 'pass'
       type: String,
       default: 'error',
     }
@@ -46,27 +41,23 @@ export default {
 
   .modal-iconback {
     border-radius: 50%;
-    width: 71px;
-    height: 71px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &.error-modal {
-      background: #ff0000;
+    width: 70px;
+    height: 70px;
+    &.reject-icon {
+      background: #ff0000 url(../assets/images/close_mini.png) no-repeat center / contain;
+      background-size: 25px;
     }
-    &.via-modal {
-      background: #00A83B;
-    }
-    .modal-icon {
-      width: 23px;
-      height: 23px;
+    &.pass-icon {
+      background: #00A83B url(../assets/images/done_mini.png) no-repeat center / contain;
+      background-size: 25px;
     }
   }
-  .modal-error {
+  .modal-info {
     margin-top: 15px;
     color: #FFEC00;
     font-size: 16px;
     text-align: center;
+    line-height: 1.5;
   }
 }
 </style>

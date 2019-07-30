@@ -4,15 +4,15 @@
     <Details :info="detailInfo" />
 
     <!-- 尾部 -->
-    <footer class="audit-audit" v-if="detailInfo.state === 1">
+    <footer class="audit-audit">
       <div class="audit-auditbox">
         <!-- 通过 -->
-        <div class="audit-YoN" @click="viaModal">
+        <div class="audit-YoN" @click="handlePassModal">
           <img class="audit-icon" src="../assets/images/done.png" />
           <p class="audit-done">通过</p>
         </div>
         <!-- 拒绝 -->
-        <div class="audit-YoN" @click="errorModal">
+        <div class="audit-YoN" @click="handleRejectModal">
           <img class="audit-icon" src="../assets/images/not.png" />
           <p class="audit-not">拒绝</p>
         </div>
@@ -21,10 +21,14 @@
     </footer>
 
     <!-- 通过弹窗 -->
-    <Modal v-if="viaShow" :list="viaList" status="via" />
+    <transition name="fade">
+      <Modal v-if="passModal.visible" :orderNo="passModal.orderNo" status="pass" />
+    </transition>
 
     <!-- 拒绝弹窗 -->
-    <Modal v-if="isShow" :list="errorList" status="error" />
+    <transition name="fade">
+      <Modal v-if="rejectModal.visible" :orderNo="rejectModal.orderNo" status="reject" />
+    </transition>
 
   </div>
 </template>
@@ -37,19 +41,17 @@ import utils from '../utils';
 export default {
   data () {
     return {
-      viaShow: false,
-      isShow: false,
-      detailInfo: {},
       // 通过弹窗显示
-      viaList: [{
-        oddnum: '预约单号：YY190000145',
-        YorN: '审核通过',
-      }],
+      passModal: {
+        visible: false,
+        orderNo: ''
+      },
       // 拒绝弹窗显示
-      errorList: [{
-        oddnum: '预约单号：YY190000145',
-        YorN: '审核不通过',
-      }]
+      rejectModal: {
+        visible: false,
+        orderNo: ''
+      },
+      detailInfo: {}
     }
   },
   components: {
@@ -57,10 +59,10 @@ export default {
     Modal
   },
   created() {
-    this.getList();
+    this.getDetailInfo();
   },
   methods: {
-    getList () {
+    getDetailInfo () {
       const { params } = this.$route;
       if (!params.id) return;
 
@@ -76,7 +78,8 @@ export default {
         this.detailInfo.end_time = utils.parseTime(this.detailInfo.end_time, 'hh:mm');
       })
     },
-    viaModal () {
+    // 通过弹窗
+    handlePassModal () {
       const { params } = this.$route;
       if (!params.id) return;
       axios({
@@ -87,11 +90,16 @@ export default {
         },
         headers: {'X-Token': window.localStorage.getItem('user-token')},
       }).then(() => {
-        this.viaShow = true;
+        this.passModal.visible = true;
+        this.passModal.orderNo = this.detailInfo.ticket_id;
+        setTimeout( () => {
+          this.passModal.visible = false;
+          this.detailInfo.status = 3;
+        }, 3000)
       })
-      
     },
-    errorModal () {
+    // 拒绝弹窗
+    handleRejectModal () {
       const { params } = this.$route;
       if (!params.id) return;
       axios({
@@ -102,7 +110,12 @@ export default {
         },
         headers: {'X-Token': window.localStorage.getItem('user-token')},
       }).then(() => {
-        this.isShow = true;
+        this.rejectModal.visible = true;
+        this.rejectModal.orderNo = this.detailInfo.ticket_id;
+        setTimeout( () => {
+          this.rejectModal.visible = false;
+          this.detailInfo.status = 2;
+        }, 3000)
       })
     },
     
@@ -141,6 +154,7 @@ export default {
         .audit-icon {
           width: 12px;
           height: 12px;
+          margin-top: 3px;
         }
         // 通过
         .audit-done {
@@ -155,6 +169,13 @@ export default {
       }
     }
   }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all .5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
 }
 </style>
 
