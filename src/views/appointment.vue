@@ -247,10 +247,12 @@ export default {
       }).then(({ data }) => {
         this.draft = data;
         toast.clear();
-      }).catch(() => {
+      }).catch((error) => {
         toast.clear();
         this.$router.back(-1);
-        Toast('创建预约信息失败');
+        if (error && error.error_message) {
+          Toast(error.error_message);
+        }
       })
     },
     // 提交前校验

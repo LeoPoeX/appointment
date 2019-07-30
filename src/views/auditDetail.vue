@@ -5,7 +5,7 @@
 
     <!-- 尾部 -->
     <footer class="audit-audit">
-      <div class="audit-auditbox">
+      <div class="audit-auditbox" v-if="detailInfo.state === 1">
         <!-- 通过 -->
         <div class="audit-YoN" @click="handlePassModal">
           <img class="audit-icon" src="../assets/images/done.png" />
@@ -76,6 +76,10 @@ export default {
         this.detailInfo.end_day = utils.parseTime(this.detailInfo.end_time, 'yyyy-MM-dd');
         this.detailInfo.start_time = utils.parseTime(this.detailInfo.start_time, 'hh:mm');
         this.detailInfo.end_time = utils.parseTime(this.detailInfo.end_time, 'hh:mm');
+      }).catch((error) => {
+        if (error && error.error_message) {
+          Toast(error.error_message);
+        }
       })
     },
     // 通过弹窗
@@ -94,8 +98,12 @@ export default {
         this.passModal.orderNo = this.detailInfo.ticket_id;
         setTimeout( () => {
           this.passModal.visible = false;
-          this.detailInfo.status = 3;
+          this.detailInfo.state = 3;
         }, 3000)
+      }).catch((error) => {
+        if (error && error.error_message) {
+          Toast(error.error_message);
+        }
       })
     },
     // 拒绝弹窗
@@ -114,8 +122,12 @@ export default {
         this.rejectModal.orderNo = this.detailInfo.ticket_id;
         setTimeout( () => {
           this.rejectModal.visible = false;
-          this.detailInfo.status = 2;
+          this.detailInfo.state = 2;
         }, 3000)
+      }).catch((error) => {
+        if (error && error.error_message) {
+          Toast(error.error_message);
+        }
       })
     },
     
@@ -154,7 +166,7 @@ export default {
         .audit-icon {
           width: 12px;
           height: 12px;
-          margin-top: 3px;
+          margin-top: 2px;
         }
         // 通过
         .audit-done {
