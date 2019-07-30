@@ -30,7 +30,7 @@
           </div>
           <div class="appoinsuccess-footbox">
             <p class="appoinsuccess-footcont">{{ info.visitor_name }}</p>
-            <p class="appoinsuccess-footcont">{{ info.followers + 1 }}人</p>
+            <p class="appoinsuccess-footcont">{{ info.followers }}人</p>
             <p class="appoinsuccess-footcont">{{ info.visitor_phone }}</p>
           </div>
         </div>

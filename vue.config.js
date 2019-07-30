@@ -1,5 +1,4 @@
 module.exports = {
-  outputDir: 'visitor-frontend', // 打包的目录名称，默认为dist
   publicPath: '/',
   devServer: {
     proxy: {

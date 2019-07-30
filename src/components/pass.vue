@@ -24,7 +24,7 @@
           </div>
           <div class="pass-footbox">
             <p class="pass-footcont">{{ detailInfo.visitor_name }}</p>
-            <p class="pass-footcont">{{detailInfo.followers + 1}}人</p>
+            <p class="pass-footcont">{{ detailInfo.followers }}人</p>
             <p class="pass-footcont">{{ detailInfo.visitor_phone }}</p>
           </div>
         </div>

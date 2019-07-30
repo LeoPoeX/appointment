@@ -194,6 +194,7 @@ export default {
       margin-top: 6px;
       display: flex;
       border-bottom: 1px solid #DDDDDD;
+      height: 40px;
       .appoint-icon {
         flex-shrink: 0;
         width: 20px;
