@@ -1,10 +1,12 @@
 <template>
   <div class="box">
-    <van-tabs v-model="active" sticky swipeable animated>
-      <van-tab v-for="tab in tabs" :key="tab.key" :title="tab.title">
-        <List :tab="tab.key" />
-      </van-tab>
-    </van-tabs>
+    <div class="tab-wrap">
+      <van-tabs v-model="active" sticky swipeable animated>
+        <van-tab v-for="tab in tabs" :key="tab.key" :title="tab.title">
+          <List :tab="tab.key" />
+        </van-tab>
+      </van-tabs>
+    </div>
 
     <!-- 底部栏 -->
     <router-link
@@ -47,18 +49,20 @@ export default {
 
 <style lang="less">
 .box {
-  position: relative;
-  width: 100%;
-  margin-bottom: calc(env(safe-area-inset-bottom) - 50px) !important;
-  margin-bottom: calc(constant(safe-area-inset-bottom) - 50px) !important;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: calc(env(safe-area-inset-bottom) + 0px) !important;
+  bottom: calc(constant(safe-area-inset-bottom) + 0px) !important;
 
   .tab-wrap {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: calc(env(safe-area-inset-bottom) - 42px) !important;
-    bottom: calc(constant(safe-area-inset-bottom) - 42px) !important;
+    bottom: calc(env(safe-area-inset-bottom) + 42px) !important;
+    bottom: calc(constant(safe-area-inset-bottom) + 42px) !important;
   }
 
   // 底部栏

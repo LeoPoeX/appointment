@@ -212,7 +212,7 @@ export default {
         
         .details-name {
           color: #AEAEAE;
-          min-height: 40px;
+          min-width: 40px;
         }
       }
 

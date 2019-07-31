@@ -165,9 +165,7 @@ export default {
   }
 
   .card-content {
-    border-left: 1px solid #ECECEC;
-    border-right: 1px solid #ECECEC;
-    border-bottom: 1px solid #ECECEC;
+    box-shadow: 0 1px 6px 0 #ECECEC;
     padding: 12px;
     background: #fff;
     border-bottom-left-radius: 6px;
