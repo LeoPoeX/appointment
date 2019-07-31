@@ -69,11 +69,11 @@ export default {
 <style lang="less">
 .pass-box {
   background: #616161;
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
   display: table;
 
   .pass-content {

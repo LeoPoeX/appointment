@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <div class="modal-backdrop">
-      <div :class="`modal-iconback ${status}-icon`"></div>
-      <div class="modal-info">
-        <div>预约单号：{{ orderNo }}</div>
-        <div>{{ status === 'pass' ? '审核通过' : '审核不通过' }}</div>
-      </div>
+  <div class="modal-backdrop">
+    <div :class="`modal-iconback ${status}-icon`"></div>
+    <div class="modal-info">
+      <div>预约单号：{{ orderNo }}</div>
+      <div>{{ status === 'pass' ? '审核通过' : '审核不通过' }}</div>
     </div>
   </div>
 </template>

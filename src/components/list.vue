@@ -61,7 +61,7 @@ export default {
     return {
       list: [],
       offset: 0,
-      limit: 3,
+      limit: 20,
       isLoading: false, // 上拉刷新
       isPulling: false, // 下拉刷新
       isFinished: false, // 加载完毕
