@@ -259,7 +259,7 @@ export default {
     // 添加随员信息
     addNewVistor () {
       this.draft.followers.push({
-        organization: this.draft.visitor_position || ''
+        organization: this.draft.visitor_organization || ''
       });
       this.saveDraft();
     },
