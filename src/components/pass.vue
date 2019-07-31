@@ -134,7 +134,7 @@ export default {
           padding: 10px;
           display: flex;
           justify-content: space-between;
-          border-bottom: 1px solid #DDDDDD;
+          border-bottom: 1px solid #ECECEC;
 
           &:last-child {
             border-bottom: 0;

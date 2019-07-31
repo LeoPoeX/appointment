@@ -14,14 +14,14 @@
           type="tel"
           oninput="if(value.length>11) value=value.slice(0,11),value=value.replace(/[^\d]/g,'')"
           maxlength="11"
-          placeholder="电话（必填）"
+          placeholder="电话"
           @blur.prevent="saveDraft"
           />
       </div>
 
       <div class="content">
         <img class="img-backgro" src="../assets/images/post.png" />
-        <input type="text" placeholder="职位（必填）" v-model="user.position" @blur.prevent="saveDraft" />
+        <input type="text" placeholder="职位" v-model="user.position" @blur.prevent="saveDraft" />
       </div>
 
       <div class="content">
@@ -31,7 +31,7 @@
 
       <div class="content">
         <img class="img-backgro" src="../assets/images/car.png" />
-        <input type="text" placeholder="车牌（选填）" v-model="user.car_number" @blur.prevent="saveDraft" />
+        <input type="text" placeholder="车牌" v-model="user.car_number" @blur.prevent="saveDraft" />
       </div>
 
     </div>
@@ -69,7 +69,7 @@ export default {
 
   .content {
     display: flex;
-    margin-top: 12px;
+    height: 40px;
     align-items: center;
 
     .img-backgro {
@@ -83,7 +83,7 @@ export default {
       width: 100%;
       border: 0;
       margin-left: 5px;
-      border-bottom: 0.5px solid #DEDEDE;
+      border-bottom: 0.5px solid #ECECEC;
       border-radius: 0;
       font-size: 12px;
       line-height: 20px;

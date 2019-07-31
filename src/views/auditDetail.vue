@@ -4,8 +4,8 @@
     <Details :info="detailInfo" />
 
     <!-- 尾部 -->
-    <footer class="audit-audit">
-      <div class="audit-auditbox" v-if="detailInfo.state === 1">
+    <footer class="audit-audit" v-if="detailInfo.state === 1">
+      <div class="audit-auditbox">
         <!-- 通过 -->
         <div class="audit-YoN" @click="handlePassModal">
           <img class="audit-icon" src="../assets/images/done.png" />
@@ -36,6 +36,7 @@
 <script>
 import Details from '../components/details';
 import Modal from '../components/modal';
+import { Toast } from 'vant';
 import axios from 'axios';
 import utils from '../utils';
 export default {
@@ -147,7 +148,8 @@ export default {
     width: 100%;
     height: 42px;
     position: fixed;
-    bottom: 0;
+    bottom: calc(env(safe-area-inset-bottom) + 0px) !important;
+    bottom: calc(constant(safe-area-inset-bottom) + 0px) !important;
     background: #FFFFFF;
     border: 1px solid #DFDFDF;
     .audit-auditbox {
@@ -159,7 +161,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-left: 1px solid #DFDFDF;
+        border-left: 1px solid #ECECEC;
         &:first-child {
           border-left: 0;
         }

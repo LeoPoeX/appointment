@@ -47,16 +47,25 @@ export default {
 
 <style lang="less">
 .box {
-  margin-bottom: 50px;
-  width: 100%;
   position: relative;
+  width: 100%;
+  margin-bottom: calc(env(safe-area-inset-bottom) - 50px) !important;
+  margin-bottom: calc(constant(safe-area-inset-bottom) - 50px) !important;
 
-
+  .tab-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: calc(env(safe-area-inset-bottom) - 42px) !important;
+    bottom: calc(constant(safe-area-inset-bottom) - 42px) !important;
+  }
 
   // 底部栏
   .bottom-column {
     position: fixed;
-    bottom: 0;
+    bottom: calc(env(safe-area-inset-bottom) + 0px) !important;
+    bottom: calc(constant(safe-area-inset-bottom) + 0px) !important;
     width: 100%;
     height: 42px;
     font-size: 14px;
@@ -65,7 +74,7 @@ export default {
     align-items: center;
     color: #232323;
     background: #fff;
-    border-top: 1px solid #DFDFDF;
+    border-top: 1px solid #ECECEC;
     img {
       width: 16px;
       height: 16px;

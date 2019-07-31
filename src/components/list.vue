@@ -165,9 +165,9 @@ export default {
   }
 
   .card-content {
-    border-left: 1px solid #DDDDDD;
-    border-right: 1px solid #DDDDDD;
-    border-bottom: 1px solid #DDDDDD;
+    border-left: 1px solid #ECECEC;
+    border-right: 1px solid #ECECEC;
+    border-bottom: 1px solid #ECECEC;
     padding: 12px;
     background: #fff;
     border-bottom-left-radius: 6px;
@@ -191,23 +191,23 @@ export default {
       }
     }
     .appoint-info {
-      margin-top: 6px;
       display: flex;
-      border-bottom: 1px solid #DDDDDD;
-      height: 40px;
+      align-items: flex-end;
+      border-bottom: 1px solid #ECECEC;
       .appoint-icon {
         flex-shrink: 0;
         width: 20px;
         height: 20px;
         background: #ffffff;
         border-radius: 50%;
-        margin-bottom: 2px;
+        margin-bottom: 4px;
       }
       .appoint-name {
         flex-shrink: 0;
         margin-left: 5px;
         color: #C6AA67;
         font-size: 14px;
+        line-height: 24px;
         &.appoint-date {
           font-size: 11px;
         }
@@ -217,6 +217,7 @@ export default {
         text-align: right;
         color: #333333;
         font-size: 13px;
+        line-height: 24px;
         &.user {
           font-weight: bold;
           font-size: 16px;

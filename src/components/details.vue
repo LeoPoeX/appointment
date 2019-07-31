@@ -144,7 +144,7 @@ export default {
   
   .details-content {
     background: #FFFFFF;
-    border: 0.5px solid #D6D6D6;
+    border: 0.5px solid #DFDFDF;
     border-radius: 8px;
     margin-top: 10px;
     &.follower-box {
@@ -176,7 +176,7 @@ export default {
         .details-timeDesc {
           color: #C6AA67;
           padding-bottom: 8px;
-          border-bottom: 1px solid #EBEBEB;
+          border-bottom: 1px solid #ECECEC;
         }
         .details-date {
           margin-top: 7px;

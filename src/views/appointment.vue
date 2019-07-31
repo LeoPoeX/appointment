@@ -255,6 +255,14 @@ export default {
         }
       })
     },
+
+    // 添加随员信息
+    addNewVistor () {
+      this.draft.followers.push({});
+      this.draft.followers.organization = this.draft.visitor_position;
+      this.saveDraft();
+    },
+
     // 提交前校验
     validateBeforeSubmit() {
       var reg = /^1[3456789]\d{9}$/;
@@ -298,14 +306,8 @@ export default {
         if (!user.name) {
           Toast('请输入随员姓名');
           return false;
-        } else if (!user.phone) {
-          Toast(`请输入随员${user.name}的电话`);
-          return false;
         } else if (!reg.test(user.phone)) {
           Toast(`随员${user.name}的手机号格式不正确`);
-          return false;
-        } else if (!user.position) {
-          Toast(`请输入随员${user.name}的职位`);
           return false;
         } else if (!user.organization) {
           Toast(`请输入随员${user.name}的公司`);
@@ -315,12 +317,6 @@ export default {
       return true;
 
     },
-    // 添加随员信息
-    addNewVistor () {
-      this.draft.followers.push({});
-      this.saveDraft();
-    },
-
     // 提交
     submit() {
       // 校验不通过，不能提交
@@ -428,7 +424,7 @@ export default {
             border: 0;
             border-radius: 0;
             background: #FFFAF5;
-            border-bottom: 0.5px solid #DEDEDE;
+            border-bottom: 0.5px solid #ECECEC;
             font-size: 12px;
             padding: 0;
             padding-left: 4px;
@@ -460,7 +456,7 @@ export default {
           width: 100%;
           border: 0;
           margin-left: 5px;
-          border-bottom: 0.5px solid #DEDEDE;
+          border-bottom: 0.5px solid #ECECEC;
           border-radius: 0;
           font-size: 12px;
           line-height: 20px;
@@ -491,7 +487,7 @@ export default {
           border: none;
           outline: none;
           width: 108px;
-          border-bottom: 0.5px solid #DEDEDE;
+          border-bottom: 0.5px solid #ECECEC;
           background: #fff;
           border-radius: 0;
           appearance:none;
