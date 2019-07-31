@@ -258,8 +258,9 @@ export default {
 
     // 添加随员信息
     addNewVistor () {
-      this.draft.followers.push({});
-      this.draft.followers.organization = this.draft.visitor_position;
+      this.draft.followers.push({
+        organization: this.draft.visitor_position || ''
+      });
       this.saveDraft();
     },
 
