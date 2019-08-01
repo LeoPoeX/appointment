@@ -71,8 +71,6 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    bottom: calc(env(safe-area-inset-bottom) + 0px) !important;
-    bottom: calc(constant(safe-area-inset-bottom) + 0px) !important;
     height: 42px;
     font-size: 14px;
     display: flex;
