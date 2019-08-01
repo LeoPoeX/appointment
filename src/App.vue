@@ -18,9 +18,9 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   outline: none;
 }
 
-html,body {
-  height: 100%;
-}
+// html,body {
+//   height: 100%;
+// }
 
 // body {
 //   padding-top: constant(safe-area-inset-top);
