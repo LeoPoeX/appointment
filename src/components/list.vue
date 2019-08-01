@@ -192,6 +192,7 @@ export default {
       display: flex;
       align-items: flex-end;
       border-bottom: 1px solid #ECECEC;
+      height: 40px;
       .appoint-icon {
         flex-shrink: 0;
         width: 20px;
