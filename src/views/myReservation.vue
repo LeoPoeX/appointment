@@ -68,9 +68,9 @@ export default {
   // 底部栏
   .bottom-column {
     position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 0px) !important;
-    bottom: calc(constant(safe-area-inset-bottom) + 0px) !important;
-    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 42px;
     font-size: 14px;
     display: flex;

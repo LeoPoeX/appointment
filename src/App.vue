@@ -18,4 +18,16 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   outline: none;
 }
 
+html,body {
+  height: 100%;
+}
+
+body {
+  padding-top: constant(safe-area-inset-top);
+  padding-left: constant(safe-area-inset-left);
+  padding-right: constant(safe-area-inset-right);
+  // padding-bottom: constant(safe-area-inset-bottom);
+}
+
+
 </style>
