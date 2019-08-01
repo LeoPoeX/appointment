@@ -18,9 +18,9 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   outline: none;
 }
 
-body {
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
-}
+// body {
+//   padding-bottom: constant(safe-area-inset-bottom);
+//   padding-bottom: env(safe-area-inset-bottom);
+// }
 
 </style>
