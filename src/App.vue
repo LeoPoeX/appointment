@@ -24,10 +24,10 @@ html,body {
 
 body {
   padding-top: constant(safe-area-inset-top);
-  padding-left: constant(safe-area-inset-left);
-  padding-right: constant(safe-area-inset-right);
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
+  // padding-left: constant(safe-area-inset-left);
+  // padding-right: constant(safe-area-inset-right);
+  // padding-bottom: constant(safe-area-inset-bottom);
+  // padding-bottom: env(safe-area-inset-bottom);
 }
 
 
