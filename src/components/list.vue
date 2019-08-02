@@ -12,7 +12,6 @@
         <div class="card-header">
           <Tag :state="item.state"/>
           <span
-            v-if="item.state === 1 && item.state === 3"
             :class="`show-permit ${item.state}`"
             @click.stop="showPermit(item)"
           >查看通行证</span>
@@ -81,10 +80,8 @@ export default {
     getList () {
       let params = {
         offset: this.offset,
-        limit: this.limit
-      }
-      if (Number(this.tab) !== 0) {
-        params.state = '1,3';
+        limit: this.limit,
+        state: this.tab
       }
       axios({
         method:'get',

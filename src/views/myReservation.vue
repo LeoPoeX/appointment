@@ -27,13 +27,20 @@ export default {
   data() {
     return {
       itemDetail: {},
-      tabs: [{
-        key: '1',
-        title: '待处理'
-      }, {
-        key: '0',
-        title: '全部'
-      }],
+      tabs: [
+        {
+          key: '1',
+          title: '待审核'
+        },
+        {
+          key: '3',
+          title: '待放行'
+        },
+        {
+          key: '2,4',
+          title: '已完结'
+        },
+      ],
       active: '0',
       list: [],
     }
