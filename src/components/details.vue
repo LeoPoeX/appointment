@@ -140,6 +140,8 @@ export default {
 
 <style lang="less">
 .details-box {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 52px) !important;
+  padding-bottom: calc(constant(safe-area-inset-bottom) + 52px) !important;
   margin: 35px 15px 0 15px;
   
   .details-content {

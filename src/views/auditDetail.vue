@@ -1,10 +1,12 @@
 <template>
-  <div class="audit-box">
+  <div class="audit-container">
     <!-- 内容 -->
-    <Details :info="detailInfo" />
+    <div :class="`audit-content ${detailInfo.state === 1 ? 'has-footer' : ''}`">
+      <Details :info="detailInfo" />
+    </div>
 
     <!-- 尾部 -->
-    <footer class="audit-audit" v-if="detailInfo.state === 1">
+    <footer class="audit-footer" v-if="detailInfo.state === 1">
       <div class="audit-auditbox">
         <!-- 通过 -->
         <div class="audit-YoN" @click="handlePassModal">
@@ -137,19 +139,39 @@ export default {
 </script>
 
 <style lang="less">
-.audit-box {
-  padding-top: 10px;
-  padding-bottom: 50px;
+
+.audit-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: calc(env(safe-area-inset-bottom) + 0px) !important;
+  bottom: calc(constant(safe-area-inset-bottom) + 0px) !important;
   background: url('../assets/images/back.png') no-repeat;
   background-size: 100% 219px;
   background-position-y: -30px;
 
-  .audit-audit {
-    width: 100%;
-    height: 42px;
+  .audit-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: env(safe-area-inset-bottom) !important;
+    bottom: constant(safe-area-inset-bottom) !important;
+    &.has-footer {
+      bottom: calc(env(safe-area-inset-bottom) + 42px) !important;
+      bottom: calc(constant(safe-area-inset-bottom) + 42px) !important;
+    }
+  }
+
+  .audit-footer {
     position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 0px) !important;
-    bottom: calc(constant(safe-area-inset-bottom) + 0px) !important;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+    height: 42px;
     background: #FFFFFF;
     border: 1px solid #DFDFDF;
     .audit-auditbox {
