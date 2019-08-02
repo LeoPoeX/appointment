@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import router from "./router";
 import App from './App';
-import { NumberKeyboard, Loading, Cell, Picker, Field, Popup, DatetimePicker, List, Tab, Tabs, PullRefresh } from 'vant';
+import { NumberKeyboard, Loading, Picker, Field, Popup, DatetimePicker, List, Tab, Tabs, PullRefresh } from 'vant';
 
 Vue
   .use(List)
@@ -14,7 +14,6 @@ Vue
   .use(Picker)
   .use(Loading)
   .use(NumberKeyboard)
-  .use(Cell)
 
 Vue.config.productionTip = false
 

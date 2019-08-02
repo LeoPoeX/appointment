@@ -18,8 +18,8 @@ export default {
           name: '待审核'
         },
         2: {
-          tag: 'refuse',
-          name: '已拒绝'
+          tag: 'over',
+          name: '已完结'
         },
         3: {
           tag: 'pass',
@@ -27,7 +27,7 @@ export default {
         },
         4: {
           tag: 'over',
-          name: '已完成'
+          name: '已完结'
         }
       }
     }
@@ -53,16 +53,11 @@ export default {
   &.audit-tag {
     background: #FF9000;
   }
-  // 已拒绝标签
-  &.refuse-tag {
-    background: #FF0000;
-  }
-
   // 待放行标签
   &.pass-tag {
     background: #00A83B;
   }
-  // 已放行标签
+  // 已完结标签
   &.over-tag {
     background: #989898;
   }
