@@ -12,7 +12,7 @@
         <div class="card-header">
           <Tag :state="item.state"/>
           <span
-            v-if="item.state === 1 && item.state === 3"
+            v-if="item.state === 1 || item.state === 3"
             :class="`show-permit ${item.state}`"
             @click.stop="showPermit(item)"
           >查看通行证</span>
