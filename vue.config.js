@@ -12,6 +12,7 @@ module.exports = {
     loaderOptions: {
       less: {
         modifyVars: {
+          'dialog-message-font-size': '16px',
           'tab-active-text-color': '#2090E6',
           'tabs-bottom-bar-color': '#2090E6'
         }

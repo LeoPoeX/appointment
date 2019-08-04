@@ -270,12 +270,15 @@ export default {
     // 删除随员信息
     prune(index) {
       this.draft.followers.splice(index, 1);
+      this.saveDraft();
     },
     
     // 重置 
     reset() {
       Dialog.confirm({
-        message: '确定要重置所有信息吗？'
+        message: '确定要重置所有信息吗？',
+        confirmButtonColor: '#FF8800',
+        confirmButtonText: '删除',
       }).then(() => {
         this.draft = {
           id: this.draft.id,
@@ -284,6 +287,7 @@ export default {
           employee_phone: this.draft.employee_phone,
           followers:[]
         };
+        this.saveDraft();
       }).catch(() => {
         Dialog.close
       });
