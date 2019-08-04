@@ -115,7 +115,7 @@
       <img class="follower-img" @click="addNewVistor" src="../assets/images/add.png" />
     </div>
 
-    <div class="appoint-button">
+    <div class="appoint-button" v-if="!loading">
       <div class="reset">
         <button @click="reset">重置</button>
       </div>
@@ -152,6 +152,7 @@ export default {
   name: 'Appointment',
   data () {
     return {
+      loading: true,
       timePopup: {
         visible: false,
         minDate: new Date(),
@@ -250,7 +251,9 @@ export default {
       }).then(({ data }) => {
         this.draft = data;
         toast.clear();
+        this.loading = false;
       }).catch((error) => {
+        this.loading = false;
         toast.clear();
         this.$router.back(-1);
         if (error && error.error_message) {
