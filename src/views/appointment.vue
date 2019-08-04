@@ -272,8 +272,16 @@ export default {
 
     // 删除随员信息
     prune(index) {
-      this.draft.followers.splice(index, 1);
-      this.saveDraft();
+      Dialog.confirm({
+        message: '确定要删除该随员信息吗？',
+        confirmButtonColor: '#FF8800',
+        confirmButtonText: '删除',
+      }).then(() => {
+        this.draft.followers.splice(index, 1);
+        this.saveDraft();
+      }).catch(() => {
+        Dialog.close
+      });
     },
     
     // 重置 
