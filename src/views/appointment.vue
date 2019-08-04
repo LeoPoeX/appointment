@@ -49,12 +49,12 @@
             />
           </div>
           <div class="appoint-box">
-            <input 
-              v-model="draft.employee_phone" 
-              class="appoint-content" 
+            <van-field
+              class="appoint-content"
               type="tel"
               oninput="if(value.length>11) value=value.slice(0,11),value=value.replace(/[^\d]/g,'')"
               maxlength="11"
+              v-model="draft.employee_phone" 
               placeholder="接待人电话（必填）" 
             />
           </div>
@@ -108,19 +108,20 @@
     </div>
 
     <!-- 随行人员信息 -->
-    <div class="details">
-      <div class="yuyueTitle" v-if="draft.followers.length">填写随员信息</div>
+    <Followers :followers="draft.followers" :people="this.draft.followers.length" :saveDraft="saveDraft" :prune="prune" />
 
-      <Followers :followers="draft.followers" :saveDraft="saveDraft" />
-
-      <div class="PeopleInfo" :class="draft.followers.length ? '' : 'no-user'" @click="addNewVistor">
-        <p>添加随员信息</p>
-      </div>
-      
+    <div class="PeopleInfo">
+      <p>添加随员信息</p>
+      <img class="follower-img" @click="addNewVistor" src="../assets/images/add.png" />
     </div>
 
-    <div class="submit">
-      <button @click.stop="submit">立即提交</button>
+    <div class="appoint-button">
+      <div class="reset">
+        <button @click="reset">重置</button>
+      </div>
+      <div class="submit">
+        <button @click.stop="submit">立即提交</button>
+      </div>
     </div>
     
     <!-- 来访事由弹窗 -->
@@ -144,7 +145,7 @@
 
 <script>
 import axios from 'axios';
-import { Toast } from 'vant';
+import { Toast, Dialog } from 'vant';
 import utils from '../utils';
 import Followers from '../components/followers';
 export default {
@@ -164,7 +165,8 @@ export default {
     }
   },
   components: {
-    Followers
+    Followers,
+    [Dialog.Component.name]: Dialog.Component
   },
   created () {
     this.getDraft()
@@ -217,6 +219,7 @@ export default {
     closeReason () {
       this.showReason = false
     },
+    
     // 暂存预约单
     saveDraft: utils.debounce(function() {
       axios({
@@ -262,6 +265,28 @@ export default {
         organization: this.draft.visitor_organization || ''
       });
       this.saveDraft();
+    },
+
+    // 删除随员信息
+    prune(index) {
+      this.draft.followers.splice(index, 1);
+    },
+    
+    // 重置 
+    reset() {
+      Dialog.confirm({
+        message: '确定要重置所有信息吗？'
+      }).then(() => {
+        this.draft = {
+          id: this.draft.id,
+          ticket_id: this.draft.ticket_id,
+          employee_name: this.draft.employee_name,
+          employee_phone: this.draft.employee_phone,
+          followers:[]
+        };
+      }).catch(() => {
+        Dialog.close
+      });
     },
 
     // 提交前校验
@@ -359,10 +384,11 @@ export default {
 <style lang="less">
 .appoin-wrapper {
   padding-top: 10px;
-  background: url('../assets/images/back.png') no-repeat;
+  background: url('../assets/images/back.png') no-repeat #F5F5F5;
   background-size: 100% 219px;
   background-position-y: -22px;
   font-size: 12px;
+  height: 100%;
 
   .details {
     margin: 24px 15px 15px 15px;
@@ -371,7 +397,7 @@ export default {
     background: #ffffff;
     
     .yuyueTitle {
-      line-height: 48px;
+      line-height: 40px;
       padding-left: 12px;
       font-size: 14px;
       letter-spacing: 1.56px;
@@ -379,7 +405,7 @@ export default {
     }
 
     .visitor {
-      padding: 12px 15px;
+      padding: 10px 12px 15px 12px;
 
       .danhao {
         background: #FFFAF5;
@@ -499,38 +525,64 @@ export default {
       }
     
     }
-
-    .PeopleInfo {
-      line-height: 36px;
-      text-align: center;
-      background: #FFFAF5;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      &.no-user {
-        border-radius: 10px;
-      }
-      p {
-        margin: 0;
-        color: #999999;
-      }
-    }
-
   }
 
-  .submit {
-    text-align: center;
-    margin: 18px 0;
-    font-size: 13px;
-    color: #835B02;
+  .PeopleInfo {
+    padding: 0 12px 0 10px;
+    margin: 0 15px;
+    line-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background:rgba(255,255,255,1);
+    border-radius:10px;
+    border:1px solid rgba(214,214,214,1);
+    font-size: 14px;
+    .follower-img {
+      width: 24px;
+      height: 24px;
+    }
+    
+  }
 
-    button {
-      width: 300px;
-      height: 36px;
-      border: 0;
+  .appoint-button {
+    display: flex;
+    padding: 20px 12px;
+
+    .reset {
+      color: #FF8800;
+      font-size: 16px;
+      width: 30%;
+      background: #fff;
       border-radius: 36px;
-      background-image: linear-gradient(1deg, #FACE83 0%, #F6AE3A 100%);
+      text-align: center;
+      border:1px solid rgba(214,214,214,1);
+
+      button {
+        height: 36px;
+        border: 0;
+        background: #fff;
+      }
+    }
+
+    .submit {
+      text-align: center;
+      margin-left: 10px;
+      font-size: 16px;
+      color: #835B02;
+      width: 70%;
+
+      button {
+        width: 100%;
+        height: 36px;
+        border: 0;
+        border-radius: 36px;
+        background-image: linear-gradient(1deg, #FACE83 0%, #F6AE3A 100%);
+      }
     }
   }
+
+  
 }
 
 </style>
