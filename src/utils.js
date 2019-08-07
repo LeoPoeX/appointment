@@ -1,3 +1,5 @@
+import { Toast } from 'vant';
+
 function parseTime(timestamp, fmt) {
   let d = new Date(timestamp),
       f = fmt || 'yyyy-MM-dd hh:mm:ss',
@@ -79,9 +81,29 @@ const getQueryString = (name) => {
     return null;
 };
 
+const handleNetworkError = (error) => {
+  let errorMsg = '连接服务器失败';
+  if (error.response) {
+    const { status, data } = error.response;
+    switch (status) {
+      case 400: errorMsg = '请求错误'; break;
+      case 401: errorMsg = '未授权，请重新登录'; break;
+      case 403: errorMsg = '拒绝访问'; break;
+      case 404: errorMsg = '请求出错'; break;
+      case 408: errorMsg = '请求超时'; break;
+      case 502: errorMsg = '网络错误'; break;
+      case 503: errorMsg = '服务不可用'; break;
+      case 504: errorMsg = '网络超时'; break;
+      default: err.message = `网络连接出错`;
+    }
+    errorMsg = data.error_message || errorMsg;
+  }
+  Toast(errorMsg);
+}
 export default {
   getQueryString,
   parseTime,
   throttle,
-  debounce
+  debounce,
+  handleNetworkError
 }

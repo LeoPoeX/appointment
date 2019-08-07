@@ -256,9 +256,7 @@ export default {
         this.loading = false;
         toast.clear();
         this.$router.back(-1);
-        if (error && error.error_message) {
-          Toast(error.error_message);
-        }
+        utils.handleNetworkError(error);
       })
     },
 
@@ -338,20 +336,20 @@ export default {
         Toast('请输入来访者公司');
         return false;
       } else if (!this.draft.reason) {
-        Toast('请输入来访事由');
+        Toast('请选择来访事由');
         return false;
       }
 
       for (let i = 0; i <this.draft.followers.length; i++) {
         let user = this.draft.followers[i];
         if (!user.name) {
-          Toast('请输入随员姓名');
+          Toast(`请输入随员${i + 1}的姓名`);
           return false;
-        } else if (!reg.test(user.phone)) {
-          Toast(`随员${user.name}的手机号格式不正确`);
+        } else if (user.phone && !reg.test(user.phone)) {
+          Toast(`随员$${i + 1}的手机号格式不正确`);
           return false;
         } else if (!user.organization) {
-          Toast(`请输入随员${user.name}的公司`);
+          Toast(`请输入随员${i + 1}的公司`);
           return false;
         }
       }
@@ -371,7 +369,7 @@ export default {
           start_time: this.draft.start_time || null,
           end_time: this.draft.end_time || null
         }
-      }).then(({ data:info }) => {
+      }).then(({ data: info }) => {
         if (info && info.id) {
           this.$router.push({
             path: '/appointSuccess',
@@ -385,9 +383,7 @@ export default {
           })
         }
       }).catch((error) => {
-        if (error && error.message) {
-          Toast(error.message)
-        }
+        utils.handleNetworkError(error);
       });
     },
 

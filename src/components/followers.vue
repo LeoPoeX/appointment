@@ -3,7 +3,7 @@
     
     <div class="follower-info" v-for="(user, index) in followers" :key="index">
       <div class="yuyueTitle">
-        <p>填写随员信息-随员{{index+1}}</p>
+        <p>随员{{index+1}}</p>
         <img class="follower-img" @click="prune(index)" src="../assets/images/minus.png" />
       </div>
 

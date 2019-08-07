@@ -41,7 +41,7 @@ export default {
           title: '已完结'
         },
       ],
-      active: '1',
+      active: 0,
       list: [],
     }
   },

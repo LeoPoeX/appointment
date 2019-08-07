@@ -38,7 +38,6 @@
 <script>
 import Details from '../components/details';
 import Modal from '../components/modal';
-import { Toast } from 'vant';
 import axios from 'axios';
 import utils from '../utils';
 export default {
@@ -80,9 +79,7 @@ export default {
         this.detailInfo.start_time = utils.parseTime(this.detailInfo.start_time, 'hh:mm');
         this.detailInfo.end_time = utils.parseTime(this.detailInfo.end_time, 'hh:mm');
       }).catch((error) => {
-        if (error && error.error_message) {
-          Toast(error.error_message);
-        }
+        utils.handleNetworkError(error);
       })
     },
     // 通过弹窗
@@ -104,9 +101,7 @@ export default {
           this.detailInfo.state = 3;
         }, 3000)
       }).catch((error) => {
-        if (error && error.error_message) {
-          Toast(error.error_message);
-        }
+        utils.handleNetworkError(error);
       })
     },
     // 拒绝弹窗
@@ -128,9 +123,7 @@ export default {
           this.detailInfo.state = 2;
         }, 3000)
       }).catch((error) => {
-        if (error && error.error_message) {
-          Toast(error.error_message);
-        }
+        utils.handleNetworkError(error);
       })
     },
     
