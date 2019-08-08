@@ -15,7 +15,10 @@ const routes = [
     path: "/list",
     name: "home",
     component: () => import("./views/myReservation.vue"),
-    meta: { title: '我的预约' }
+    meta: { 
+      title: '我的预约',
+      keepAlive: true 
+    }
   },
   {
     path: "/appointment",
@@ -46,7 +49,18 @@ const routes = [
 const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
-  routes: routes
+  routes: routes,
+  // 返回时回到原位置
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      if (from.meta.keepAlive) {
+        from.meta.savedPosition = document.body.scrollTop
+      }
+      return { x: 0, y: to.meta.savedPosition || 0 }
+    }
+  }
 });
 
 // add route path
