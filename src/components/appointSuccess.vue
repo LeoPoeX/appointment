@@ -58,6 +58,7 @@ export default {
   },
   created () {
     this.getQueryString();
+    this.returnList();
   },
   beforeRouteLeave(to, from, next) {
     // 设置当前路由的 meta
@@ -81,6 +82,12 @@ export default {
       })
       return qrcode;
     },
+    returnList() {
+      setTimeout( () => {
+        this.toTab = 2;
+        this.$router.push({ path: `/list`, query: { activeTab: '2' } });
+      }, 3000)
+    }
   },
 }
 </script>
