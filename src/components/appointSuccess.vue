@@ -3,7 +3,7 @@
 
     <!-- 内容 -->
     <div class="appoinsuccess-content">
-      <router-link to="/list?activeTab = 2"><img class="appoinsuccess-close" src="../assets/images/close.png" /></router-link>
+      <router-link to="/list?activeTab=2"><img class="appoinsuccess-close" src="../assets/images/close.png" /></router-link>
       <div class="appoinsuccess-content-header">
         <p class="appoinsuccess-details">预约单详情</p>
         <div class="appoinsuccess-odd">
