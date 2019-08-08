@@ -53,6 +53,7 @@ export default {
         visible: false,
         orderNo: ''
       },
+      toTab: 0, // 要跳转的tab，默认为0，保持keep-alive，当大于0时，跳转到对应的tab页下
       detailInfo: {}
     }
   },
@@ -62,6 +63,11 @@ export default {
   },
   created() {
     this.getDetailInfo();
+  },
+  beforeRouteLeave(to, from, next) {
+    // 设置当前路由的 meta
+    to.meta.keepAlive = Number(this.toTab) > 0 ? false : true;
+    next();
   },
   methods: {
     getDetailInfo () {
@@ -80,6 +86,7 @@ export default {
         this.detailInfo.end_time = utils.parseTime(this.detailInfo.end_time, 'hh:mm');
       }).catch((error) => {
         utils.handleNetworkError(error);
+        this.$router.back(-1);
       })
     },
     // 通过弹窗
@@ -99,6 +106,8 @@ export default {
         setTimeout( () => {
           this.passModal.visible = false;
           this.detailInfo.state = 3;
+          this.toTab = 2;
+          this.$router.push({ path: `/list`, query: { activeTab: '2' } });
         }, 3000)
       }).catch((error) => {
         utils.handleNetworkError(error);
@@ -121,6 +130,8 @@ export default {
         setTimeout( () => {
           this.rejectModal.visible = false;
           this.detailInfo.state = 2;
+          this.toTab = 3;
+          this.$router.push({ path: `/list`, query: { activeTab: '3' } });
         }, 3000)
       }).catch((error) => {
         utils.handleNetworkError(error);

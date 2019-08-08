@@ -1,9 +1,9 @@
 <template>
   <div class="box">
     <div class="tab-wrap">
-      <van-tabs v-model="active" sticky swipeable animated>
-        <van-tab v-for="tab in tabs" :key="tab.key" :title="tab.title">
-          <List :tab="tab.key" />
+      <van-tabs v-model="activeName" sticky swipeable animated @change="changeTab">
+        <van-tab v-for="tab in tabs" :key="tab.name" :name="tab.name" :title="tab.title">
+          <List :tab="tab.status" />
         </van-tab>
       </van-tabs>
     </div>
@@ -24,24 +24,33 @@
 import List from '../components/list';
 export default {
   name: 'MyReservation',
+  beforeRouteLeave(to, from, next) {
+    // 设置当前路由的 meta
+    from.meta.keepAlive = true;
+    next();
+  },
   data() {
+    const activeNameStr = this.$route.query.activeTab || '1';
     return {
       itemDetail: {},
       tabs: [
         {
-          key: '1',
+          name: '1',
+          status: '1',
           title: '待审核'
         },
         {
-          key: '3',
+          name: '2',
+          status: '3',
           title: '待放行'
         },
         {
-          key: '2,4',
+          name: '3',
+          status: '2,4',
           title: '已完结'
         },
       ],
-      active: 0,
+      activeName: activeNameStr,
       list: [],
     }
   },
@@ -49,6 +58,12 @@ export default {
     List
   },
   methods: {
+    changeTab(name) {
+      this.$router.replace({
+        path: '/list',
+        query: {activeTab: name},
+      })
+    }
   }
 }
 </script>

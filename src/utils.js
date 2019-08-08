@@ -94,7 +94,7 @@ const handleNetworkError = (error) => {
       case 502: errorMsg = '网络错误'; break;
       case 503: errorMsg = '服务不可用'; break;
       case 504: errorMsg = '网络超时'; break;
-      default: err.message = `网络连接出错`;
+      default: errorMsg = `网络连接出错`;
     }
     errorMsg = data.error_message || errorMsg;
   }

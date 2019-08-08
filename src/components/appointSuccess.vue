@@ -3,7 +3,7 @@
 
     <!-- 内容 -->
     <div class="appoinsuccess-content">
-      <router-link to="/"><img class="appoinsuccess-close" src="../assets/images/close.png" /></router-link>
+      <router-link to="/list?activeTab = 2"><img class="appoinsuccess-close" src="../assets/images/close.png" /></router-link>
       <div class="appoinsuccess-content-header">
         <p class="appoinsuccess-details">预约单详情</p>
         <div class="appoinsuccess-odd">
@@ -52,11 +52,17 @@ export default {
   },
   data() {
     return {
-      info: {}
+      info: {},
+      toTab: 0, // 要跳转的tab，默认为0，保持keep-alive，当大于0时，跳转到对应的tab页下
     }
   },
   created () {
     this.getQueryString();
+  },
+  beforeRouteLeave(to, from, next) {
+    // 设置当前路由的 meta
+    to.meta.keepAlive = Number(this.toTab) > 0 ? false : true;
+    next();
   },
   mounted () {
     this.renderQrcode();
