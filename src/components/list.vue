@@ -1,6 +1,7 @@
 <template>
   <van-pull-refresh v-model="isPulling" @refresh="onPullRefresh" class="reset">
     <van-list
+      style="min-height: calc(100vh - 90px)"
       v-model="isLoading"
       :finished="isFinished"
       :error.sync="error"
