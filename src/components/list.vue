@@ -1,5 +1,5 @@
 <template>
-  <van-pull-refresh v-model="isPulling" @refresh="onPullRefresh">
+  <van-pull-refresh v-model="isPulling" @refresh="onPullRefresh" class="reset">
     <van-list
       v-model="isLoading"
       :finished="isFinished"
@@ -129,6 +129,10 @@ export default {
 </script>
 
 <style lang="less">
+.reset .van-loading {
+  height: 200px;
+}
+
 .card-box {
   margin: 15px;
   min-height: 20px;
