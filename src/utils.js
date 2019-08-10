@@ -100,6 +100,7 @@ const handleNetworkError = (error) => {
   }
   Toast(errorMsg);
 }
+
 export default {
   getQueryString,
   parseTime,

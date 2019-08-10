@@ -131,6 +131,7 @@ export default {
 <style lang="less">
 .card-box {
   margin: 15px;
+  min-height: 20px;
   background: #FFFFFF;
 
   .card-header {
